@@ -8,9 +8,9 @@ export default function Helpers() {
   const { grid, axes, gizmo, perf } = useControls(
     'helpers',
     {
-      grid: debug,
+      grid: false,
       axes: false,
-      gizmo: debug,
+      gizmo: false,
       perf: debug,
     },
     { collapsed: true },
@@ -18,14 +18,14 @@ export default function Helpers() {
 
   return (
     <>
-      <gridHelper visible={grid} args={[10, 20, 'red', 'gray']} />
-      <axesHelper visible={axes} args={[20]} position-y={0.001} />
-
-      <GizmoHelper>
-        <GizmoViewport visible={gizmo} labelColor="white" />
-      </GizmoHelper>
-
-      <Perf className={perf ? '' : 'hidden'} position="top-left" showGraph={false} />
+      {grid && <gridHelper args={[10, 10, 'red', 'gray']} />}
+      {axes && <axesHelper args={[20]} position-y={0.001} />}
+      {gizmo && (
+        <GizmoHelper>
+          <GizmoViewport labelColor="white" />
+        </GizmoHelper>
+      )}
+      {perf && <Perf showGraph={false} position="top-left" />}
     </>
   )
 }

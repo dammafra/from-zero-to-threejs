@@ -3,5 +3,5 @@
 html,
 body,
 #root {
-  @apply fixed inset-0 overflow-hidden;
+  @apply fixed inset-0 overflow-hidden bg-black;
 }
