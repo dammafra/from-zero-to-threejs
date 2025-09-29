@@ -1,9 +1,11 @@
-import { CameraControls, CameraControlsImpl, Outlines } from '@react-three/drei'
+import { CameraControls, CameraControlsImpl, Float, Outlines } from '@react-three/drei'
+import { MathUtils } from 'three'
 import Canvas from './Canvas'
 import Environment from './Environment'
 import Helpers from './Helpers'
 import Presentation from './Presentation'
 import Slide from './Slide'
+import { AboutMe, Title } from './slides'
 
 export default function Experience() {
   return (
@@ -18,18 +20,16 @@ export default function Experience() {
     >
       <Presentation
         slides={[
-          <Slide title="Slide 1">
-            <mesh position-y={0.5} castShadow>
-              <boxGeometry />
-              <meshStandardMaterial color="blue" />
-              <Outlines thickness={0.05} color="red" />
-            </mesh>
-          </Slide>,
-          <Slide title="Slide 2">
-            <mesh scale={0.5} position-y={0.5} castShadow>
-              <sphereGeometry />
-              <meshStandardMaterial color="red" />
-            </mesh>
+          <Title />,
+          <AboutMe />,
+          <Slide title="Box">
+            <Float>
+              <mesh position-y={0.5} castShadow>
+                <boxGeometry />
+                <meshStandardMaterial color="blue" />
+                <Outlines thickness={0.05} color="red" />
+              </mesh>
+            </Float>
           </Slide>,
         ]}
       />
@@ -37,6 +37,8 @@ export default function Experience() {
       <CameraControls
         makeDefault
         maxDistance={80}
+        minPolarAngle={MathUtils.degToRad(0)}
+        maxPolarAngle={MathUtils.degToRad(80)}
         mouseButtons={{
           left: CameraControlsImpl.ACTION.TRUCK,
           right: CameraControlsImpl.ACTION.ROTATE,

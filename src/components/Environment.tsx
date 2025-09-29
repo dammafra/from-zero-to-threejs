@@ -58,10 +58,10 @@ export default function Environment() {
           attach="shadow-camera"
           near={1}
           far={10}
-          top={10}
-          right={10}
-          bottom={-10}
-          left={-10}
+          top={8}
+          right={8}
+          bottom={-8}
+          left={-8}
         >
           {helpers && <Helper type={CameraHelper} />}
         </orthographicCamera>

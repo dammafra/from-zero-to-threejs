@@ -16,21 +16,21 @@ export default function PresentationControls() {
       <button
         title="Re-center"
         onClick={() => handlers.reset()}
-        className="cursor-pointer opacity-10 hover:opacity-100"
+        className="cursor-pointer opacity-10 hover:opacity-100 transition-[opacity]"
       >
         <Icon icon="icon-park-twotone:radio-two" />
       </button>
       <button
         title="Previous"
         onClick={() => handlers.previous()}
-        className="cursor-pointer opacity-10 hover:opacity-100"
+        className="cursor-pointer opacity-10 hover:opacity-100 transition-[opacity]"
       >
         <Icon icon="icon-park-twotone:left-c" />
       </button>
       <button
         title="Next"
         onClick={() => handlers.next()}
-        className="cursor-pointer opacity-10 hover:opacity-100"
+        className="cursor-pointer opacity-10 hover:opacity-100 transition-[opacity]"
       >
         <Icon icon="icon-park-twotone:right-c" />
       </button>
