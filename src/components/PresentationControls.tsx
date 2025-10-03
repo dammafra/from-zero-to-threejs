@@ -12,7 +12,7 @@ export default function PresentationControls() {
   )
 
   return (
-    <div className="absolute bottom-4 right-4 lex gap-2 text-5xl text-white">
+    <div className="absolute bottom-4 right-4 lex gap-2 text-5xl text-white z-[99999999]">
       <button
         title="Re-center"
         onClick={() => handlers.reset()}

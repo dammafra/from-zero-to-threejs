@@ -1,11 +1,11 @@
-import { CameraControls, CameraControlsImpl, Float, Outlines } from '@react-three/drei'
+import { CameraControls, CameraControlsImpl } from '@react-three/drei'
 import { MathUtils } from 'three'
 import Canvas from './Canvas'
 import Environment from './Environment'
 import Helpers from './Helpers'
 import Presentation from './Presentation'
 import Slide from './Slide'
-import { AboutMe, Title } from './slides'
+import { AboutMe, FirstScene, Title } from './slides'
 
 export default function Experience() {
   return (
@@ -19,24 +19,22 @@ export default function Experience() {
       }}
     >
       <Presentation
+        buffer={1}
+        // defaultTitleColor="brown"
+        defaultBackgroundColor="orange"
         slides={[
           <Title />,
+          <Slide title="Di cosa parleremo" />,
           <AboutMe />,
-          <Slide title="Box">
-            <Float>
-              <mesh position-y={0.5} castShadow>
-                <boxGeometry />
-                <meshStandardMaterial color="blue" />
-                <Outlines thickness={0.05} color="red" />
-              </mesh>
-            </Float>
-          </Slide>,
+          <Slide title="Cosa è WebGL?" />,
+          <Slide title="Three.js to the rescue" />,
+          <FirstScene />,
         ]}
       />
 
       <CameraControls
         makeDefault
-        maxDistance={80}
+        maxDistance={15}
         minPolarAngle={MathUtils.degToRad(0)}
         maxPolarAngle={MathUtils.degToRad(80)}
         mouseButtons={{

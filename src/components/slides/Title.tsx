@@ -21,7 +21,8 @@ export function Title(props: SlideProps) {
             <Text3D
               castShadow
               receiveShadow
-              font="./fonts/helvetiker_regular.typeface.json"
+              font="./fonts/Audiowide_Regular.json"
+              size={0.8}
               height={0.1}
               bevelEnabled
               bevelThickness={0.02}
@@ -34,11 +35,12 @@ export function Title(props: SlideProps) {
         </Float>
 
         <Float>
-          <Center position-y={-1} position-z={0.5}>
+          <Center position-y={-0.5} position-z={0.5}>
             <Text3D
               castShadow
               receiveShadow
-              font="./fonts/helvetiker_regular.typeface.json"
+              font="./fonts/Audiowide_Regular.json"
+              size={0.8}
               height={0.1}
               bevelEnabled
               bevelThickness={0.02}

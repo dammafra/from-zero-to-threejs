@@ -1,19 +1,23 @@
 import { Text3D, type CameraControls } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useEffect, useRef, type JSX, type PropsWithChildren } from 'react'
-import { DoubleSide, MathUtils, Mesh } from 'three'
+import { DoubleSide, MathUtils, Mesh, type ColorRepresentation } from 'three'
 
 export type SlideProps = JSX.IntrinsicElements['group'] &
   PropsWithChildren & {
     title?: string
+    titleColor?: ColorRepresentation
     active?: boolean
     background?: boolean
+    backgroundColor?: ColorRepresentation
   }
 
 export default function Slide({
   title,
+  titleColor = 'red',
   active,
   background = true,
+  backgroundColor = 'white',
   children,
   ...props
 }: SlideProps) {
@@ -24,13 +28,13 @@ export default function Slide({
     const cameraControls = controls as CameraControls
     if (!active || !ref.current || !cameraControls) return
 
-    cameraControls.rotatePolarTo(MathUtils.degToRad(30), true)
+    cameraControls.rotatePolarTo(MathUtils.degToRad(20), true)
     cameraControls.fitToBox(ref.current, true, {
       paddingBottom: 0.5,
       paddingRight: 1,
       paddingLeft: 1,
     })
-    cameraControls.rotatePolarTo(MathUtils.degToRad(30), true)
+    cameraControls.rotatePolarTo(MathUtils.degToRad(20), true)
     cameraControls.normalizeRotations()
     cameraControls.rotateAzimuthTo(0, true)
   }, [active, controls, size])
@@ -40,19 +44,18 @@ export default function Slide({
       {title && (
         <Text3D
           castShadow
-          receiveShadow
           position={[-3.8, 0.02, -1.5]}
           size={0.5}
-          rotation-x={-Math.PI * 0.5}
-          font="./fonts/helvetiker_regular.typeface.json"
+          rotation-x={MathUtils.degToRad(-90)}
+          font="./fonts/Encode Sans Semi Expanded_Regular.json"
           height={0.1}
-          curveSegments={24}
+          curveSegments={active ? 5 : 3}
           bevelEnabled
           bevelThickness={0.02}
           bevelSize={0.02}
-          bevelSegments={5}
+          bevelSegments={active ? 3 : 1}
         >
-          <meshStandardMaterial color="brown" />
+          <meshMatcapMaterial color={titleColor} />
           {title}
         </Text3D>
       )}
@@ -62,11 +65,11 @@ export default function Slide({
         visible={background}
         receiveShadow
         position-y={-0.001}
-        rotation-x={-Math.PI * 0.5}
+        rotation-x={MathUtils.degToRad(-90)}
         scale={0.5}
       >
         <planeGeometry args={[16, 9]} />
-        <meshStandardMaterial color="orange" side={DoubleSide} />
+        <meshStandardMaterial color={backgroundColor} side={DoubleSide} />
       </mesh>
     </group>
   )

@@ -20,7 +20,7 @@ export function Logo(props: JSX.IntrinsicElements['group']) {
   return (
     <group {...props} dispose={null}>
       <mesh castShadow receiveShadow geometry={nodes.Object_5.geometry}>
-        <meshStandardMaterial color="azure" metalness={1} roughness={0.3} />
+        <meshStandardMaterial color="azure" metalness={1} roughness={0.35} />
       </mesh>
     </group>
   )

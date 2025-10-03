@@ -3,10 +3,17 @@ import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm'
 import { CameraControls, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, type JSX } from 'react'
-import { AnimationMixer, Mesh, MeshBasicMaterial, MeshStandardMaterial, Quaternion } from 'three'
+import {
+  AnimationMixer,
+  MathUtils,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  Quaternion,
+} from 'three'
 
 export function Avatar(props: JSX.IntrinsicElements['mesh']) {
-  // @ts-ignore
+  // @ts-expect-error GLTFLoaderPlugin version mismatch
   const gltf = useGLTF('./models/avatar.vrm', true, true, loader => loader.register(parser => new VRMLoaderPlugin(parser, { autoUpdateHumanBones: true }))) //prettier-ignore
   const clip = useMixamoAnimation('./models/waving.fbx', gltf.userData.vrm)
 
@@ -23,6 +30,7 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
     gltf.scene.traverse(child => {
       if (child instanceof Mesh && child.isMesh) {
         child.castShadow = true
+        child.frustumCulled = false
 
         if (child.material && child.material instanceof MeshBasicMaterial) {
           const newMat = new MeshStandardMaterial()
@@ -67,14 +75,14 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
 
     animationMixer.current.update(delta)
     avatar.current.update(delta)
-    avatar.current.scene.rotation.y = Math.PI * 0.8
+    avatar.current.scene.rotation.y = MathUtils.degToRad(144)
 
     const head = avatar.current.humanoid!.getRawBoneNode('head')!
     cameraControls.normalizeRotations()
 
     if (Math.abs(cameraControls.azimuthAngle) < 1) {
       head.lookAt(camera.position)
-      head.rotateY(Math.PI)
+      head.rotateY(MathUtils.degToRad(180))
       targetQuat.current = head.quaternion.clone()
 
       head.setRotationFromQuaternion(lastQuat.current)
