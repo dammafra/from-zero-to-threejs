@@ -1,30 +1,31 @@
 import { KeyboardControls } from '@react-three/drei'
 import usePresentation from '@stores/use-presentation'
-import { cloneElement, useEffect, type ReactElement } from 'react'
+import { Children, cloneElement, useEffect, useState, type ReactElement } from 'react'
 import { Vector3, type ColorRepresentation } from 'three'
 import { useShallow } from 'zustand/shallow'
-import { type SlideProps } from './Slide'
+import type { SlideProps } from './Slide'
 
 interface PresentationProps {
-  slides: ReactElement<SlideProps>[]
+  children: ReactElement<SlideProps> | ReactElement<SlideProps>[]
   flowAxes?: [boolean, boolean, boolean]
   flowDirection?: number
   gap?: number
   buffer?: number
-  defaultTitleColor?: ColorRepresentation
-  defaultBackgroundColor?: ColorRepresentation
+  backgroundColor?: ColorRepresentation
+  titleColor?: ColorRepresentation
 }
 
 export default function Presentation({
-  slides,
+  children,
   flowAxes = [false, false, true],
   flowDirection = 1,
   gap = 10,
   buffer = Infinity,
-  defaultTitleColor = 'red',
-  defaultBackgroundColor = 'white',
+  backgroundColor = 'white',
+  titleColor = 'red',
 }: PresentationProps) {
   const activeIndex = usePresentation(state => state.activeIndex)
+  const setSlidesCount = usePresentation(state => state.setSlidesCount)
   const handlers = usePresentation(
     useShallow(state => ({
       reset: state.reset,
@@ -33,7 +34,9 @@ export default function Presentation({
     })),
   )
 
-  const setSlidesCount = usePresentation(state => state.setSlidesCount)
+  const [slides, setSlides] = useState<ReactElement<SlideProps>[]>([])
+
+  useEffect(() => setSlides(Children.map(children, c => c)), [])
   useEffect(() => setSlidesCount(slides.length), [setSlidesCount, slides.length])
 
   const [flowX, flowY, flowZ] = flowAxes
@@ -60,8 +63,8 @@ export default function Presentation({
               flowZ ? i * gap : 0,
             ).multiplyScalar(flowDirection),
           onDoubleClick: () => handlers.reset(i),
-          titleColor: child.props.titleColor || defaultTitleColor,
-          backgroundColor: child.props.backgroundColor || defaultBackgroundColor,
+          backgroundColor: child.props.backgroundColor || backgroundColor,
+          titleColor: child.props.titleColor || titleColor,
         }),
       )}
     </KeyboardControls>

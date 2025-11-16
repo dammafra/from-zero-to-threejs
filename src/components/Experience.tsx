@@ -18,19 +18,14 @@ export default function Experience() {
         position: [2, 4, 6],
       }}
     >
-      <Presentation
-        buffer={1}
-        // defaultTitleColor="brown"
-        defaultBackgroundColor="orange"
-        slides={[
-          <Title />,
-          <Slide title="Di cosa parleremo" />,
-          <AboutMe />,
-          <Slide title="Cosa è WebGL?" />,
-          <Slide title="Three.js to the rescue" />,
-          <FirstScene />,
-        ]}
-      />
+      <Presentation buffer={1} backgroundColor="orange">
+        <Title />
+        <Slide title="Di cosa parleremo" />
+        <AboutMe />
+        <Slide title="Cosa è WebGL?" />
+        <Slide title="Three.js to the rescue" />
+        <FirstScene />
+      </Presentation>
 
       <CameraControls
         makeDefault

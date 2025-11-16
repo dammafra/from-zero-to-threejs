@@ -5,19 +5,19 @@ import { DoubleSide, MathUtils, Mesh, type ColorRepresentation } from 'three'
 
 export type SlideProps = JSX.IntrinsicElements['group'] &
   PropsWithChildren & {
-    title?: string
-    titleColor?: ColorRepresentation
     active?: boolean
     background?: boolean
     backgroundColor?: ColorRepresentation
+    title?: string
+    titleColor?: ColorRepresentation
   }
 
 export default function Slide({
-  title,
-  titleColor = 'red',
   active,
   background = true,
   backgroundColor = 'white',
+  title,
+  titleColor = 'red',
   children,
   ...props
 }: SlideProps) {
