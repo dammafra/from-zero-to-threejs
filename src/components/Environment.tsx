@@ -4,7 +4,7 @@ import { useControls } from 'leva'
 import { useRef } from 'react'
 import { CameraHelper, DirectionalLight } from 'three'
 
-export default function Environment() {
+export function Environment() {
   const { helpers, ambientLightIntensity, directionalLightIntensity, directionalLightPosition } =
     useControls(
       'environment',
@@ -57,11 +57,11 @@ export default function Environment() {
         <orthographicCamera
           attach="shadow-camera"
           near={1}
-          far={10}
-          top={8}
-          right={8}
-          bottom={-8}
-          left={-8}
+          far={50}
+          top={20}
+          right={20}
+          bottom={-20}
+          left={-20}
         >
           {helpers && <Helper type={CameraHelper} />}
         </orthographicCamera>

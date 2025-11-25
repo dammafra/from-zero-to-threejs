@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 // See:
 // - https://github.com/pmndrs/drei/issues/720
 // - https://github.com/IsaacUA/drei-html-fix/blob/main/src/components/CanvasWrapper.tsx
-export default function Canvas(props: CanvasProps) {
+export function Canvas(props: CanvasProps) {
   const containerRef = useRef(null)
   const [size, setSize] = useState({ width: 0, height: 0 })
 

@@ -1,6 +1,6 @@
+import { type SlideProps, Slide } from '@components'
 import { Logo } from '@components/models'
-import Slide, { type SlideProps } from '@components/Slide'
-import { Billboard, Center, Float, Text3D } from '@react-three/drei'
+import { Billboard, Center, Float, Text3D, useFont } from '@react-three/drei'
 import { useRef } from 'react'
 import { MeshStandardMaterial } from 'three'
 
@@ -21,7 +21,7 @@ export function Title(props: SlideProps) {
             <Text3D
               castShadow
               receiveShadow
-              font="./fonts/Audiowide_Regular.json"
+              font="/fonts/Audiowide_Regular.json"
               size={0.8}
               height={0.1}
               bevelEnabled
@@ -39,7 +39,7 @@ export function Title(props: SlideProps) {
             <Text3D
               castShadow
               receiveShadow
-              font="./fonts/Audiowide_Regular.json"
+              font="/fonts/Audiowide_Regular.json"
               size={0.8}
               height={0.1}
               bevelEnabled
@@ -55,3 +55,5 @@ export function Title(props: SlideProps) {
     </Slide>
   )
 }
+
+useFont.preload('/fonts/Audiowide_Regular.json')

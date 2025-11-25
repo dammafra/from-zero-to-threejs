@@ -1,5 +1,4 @@
-import Example from '@components/Example'
-import Slide, { type SlideProps } from '@components/Slide'
+import { Example, Slide, type SlideProps } from '@components'
 
 export function FirstScene(props: SlideProps) {
   return (

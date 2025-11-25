@@ -1,4 +1,4 @@
-import { useMixamoAnimation } from '@hooks/use-mixamo-animation'
+import { useMixamoAnimation } from '@hooks'
 import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm'
 import { CameraControls, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
@@ -13,9 +13,8 @@ import {
 } from 'three'
 
 export function Avatar(props: JSX.IntrinsicElements['mesh']) {
-  // @ts-expect-error GLTFLoaderPlugin version mismatch
-  const gltf = useGLTF('./models/avatar.vrm', true, true, loader => loader.register(parser => new VRMLoaderPlugin(parser, { autoUpdateHumanBones: true }))) //prettier-ignore
-  const clip = useMixamoAnimation('./models/waving.fbx', gltf.userData.vrm)
+  const gltf = useGLTF('/models/avatar.vrm')
+  const clip = useMixamoAnimation('/models/waving.fbx', gltf.userData.vrm)
 
   const { camera, controls } = useThree()
   const avatar = useRef<VRM>(null)
@@ -97,3 +96,6 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
 
   return <primitive object={gltf.scene} {...props} />
 }
+
+// @ts-expect-error GLTFLoaderPlugin version mismatch
+useGLTF.preload('/models/avatar.vrm', true, true, loader => loader.register(parser => new VRMLoaderPlugin(parser, { autoUpdateHumanBones: true }))) //prettier-ignore

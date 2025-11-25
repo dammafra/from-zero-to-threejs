@@ -15,12 +15,7 @@ interface ExampleProps extends Omit<BillboardProps, 'name'> {
   interactive?: boolean
 }
 
-export default function Example({
-  name,
-  canvasScale = 0.1,
-  interactive = true,
-  ...props
-}: ExampleProps) {
+export function Example({ name, canvasScale = 0.1, interactive = true, ...props }: ExampleProps) {
   const { controls } = useThree()
   const [fullscreen, setFullscreen] = useState(false)
 

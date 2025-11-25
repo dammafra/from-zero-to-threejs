@@ -1,19 +1,17 @@
-import { Text3D, type CameraControls } from '@react-three/drei'
+import { CameraControls, Text3D, useFont, useKeyboardControls } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useEffect, useRef, type JSX, type PropsWithChildren } from 'react'
 import { DoubleSide, MathUtils, Mesh, type ColorRepresentation } from 'three'
 
 export type SlideProps = JSX.IntrinsicElements['group'] &
   PropsWithChildren & {
-    active?: boolean
     background?: boolean
     backgroundColor?: ColorRepresentation
     title?: string
     titleColor?: ColorRepresentation
   }
 
-export default function Slide({
-  active,
+export function Slide({
   background = true,
   backgroundColor = 'white',
   title,
@@ -22,11 +20,13 @@ export default function Slide({
   ...props
 }: SlideProps) {
   const { controls, size } = useThree()
+  const resetPressed = useKeyboardControls(s => s.reset)
+
   const ref = useRef<Mesh>(null)
 
   useEffect(() => {
     const cameraControls = controls as CameraControls
-    if (!active || !ref.current || !cameraControls) return
+    if (!ref.current || !cameraControls) return
 
     cameraControls.rotatePolarTo(MathUtils.degToRad(20), true)
     cameraControls.fitToBox(ref.current, true, {
@@ -37,7 +37,11 @@ export default function Slide({
     cameraControls.rotatePolarTo(MathUtils.degToRad(20), true)
     cameraControls.normalizeRotations()
     cameraControls.rotateAzimuthTo(0, true)
-  }, [active, controls, size])
+  }, [controls, size, resetPressed])
+
+  useEffect(() => {
+    document.title = title ? `${title} | ${document.title}` : document.title.replace(/.*\|\s/, '')
+  }, [title])
 
   return (
     <group {...props}>
@@ -47,13 +51,13 @@ export default function Slide({
           position={[-3.8, 0.02, -1.5]}
           size={0.5}
           rotation-x={MathUtils.degToRad(-90)}
-          font="./fonts/Encode Sans Semi Expanded_Regular.json"
+          font="/fonts/Encode Sans Semi Expanded_Regular.json"
           height={0.1}
-          curveSegments={active ? 5 : 3}
+          curveSegments={5}
           bevelEnabled
           bevelThickness={0.02}
           bevelSize={0.02}
-          bevelSegments={active ? 3 : 1}
+          bevelSegments={3}
         >
           <meshMatcapMaterial color={titleColor} />
           {title}
@@ -74,3 +78,5 @@ export default function Slide({
     </group>
   )
 }
+
+useFont.preload('/fonts/Encode Sans Semi Expanded_Regular.json')

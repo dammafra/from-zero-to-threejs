@@ -1,5 +1,5 @@
+import { Slide, type SlideProps } from '@components'
 import { Avatar } from '@components/models'
-import Slide, { type SlideProps } from '@components/Slide'
 import { Html } from '@react-three/drei'
 import { MathUtils } from 'three'
 

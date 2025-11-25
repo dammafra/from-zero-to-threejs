@@ -1,15 +1,11 @@
-import Experience from '@components/Experience'
-import PresentationControls from '@components/PresentationControls'
-import useDebug from '@hooks/use-debug'
-import { Leva } from 'leva'
+import { Experience, PresentationControls } from '@components'
+import { DoubleTapPreventer, GUI } from '@components/helpers'
 
 export default function App() {
-  const debug = useDebug()
-
   return (
     <>
-      {/* See https://github.com/pmndrs/leva/issues/552 */}
-      <Leva hidden={!debug} theme={{ sizes: { rootWidth: '350px' } }} />
+      <GUI />
+      <DoubleTapPreventer />
 
       {/* <StrictMode> */}
       <Experience />

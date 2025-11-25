@@ -9,7 +9,6 @@ export default defineConfig({
   plugins: [restart(), react(), tailwindcss(), tsconfigPaths()],
   server: {
     host: true,
-    open: true,
   },
   build: {
     emptyOutDir: true,

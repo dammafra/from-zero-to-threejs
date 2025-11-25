@@ -1,71 +1,63 @@
+import type { SlideProps } from '@components'
 import { KeyboardControls } from '@react-three/drei'
-import usePresentation from '@stores/use-presentation'
-import { Children, cloneElement, useEffect, useState, type ReactElement } from 'react'
-import { Vector3, type ColorRepresentation } from 'three'
-import { useShallow } from 'zustand/shallow'
-import type { SlideProps } from './Slide'
+import { Children, cloneElement, useCallback, useMemo, useRef, type ReactElement } from 'react'
+import { type ColorRepresentation } from 'three'
+import { Redirect, Route, Switch, useLocation, useRoute } from 'wouter'
 
 interface PresentationProps {
   children: ReactElement<SlideProps> | ReactElement<SlideProps>[]
-  flowAxes?: [boolean, boolean, boolean]
-  flowDirection?: number
-  gap?: number
-  buffer?: number
   backgroundColor?: ColorRepresentation
   titleColor?: ColorRepresentation
 }
 
-export default function Presentation({
+export function Presentation({
   children,
-  flowAxes = [false, false, true],
-  flowDirection = 1,
-  gap = 10,
-  buffer = Infinity,
   backgroundColor = 'white',
   titleColor = 'red',
 }: PresentationProps) {
-  const activeIndex = usePresentation(state => state.activeIndex)
-  const setSlidesCount = usePresentation(state => state.setSlidesCount)
-  const handlers = usePresentation(
-    useShallow(state => ({
-      reset: state.reset,
-      next: state.next,
-      previous: state.previous,
-    })),
+  const [, params] = useRoute('/:index')
+  const [, navigate] = useLocation()
+  const slides = useMemo(() => Children.map(children, c => c), [children])
+
+  const indexRef = useRef(params?.index ? +params.index : 0)
+  const next = useCallback(
+    (name: string) => {
+      indexRef.current = indexRef.current + (name === 'next' ? 1 : name === 'previous' ? -1 : 0)
+      if (indexRef.current < 0) indexRef.current = 0
+      if (indexRef.current > slides.length - 1) indexRef.current = slides.length - 1
+      return navigate(`/${indexRef.current}`)
+    },
+    [navigate, slides],
   )
-
-  const [slides, setSlides] = useState<ReactElement<SlideProps>[]>([])
-
-  useEffect(() => setSlides(Children.map(children, c => c)), [])
-  useEffect(() => setSlidesCount(slides.length), [setSlidesCount, slides.length])
-
-  const [flowX, flowY, flowZ] = flowAxes
 
   return (
     <KeyboardControls
       map={[
         { name: 'next', keys: ['ArrowDown', 'ArrowRight'], up: false },
         { name: 'previous', keys: ['ArrowUp', 'ArrowLeft'], up: false },
-        { name: 'reset', keys: ['KeyR'], up: false },
+        { name: 'reset', keys: ['KeyR'] },
       ]}
-      onChange={name => handlers[name as keyof typeof handlers]()}
+      onChange={next}
     >
-      {slides.map((child, i) =>
-        cloneElement(child, {
-          key: `slide-${i}`,
-          active: i === activeIndex,
-          visible: activeIndex === -1 || Math.abs(i - activeIndex) <= Math.round(buffer),
-          position:
-            child.props.position ||
-            new Vector3(
-              flowX ? i * gap : 0,
-              flowY ? i * gap : 0,
-              flowZ ? i * gap : 0,
-            ).multiplyScalar(flowDirection),
-          onDoubleClick: () => handlers.reset(i),
-          backgroundColor: child.props.backgroundColor || backgroundColor,
-          titleColor: child.props.titleColor || titleColor,
-        }),
+      {slides.length && (
+        <Switch>
+          <Route path="/:index">
+            {params => {
+              const slide = slides.at(+params.index)
+              if (!slide) return <></>
+
+              return cloneElement(slide, {
+                // onDoubleClick: () => handlers.reset(i),
+                backgroundColor: slide.props.backgroundColor || backgroundColor,
+                titleColor: slide.props.titleColor || titleColor,
+              })
+            }}
+          </Route>
+
+          <Route>
+            <Redirect to="/0" />
+          </Route>
+        </Switch>
       )}
     </KeyboardControls>
   )
