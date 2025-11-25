@@ -1,8 +1,6 @@
 import { Helper, SoftShadows } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
-import { useRef } from 'react'
-import { CameraHelper, DirectionalLight } from 'three'
+import { CameraHelper } from 'three'
 
 export function Environment() {
   const { helpers, ambientLightIntensity, directionalLightIntensity, directionalLightPosition } =
@@ -35,20 +33,9 @@ export function Environment() {
       { collapsed: true },
     )
 
-  const light = useRef<DirectionalLight>(null)
-
-  useFrame(state => {
-    if (!light.current) return
-
-    light.current.position.z = state.camera.position.z + 1
-    light.current.target.position.z = state.camera.position.z
-    light.current.target.updateMatrixWorld()
-  })
-
   return (
     <>
       <directionalLight
-        ref={light}
         castShadow
         position={directionalLightPosition}
         intensity={directionalLightIntensity}
@@ -57,11 +44,11 @@ export function Environment() {
         <orthographicCamera
           attach="shadow-camera"
           near={1}
-          far={50}
-          top={20}
-          right={20}
-          bottom={-20}
-          left={-20}
+          far={10}
+          top={8}
+          right={8}
+          bottom={-8}
+          left={-8}
         >
           {helpers && <Helper type={CameraHelper} />}
         </orthographicCamera>

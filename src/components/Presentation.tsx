@@ -1,4 +1,5 @@
 import type { SlideProps } from '@components'
+import { useTransition } from '@react-spring/three'
 import { KeyboardControls } from '@react-three/drei'
 import { Children, cloneElement, useCallback, useMemo, useRef, type ReactElement } from 'react'
 import { type ColorRepresentation } from 'three'
@@ -16,12 +17,14 @@ export function Presentation({
   titleColor = 'red',
 }: PresentationProps) {
   const [, params] = useRoute('/:index')
-  const [, navigate] = useLocation()
+  const [location, navigate] = useLocation()
   const slides = useMemo(() => Children.map(children, c => c), [children])
 
   const indexRef = useRef(params?.index ? +params.index : 0)
+  const previousIndexRef = useRef(0)
   const next = useCallback(
     (name: string) => {
+      previousIndexRef.current = indexRef.current
       indexRef.current = indexRef.current + (name === 'next' ? 1 : name === 'previous' ? -1 : 0)
       if (indexRef.current < 0) indexRef.current = 0
       if (indexRef.current > slides.length - 1) indexRef.current = slides.length - 1
@@ -29,6 +32,12 @@ export function Presentation({
     },
     [navigate, slides],
   )
+
+  const transition = useTransition(location, {
+    from: { position: [0, 0, indexRef.current >= previousIndexRef.current ? 20 : -20] },
+    enter: { position: [0, 0, 0] },
+    leave: { position: [0, 0, indexRef.current >= previousIndexRef.current ? -20 : 20] },
+  })
 
   return (
     <KeyboardControls
@@ -39,26 +48,28 @@ export function Presentation({
       ]}
       onChange={next}
     >
-      {slides.length && (
-        <Switch>
-          <Route path="/:index">
-            {params => {
-              const slide = slides.at(+params.index)
-              if (!slide) return <></>
+      {slides.length &&
+        transition((spring, location) => (
+          <Switch location={location}>
+            <Route path="/:index">
+              {params => {
+                const slide = slides.at(+params.index)
+                if (!slide) return <></>
 
-              return cloneElement(slide, {
-                // onDoubleClick: () => handlers.reset(i),
-                backgroundColor: slide.props.backgroundColor || backgroundColor,
-                titleColor: slide.props.titleColor || titleColor,
-              })
-            }}
-          </Route>
+                // @ts-expect-error cloneElement doesn't know slide is an animated component
+                return cloneElement(slide, {
+                  backgroundColor: slide.props.backgroundColor || backgroundColor,
+                  titleColor: slide.props.titleColor || titleColor,
+                  ...spring,
+                })
+              }}
+            </Route>
 
-          <Route>
-            <Redirect to="/0" />
-          </Route>
-        </Switch>
-      )}
+            <Route>
+              <Redirect to="/0" />
+            </Route>
+          </Switch>
+        ))}
     </KeyboardControls>
   )
 }
