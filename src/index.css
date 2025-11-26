@@ -15,5 +15,21 @@
 html,
 body,
 #root {
-  @apply fixed inset-0 overflow-hidden bg-black;
+  @apply fixed inset-0 overflow-hidden bg-white dark:bg-black;
+}
+
+@custom-variant dark {
+  &:where([data-theme='dark'] *) {
+    @slot;
+  }
+}
+
+@layer components {
+  .controls {
+    @apply absolute bottom-4 right-4 flex gap-2 text-5xl text-black dark:text-white z-[99999999];
+
+    button {
+      @apply cursor-pointer opacity-10 hover:opacity-100 transition-[opacity];
+    }
+  }
 }

@@ -55,7 +55,7 @@ export function Example({ name, canvasScale = 0.1, interactive = true, ...props 
         >
           <canvas
             id={name}
-            className={`rounded-4xl ${!props.visible && 'hidden'}`}
+            className="rounded-4xl"
             onMouseEnter={() => {
               const cameraControls = controls as CameraControls
               cameraControls.enabled = !interactive

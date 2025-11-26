@@ -1,4 +1,4 @@
-import type { SlideProps } from '@components'
+import { type SlideProps } from '@components'
 import { useTransition } from '@react-spring/three'
 import { KeyboardControls } from '@react-three/drei'
 import { Children, cloneElement, useCallback, useMemo, useRef, type ReactElement } from 'react'

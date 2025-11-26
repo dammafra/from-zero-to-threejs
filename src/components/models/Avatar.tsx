@@ -79,7 +79,7 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
     const head = avatar.current.humanoid!.getRawBoneNode('head')!
     cameraControls.normalizeRotations()
 
-    if (Math.abs(cameraControls.azimuthAngle) < 1) {
+    if (Math.abs(cameraControls.azimuthAngle) < 1 && Math.abs(cameraControls.polarAngle) > 0.1) {
       head.lookAt(camera.position)
       head.rotateY(MathUtils.degToRad(180))
       targetQuat.current = head.quaternion.clone()
