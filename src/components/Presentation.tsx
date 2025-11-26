@@ -20,7 +20,7 @@ export function Presentation({
   const [location, navigate] = useLocation()
   const slides = useMemo(() => Children.map(children, c => c), [children])
 
-  const indexRef = useRef(params?.index ? +params.index : 0)
+  const indexRef = useRef(params?.index && !isNaN(+params.index) ? +params.index : 0)
   const previousIndexRef = useRef(0)
   const next = useCallback(
     (name: string) => {

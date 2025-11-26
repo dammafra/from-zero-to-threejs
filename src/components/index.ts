@@ -1,6 +1,7 @@
 export * from './Environment'
 export * from './Example'
 export * from './Experience'
+export * from './Frame'
 export * from './Presentation'
 export * from './PresentationControls'
 export * from './Slide'
