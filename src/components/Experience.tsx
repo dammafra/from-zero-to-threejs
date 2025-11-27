@@ -1,8 +1,11 @@
-import { Environment, Presentation, Slide } from '@components'
 import { Canvas, Helpers } from '@components/helpers'
 import { AboutMe, FirstScene, Title } from '@components/slides'
 import { CameraControls } from '@react-three/drei'
 import { MathUtils } from 'three'
+
+import { Environment } from './Environment'
+import { Presentation } from './Presentation'
+import { Slide } from './Slide'
 
 export function Experience() {
   return (
@@ -21,17 +24,6 @@ export function Experience() {
         maxDistance={15}
         minPolarAngle={MathUtils.degToRad(0)}
         maxPolarAngle={MathUtils.degToRad(80)}
-        // mouseButtons={{
-        //   left: CameraControlsImpl.ACTION.TRUCK,
-        //   right: CameraControlsImpl.ACTION.ROTATE,
-        //   middle: CameraControlsImpl.ACTION.DOLLY,
-        //   wheel: CameraControlsImpl.ACTION.DOLLY,
-        // }}
-        // touches={{
-        //   one: CameraControlsImpl.ACTION.TOUCH_TRUCK,
-        //   two: CameraControlsImpl.ACTION.TOUCH_DOLLY,
-        //   three: CameraControlsImpl.ACTION.TOUCH_ROTATE,
-        // }}
       />
 
       <Helpers />

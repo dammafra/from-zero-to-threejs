@@ -41,7 +41,8 @@ function _Slide({
   }, [controls, size, resetPressed])
 
   useEffect(() => {
-    document.title = title ? `${title} | ${document.title}` : document.title.replace(/.*\|\s/, '')
+    document.title = document.title.replace(/.*\|\s/, '')
+    if (title) document.title = `${title} | ${document.title}`
   }, [title])
 
   return (
