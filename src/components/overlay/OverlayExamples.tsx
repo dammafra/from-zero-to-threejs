@@ -29,7 +29,7 @@ export function OverlayExamples({ index }: OverlayProps) {
 
       return {
         position: positions.at(i),
-        scale: index === examplesIndex ? (i < 3 ? 1 : 0.9) : 0.01,
+        scale: index === examplesIndex ? (i < 3 ? 1 : 0.9) : 0.001,
       }
     },
     [index],

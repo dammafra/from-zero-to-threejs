@@ -9,7 +9,7 @@ export function OverlayDemo({ index }: OverlayProps) {
 
   const demoSpring = useSpring({
     position: index < demoIndex ? [20, 0, 0] : [[2].at(targetIndex) || 0, 1.5, 1],
-    scale: index < demoIndex ? 0.01 : 1,
+    scale: index < demoIndex ? 0.001 : 1,
     rotation: [0, MathUtils.degToRad(targetIndex * 360), 0],
   })
 

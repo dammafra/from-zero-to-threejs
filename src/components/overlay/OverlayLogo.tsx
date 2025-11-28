@@ -7,11 +7,11 @@ import type { OverlayProps } from './Overlay'
 export function OverlayLogo({ index }: OverlayProps) {
   const threeLogoSpring = useSpring({
     position: [
-      [0.01, 2.5, -2.1, -2, 2].at(index) || 20,
-      [-1, 1.3, 1, 1.3].at(index) || 0,
-      [0, 1.25, 0.25, 1.25].at(index) || 0,
+      [0.001, 2.5, -2.1, -0.1, 2].at(index) || 20,
+      [-1, 1.3, 1, 1.7].at(index) || 0,
+      [0, 1.25, 0.25, 1.3].at(index) || 0,
     ],
-    scale: [1, 0.4, 0.25, 0.1, 0.5, 0.01].at(index) || 1,
+    scale: [1, 0.4, 0.25, 0.1, 0.5, 0.001].at(index) || 1,
     rotation: [0, MathUtils.degToRad([0, 0, -360, -360, -360].at(index) || 0), 0],
   })
 
