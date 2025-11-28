@@ -5,7 +5,7 @@ import { MathUtils } from 'three'
 
 export function Summary(props: SlideProps) {
   return (
-    <Slide title="Cosa impareremo" {...props}>
+    <Slide title="Cosa scopriremo" {...props}>
       <Book scale={2.5} position={[-2.5, 0, 0.2]} rotation-y={MathUtils.degToRad(25)} />
       <SlideBody bullet offset={3}>
         <SlideText>Setup di una scena</SlideText>

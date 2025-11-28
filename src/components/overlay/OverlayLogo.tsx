@@ -21,7 +21,7 @@ export function OverlayLogo({ index }: OverlayProps) {
     6: [-1.5, 0.5, 0.3],
     7: [-1.2, 1.3, 0.9],
     8: [-1.2, 1.3, 0.9],
-  } as const
+  }
 
   const rotationMap: Record<number, EulerTuple> = {
     0: [0, MathUtils.degToRad(0), 0],
@@ -38,7 +38,6 @@ export function OverlayLogo({ index }: OverlayProps) {
     2: 0.25,
     3: 0.1,
     4: 0.5,
-    5: 0.001,
     6: 0.2,
     7: 0.4,
     8: 0.4,
@@ -56,14 +55,14 @@ export function OverlayLogo({ index }: OverlayProps) {
 
   const threeLogoSpring = useSpring({
     from: {
-      position: positionMap[index - 1] ?? [0, 0, 0],
+      position: positionMap[index - 1] ?? [-20, 0, 0],
       rotation: rotationMap[index - 1] ?? [0, 0, 0],
-      scale: scaleMap[index - 1] ?? 1,
+      scale: scaleMap[index - 1] ?? 0.001,
     },
     to: {
-      position: positionMap[index] ?? [0, 0, 0],
+      position: positionMap[index] ?? [-20, 0, 0],
       rotation: rotationMap[index] ?? [0, 0, 0],
-      scale: scaleMap[index] ?? 1,
+      scale: scaleMap[index] ?? 0.001,
     },
     loop: loopMap[index] ?? false,
     config: configMap[index] ?? config.default,
@@ -77,7 +76,7 @@ export function OverlayLogo({ index }: OverlayProps) {
   return (
     <>
       {/* @ts-expect-error spring typings */}
-      <OverlayThreeLogo {...threeLogoSpring} />
+      {index < 10 && <OverlayThreeLogo {...threeLogoSpring} />}
 
       {/* @ts-expect-error spring typings */}
       {index > 2 && index < 6 && <OverlayWebGLLogo {...webGLLogoSpring} />}

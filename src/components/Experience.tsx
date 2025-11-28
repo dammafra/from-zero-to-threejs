@@ -1,5 +1,15 @@
 import { Canvas, Helpers } from '@components/helpers'
-import { AboutMe, Animating, FirstScene, Goal, Resizing, Summary, Title } from '@components/slides'
+import {
+  AboutMe,
+  Animating,
+  Cameras,
+  Controls,
+  FirstScene,
+  Goal,
+  Resizing,
+  Summary,
+  Title,
+} from '@components/slides'
 import { CameraControls } from '@react-three/drei'
 
 import { Environment } from './Environment'
@@ -37,11 +47,14 @@ export function Experience() {
         <FirstScene />
         <Resizing />
         <Animating />
-        <Slide title="Camera e Controls" />
+        <Cameras />
+        <Controls />
+        <Slide title="Geometries" />
         <Slide title="Player" />
         <Slide title="Grid" />
-        <Slide title="Luci e Materiali" />
-        <Slide title="Ombre" />
+        <Slide title="Lights..." />
+        <Slide title="... and Materials" />
+        <Slide title="Shadows" />
         <Slide title="Animazione Player" />
         <Slide title="Animazione Grid" />
         <Slide title="Fine..." />

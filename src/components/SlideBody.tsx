@@ -1,6 +1,7 @@
-import { Text, type TextProps } from '@react-three/drei'
-import { Children, Suspense, type ReactElement } from 'react'
-import { MathUtils } from 'three'
+import { Text, useCursor, type TextProps } from '@react-three/drei'
+import type { ThreeEvent } from '@react-three/fiber'
+import { Children, Suspense, useState, type ReactElement } from 'react'
+import { MathUtils, Mesh, MeshBasicMaterial } from 'three'
 
 interface SlideBodyProps extends SlideTextProps {
   offset?: number
@@ -17,6 +18,23 @@ export function SlideBody({
   color = 'black',
   ...props
 }: SlideBodyProps) {
+  const [hovered, setHovered] = useState(false)
+  useCursor(hovered)
+
+  const onHover = (event: ThreeEvent<PointerEvent>) => {
+    setHovered(true)
+    const mesh = event.object as Mesh
+    const material = mesh.material as MeshBasicMaterial
+    material.color.set('dodgerblue')
+  }
+
+  const onLeave = (event: ThreeEvent<PointerEvent>) => {
+    setHovered(false)
+    const mesh = event.object as Mesh
+    const material = mesh.material as MeshBasicMaterial
+    material.color.set('black')
+  }
+
   return (
     <Suspense>
       <group position={[-3.8 + offset, 0, -1]}>
@@ -45,10 +63,14 @@ export function SlideBody({
               rotation-x={MathUtils.degToRad(-90)}
               color={child.props.color || color}
               anchorX={child.props.bullet || bullet ? -0.25 : 0}
+              onPointerOver={child.props.onClick ? onHover : undefined}
+              onPointerOut={child.props.onClick ? onLeave : undefined}
               {...props}
               {...child.props}
             >
               {child.props.children}
+              {}
+              {child.props.onClick && ' ↗'}
             </Text>
           </>
         ))}
