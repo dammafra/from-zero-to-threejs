@@ -3,7 +3,7 @@ import { a, useSpring } from '@react-spring/web'
 import { useState } from 'react'
 import { useParams } from 'wouter'
 
-export function Demo() {
+export function DemoFull() {
   const params = useParams()
   const src = decodeURIComponent(params.src!)
   const [loaded, setLoaded] = useState(false)

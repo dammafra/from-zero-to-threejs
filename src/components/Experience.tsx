@@ -14,7 +14,7 @@ export function Experience() {
       camera={{
         fov: 45,
         near: 0.1,
-        far: 100,
+        far: 50,
         position: [2, 4, 6],
       }}
     >
@@ -31,9 +31,10 @@ export function Experience() {
       <Presentation backgroundColor="orange">
         <Title />
         <Slide title="Di cosa parleremo" />
+        <Slide title="Obiettivo" />
         <AboutMe />
-        <Slide title="Cosa è WebGL?" />
-        <Slide title="Three.js to the rescue" />
+        <Slide background={false} />
+        <Slide background={false} />
         <FirstScene />
       </Presentation>
     </Canvas>

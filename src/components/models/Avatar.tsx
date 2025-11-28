@@ -16,7 +16,7 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
   const gltf = useGLTF('/models/avatar.vrm')
   const clip = useMixamoAnimation('/models/waving.fbx', gltf.userData.vrm)
 
-  const { camera, controls } = useThree()
+  const { controls } = useThree()
   const avatar = useRef<VRM>(null)
   const animationMixer = useRef<AnimationMixer>(null)
 
@@ -79,8 +79,11 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
     const head = avatar.current.humanoid!.getRawBoneNode('head')!
     cameraControls.normalizeRotations()
 
-    if (Math.abs(cameraControls.azimuthAngle) < 1 && Math.abs(cameraControls.polarAngle) > 0.1) {
-      head.lookAt(camera.position)
+    const azimuthAngle = Math.abs(Math.round(MathUtils.radToDeg(cameraControls.azimuthAngle)))
+    const polarAngle = Math.abs(Math.round(MathUtils.radToDeg(cameraControls.polarAngle)))
+
+    if (azimuthAngle < 70 && polarAngle > 10) {
+      head.lookAt(cameraControls.camera.position)
       head.rotateY(MathUtils.degToRad(180))
       targetQuat.current = head.quaternion.clone()
 

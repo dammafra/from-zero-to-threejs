@@ -1,2 +1,3 @@
 export * from './Avatar'
-export * from './Logo'
+export * from './ThreeLogo'
+export * from './WebGLLogo'

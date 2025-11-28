@@ -14,8 +14,8 @@ import type { GLTF } from 'three-stdlib'
 
 type GLTFResult = GLTF & ObjectMap & { nodes: { Object_5: Mesh } }
 
-export function Logo(props: JSX.IntrinsicElements['group']) {
-  const { nodes } = useGLTF('/models/logo.glb') as GLTFResult
+export function ThreeLogo(props: JSX.IntrinsicElements['group']) {
+  const { nodes } = useGLTF('/models/three-logo.glb') as GLTFResult
 
   return (
     <group {...props} dispose={null}>
@@ -26,4 +26,4 @@ export function Logo(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/models/logo.glb')
+useGLTF.preload('/models/three-logo.glb')

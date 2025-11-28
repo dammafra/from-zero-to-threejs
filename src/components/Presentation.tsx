@@ -1,3 +1,4 @@
+import { Overlay } from '@components/overlay'
 import { useTransition } from '@react-spring/three'
 import { KeyboardControls } from '@react-three/drei'
 import {
@@ -60,6 +61,7 @@ export function Presentation({
         })
       }
     >
+      {match && <Overlay index={index} />}
       <Route path="/slides/:index?">
         {transition(
           (spring, slide) =>

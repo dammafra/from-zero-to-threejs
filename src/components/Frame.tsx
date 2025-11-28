@@ -1,4 +1,4 @@
-import { a, useSpring } from '@react-spring/web'
+import { animated } from '@react-spring/three'
 import {
   Billboard,
   CameraControls,
@@ -8,21 +8,14 @@ import {
   type BillboardProps,
 } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Mesh } from 'three'
-import { useLocation } from 'wouter'
 
-interface FrameProps extends BillboardProps {
-  src: string
-}
+export interface FrameProps extends BillboardProps {}
 
-export function Frame({ src, ...props }: FrameProps) {
-  const [, navigate] = useLocation()
+function _Frame({ children, onDoubleClick, ...props }: FrameProps) {
   const { controls } = useThree()
-
   const ref = useRef<Mesh>(null)
-  const [loaded, setLoaded] = useState(false)
-  const springs = useSpring({ opacity: loaded ? 1 : 0 })
 
   return (
     <Billboard {...props}>
@@ -41,21 +34,17 @@ export function Frame({ src, ...props }: FrameProps) {
         </mesh>
         <mesh ref={ref} castShadow position={[0, 0, -0.06]} scale={[2.8, 2.8, 0.1]}>
           <RoundedBoxGeometry />
-          <meshStandardMaterial />
+          <meshStandardMaterial color="#cccccc" />
         </mesh>
         <Html
           transform
+          occlude="blending"
           position-y={-0.05}
           scale={0.1}
-          className="rounded-4xl border-4"
+          className=" bg-white "
           style={{ width: 1000, height: 950 }}
         >
-          <a.iframe
-            className="rounded-4xl h-full w-full pointer-events-none"
-            src={src}
-            onLoad={() => setLoaded(true)}
-            style={springs}
-          />
+          {children}
           <div
             className="fixed inset-0 cursor-pointer"
             onDoubleClick={() => {
@@ -69,7 +58,8 @@ export function Frame({ src, ...props }: FrameProps) {
                 paddingLeft: -1,
               })
 
-              setTimeout(() => navigate(`~/demo/${encodeURIComponent(src)}`), 500)
+              // @ts-expect-error
+              onDoubleClick && setTimeout(onDoubleClick, 500)
             }}
           />
         </Html>
@@ -77,3 +67,5 @@ export function Frame({ src, ...props }: FrameProps) {
     </Billboard>
   )
 }
+
+export const Frame = animated(_Frame)
