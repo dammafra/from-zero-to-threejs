@@ -6,12 +6,13 @@ import type { OverlayProps } from './Overlay'
 export function OverlayExamples({ index }: OverlayProps) {
   const examplesIndex = 5
   const examples = [
+    { image: '/images/drysland.png', url: 'https://drysland.vercel.app' },
+    // { image: '/images/hook-a-fish.png', url: 'https://hook-a-fish.vercel.app' },
     { image: '/images/bruno.png', url: 'https://bruno-simon.com' },
     { image: '/images/chartogne.png', url: 'https://chartogne-taillet.com' },
     { image: '/images/cornrevolution.png', url: 'https://cornrevolution.resn.global' },
+    { image: '/images/lumen.png', url: 'https://lumen-decor-studio.vercel.app' },
     { image: '/images/messenger.png', url: 'https://messenger.abeto.co' },
-    { image: '/images/drysland.png', url: 'https://drysland.vercel.app' },
-    { image: '/images/hook-a-fish.png', url: 'https://hook-a-fish.vercel.app' },
   ]
 
   const [examplesSprings] = useSprings(
@@ -42,7 +43,7 @@ export function OverlayExamples({ index }: OverlayProps) {
         onDoubleClick={() => window.location.assign(examples.at(i)!.url)}
         {...spring}
       >
-        <img src={examples.at(i)!.image} />
+        <img src={examples.at(i)!.image} className="fixed inset-0 size-full" />
       </Frame>
     ))
   )

@@ -1,3 +1,5 @@
 export * from './Avatar'
+export * from './Book'
+export * from './Target'
 export * from './ThreeLogo'
 export * from './WebGLLogo'

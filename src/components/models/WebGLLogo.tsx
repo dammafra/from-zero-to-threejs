@@ -9,16 +9,16 @@
 import { useGLTF } from '@react-three/drei'
 import type { ObjectMap } from '@react-three/fiber'
 import { type JSX } from 'react'
-import * as THREE from 'three'
+import type { Mesh, MeshPhysicalMaterial } from 'three'
 import type { GLTF } from 'three-stdlib'
 
 type GLTFResult = GLTF &
   ObjectMap & {
     nodes: {
-      defaultMaterial: THREE.Mesh
+      defaultMaterial: Mesh
     }
     materials: {
-      WebGL: THREE.MeshPhysicalMaterial
+      WebGL: MeshPhysicalMaterial
     }
   }
 

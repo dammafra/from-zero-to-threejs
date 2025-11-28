@@ -19,7 +19,7 @@ export function DemoFull() {
       <a.iframe
         src={src}
         onLoad={() => setLoaded(true)}
-        className="fixed inset-0 h-full w-full"
+        className="fixed inset-0 h-full w-full bg-white"
         style={springs}
       />
     </div>

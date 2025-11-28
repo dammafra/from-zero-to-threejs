@@ -1,8 +1,8 @@
 import { Canvas, Helpers } from '@components/helpers'
-import { AboutMe, Title } from '@components/slides'
+import { AboutMe, Goal, Summary, Title } from '@components/slides'
 import { CameraControls } from '@react-three/drei'
-import { MathUtils } from 'three'
 
+import { MathUtils } from 'three'
 import { Environment } from './Environment'
 import { Presentation } from './Presentation'
 import { Slide } from './Slide'
@@ -30,13 +30,22 @@ export function Experience() {
 
       <Presentation backgroundColor="orange">
         <Title />
-        <Slide title="Di cosa parleremo" />
-        <Slide title="Obiettivo" />
+        <Goal />
+        <Summary />
         <AboutMe />
         <Slide background={false} />
         <Slide background={false} />
         <Slide title="Prima scena" />
         <Slide title="Resizing" />
+        <Slide title="Animazione" />
+        <Slide title="Camera e Controls" />
+        <Slide title="Player" />
+        <Slide title="Grid" />
+        <Slide title="Luci e Materiali" />
+        <Slide title="Ombre" />
+        <Slide title="Animazione Player" />
+        <Slide title="Animazione Grid" />
+        <Slide title="Fine..." />
       </Presentation>
     </Canvas>
   )

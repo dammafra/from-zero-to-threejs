@@ -1,2 +1,4 @@
-export * from './AboutMe'
-export * from './Title'
+export * from './0-Title'
+export * from './1-Goal'
+export * from './2-Summary'
+export * from './3-AboutMe'
