@@ -18,7 +18,7 @@ export function FirstScene(props: SlideProps) {
 
   return (
     <Slide title="Prima scena" {...props}>
-      <Camera ref={cameraRef} position={[-2, 2, 1.5]} scale={0.2} />
+      <Camera ref={cameraRef} position={[-2, 2, 1.7]} scale={0.2} />
       <Stage ref={stageRef} position={[-1.5, 0, -0.3]} scale={0.1} />
       <spotLight ref={spotLightRef} intensity={10} penumbra={0.6} />
     </Slide>
