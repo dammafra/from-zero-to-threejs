@@ -1,11 +1,5 @@
 import { ThreeLogo, WebGLLogo } from '@components/models'
-import {
-  animated,
-  AnimationConfig,
-  config,
-  useSpring,
-  type UseSpringProps,
-} from '@react-spring/three'
+import { animated, config, useSpring } from '@react-spring/three'
 import { Billboard, Center, Float, type BillboardProps } from '@react-three/drei'
 import { MathUtils, type EulerTuple, type Vector3Tuple } from 'three'
 import type { OverlayProps } from './Overlay'
@@ -43,29 +37,28 @@ export function OverlayLogo({ index }: OverlayProps) {
     8: 0.4,
   }
 
-  const loopMap: Record<number, UseSpringProps['loop']> = {
-    7: { reverse: true },
-    8: true,
-  }
+  const threeLogoPositionSpring = useSpring({
+    position: positionMap[index] ?? [-20, 0, 0],
+  })
 
-  const configMap: Record<number, Partial<AnimationConfig>> = {
-    7: { tension: 30, friction: 10 },
-    8: { duration: 3000 },
-  }
+  const threeLogoRotationSpring = useSpring({
+    from: { rotation: rotationMap[index - 1] ?? [0, 0, 0] },
+    to: { rotation: rotationMap[index] ?? [0, 0, 0] },
+    loop: index === 8,
+    config: index === 8 ? { duration: 5000 } : config.default,
+  })
 
-  const threeLogoSpring = useSpring({
-    from: {
-      position: positionMap[index - 1] ?? [-20, 0, 0],
-      rotation: rotationMap[index - 1] ?? [0, 0, 0],
-      scale: scaleMap[index - 1] ?? 0.001,
+  const threeLogoScaleSpring = useSpring({
+    from: { scale: scaleMap[index - 1] ?? 0.001 },
+    to: async next => {
+      if (index === 7) {
+        while (true) {
+          await next({ scale: 0.5 })
+          await next({ scale: 0.4 })
+        }
+      } else await next({ scale: scaleMap[index] ?? 0.001 })
     },
-    to: {
-      position: positionMap[index] ?? [-20, 0, 0],
-      rotation: rotationMap[index] ?? [0, 0, 0],
-      scale: scaleMap[index] ?? 0.001,
-    },
-    loop: loopMap[index] ?? false,
-    config: configMap[index] ?? config.default,
+    config: index === 7 ? { tension: 30, friction: 10 } : config.default,
   })
 
   const webGLLogoSpring = useSpring({
@@ -75,8 +68,14 @@ export function OverlayLogo({ index }: OverlayProps) {
 
   return (
     <>
-      {/* @ts-expect-error spring typings */}
-      {index < 10 && <OverlayThreeLogo {...threeLogoSpring} />}
+      {index < 10 && (
+        // @ts-expect-error spring typings
+        <OverlayThreeLogo
+          {...threeLogoPositionSpring}
+          {...threeLogoRotationSpring}
+          {...threeLogoScaleSpring}
+        />
+      )}
 
       {/* @ts-expect-error spring typings */}
       {index > 2 && index < 6 && <OverlayWebGLLogo {...webGLLogoSpring} />}
