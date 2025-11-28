@@ -1,5 +1,5 @@
 import { Canvas, Helpers } from '@components/helpers'
-import { AboutMe, FirstScene, Title } from '@components/slides'
+import { AboutMe, Title } from '@components/slides'
 import { CameraControls } from '@react-three/drei'
 import { MathUtils } from 'three'
 
@@ -35,7 +35,8 @@ export function Experience() {
         <AboutMe />
         <Slide background={false} />
         <Slide background={false} />
-        <FirstScene />
+        <Slide title="Prima scena" />
+        <Slide title="Resizing" />
       </Presentation>
     </Canvas>
   )

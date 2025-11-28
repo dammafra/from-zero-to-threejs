@@ -13,13 +13,13 @@ import { Mesh } from 'three'
 
 export interface FrameProps extends BillboardProps {}
 
-function _Frame({ children, onDoubleClick, ...props }: FrameProps) {
+function _Frame({ children, onDoubleClick, rotation, ...props }: FrameProps) {
   const { controls } = useThree()
   const ref = useRef<Mesh>(null)
 
   return (
     <Billboard {...props}>
-      <Float>
+      <Float floatIntensity={0.5} rotationIntensity={0.5} rotation={rotation}>
         <mesh scale={0.05} position={[-1.25, 1.25, 0]}>
           <circleGeometry />
           <meshBasicMaterial color="red" />
