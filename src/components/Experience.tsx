@@ -1,8 +1,7 @@
 import { Canvas, Helpers } from '@components/helpers'
-import { AboutMe, Goal, Summary, Title } from '@components/slides'
+import { AboutMe, FirstScene, Goal, Summary, Title } from '@components/slides'
 import { CameraControls } from '@react-three/drei'
 
-import { MathUtils } from 'three'
 import { Environment } from './Environment'
 import { Presentation } from './Presentation'
 import { Slide } from './Slide'
@@ -22,8 +21,8 @@ export function Experience() {
       <CameraControls
         makeDefault
         maxDistance={15}
-        minPolarAngle={MathUtils.degToRad(0)}
-        maxPolarAngle={MathUtils.degToRad(80)}
+        // minPolarAngle={MathUtils.degToRad(0)}
+        // maxPolarAngle={MathUtils.degToRad(80)}
       />
 
       <Helpers />
@@ -35,7 +34,7 @@ export function Experience() {
         <AboutMe />
         <Slide background={false} />
         <Slide background={false} />
-        <Slide title="Prima scena" />
+        <FirstScene />
         <Slide title="Resizing" />
         <Slide title="Animazione" />
         <Slide title="Camera e Controls" />

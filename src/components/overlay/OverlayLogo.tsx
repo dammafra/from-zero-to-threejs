@@ -7,28 +7,26 @@ import type { OverlayProps } from './Overlay'
 export function OverlayLogo({ index }: OverlayProps) {
   const threeLogoSpring = useSpring({
     position: [
-      [0.001, 2.5, -2.1, -0.1, 2].at(index) || 20,
-      [-1, 1.3, 1, 1.7].at(index) || 0,
-      [0, 1.25, 0.25, 1.3].at(index) || 0,
+      [0.001, 2.5, -2.1, -0.1, -2, -20, -1.5].at(index) || 0,
+      [-1, 1.3, 1, 1.7, 0, 0, 0.5].at(index) || 0,
+      [0, 1.25, 0.25, 1.3, 0, 0, 0.3].at(index) || 0,
     ],
-    scale: [1, 0.4, 0.25, 0.1, 0.5, 0.001].at(index) || 1,
+    scale: [1, 0.4, 0.25, 0.1, 0.5, 0.001, 0.2].at(index) || 1,
     rotation: [0, MathUtils.degToRad([0, 0, -360, -360, -360].at(index) || 0), 0],
   })
 
   const webGLLogoSpring = useSpring({
-    position: [index === 4 ? -2 : -20, 0, 0],
+    position: [index === 4 ? 2 : 20, 0, 0],
     scale: index === 4 ? 1 : 0,
   })
 
   return (
-    index < 6 && (
-      <>
-        {/* @ts-expect-error spring typings */}
-        <OverlayThreeLogo {...threeLogoSpring} />
-        {/* @ts-expect-error spring typings */}
-        <OverlayWebGLLogo {...webGLLogoSpring} />
-      </>
-    )
+    <>
+      {/* @ts-expect-error spring typings */}
+      <OverlayThreeLogo {...threeLogoSpring} />
+      {/* @ts-expect-error spring typings */}
+      {index > 2 && index < 6 && <OverlayWebGLLogo {...webGLLogoSpring} />}
+    </>
   )
 }
 

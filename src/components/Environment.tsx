@@ -23,7 +23,7 @@ export function Environment() {
           label: 'directional intensity',
         },
         directionalLightPosition: {
-          value: [4, 4, 1],
+          value: [2, 4, 1],
           min: 0,
           max: 20,
           step: 0.01,
@@ -43,7 +43,7 @@ export function Environment() {
       >
         <orthographicCamera
           attach="shadow-camera"
-          near={1}
+          near={0.1}
           far={10}
           top={8}
           right={8}
