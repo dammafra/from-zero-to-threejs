@@ -15,6 +15,7 @@ import {
   Title,
 } from '@components/slides'
 import { CameraControls } from '@react-three/drei'
+import { MathUtils } from 'three'
 
 import { Environment } from './Environment'
 import { Frame } from './Frame'
@@ -37,8 +38,8 @@ export function Experience() {
       <CameraControls
         makeDefault
         maxDistance={15}
-        // minPolarAngle={MathUtils.degToRad(0)}
-        // maxPolarAngle={MathUtils.degToRad(80)}
+        minPolarAngle={MathUtils.degToRad(0)}
+        maxPolarAngle={MathUtils.degToRad(80)}
       />
 
       <Helpers />
