@@ -93,17 +93,17 @@ export function Experience() {
           </SlideBody>
         </Slide>
         <Slide title="Fine?">
-          <Frame position={[-1.8, 1.5, 1.4]} scale={1.25}>
+          <Frame position={[-1.5, 1.5, 1.3]} scale={1.1}>
             <img src="/images/linktree.png" className="fixed inset-0 size-full" />
           </Frame>
         </Slide>
         <Slide background={false}>
-          <Frame scale={2}>
+          <Frame scale={1.8}>
             <img src="/images/quiz.png" className="fixed inset-0 size-full" />
           </Frame>
         </Slide>
         <Slide background={false}>
-          <Frame scale={2}>
+          <Frame scale={1.8}>
             <img src="/images/game.png" className="fixed inset-0 size-full" />
           </Frame>
         </Slide>
