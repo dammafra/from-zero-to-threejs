@@ -1,7 +1,7 @@
 import { Text, type TextProps } from '@react-three/drei'
 import type { ThreeEvent } from '@react-three/fiber'
-import { Children, Suspense, type ReactElement } from 'react'
-import { MathUtils, Mesh, MeshBasicMaterial } from 'three'
+import { Children, cloneElement, Suspense, type ReactElement } from 'react'
+import { MathUtils, Mesh, MeshBasicMaterial, type ColorRepresentation } from 'three'
 import { Hoverable } from './helpers'
 
 interface SlideBodyProps extends SlideTextProps {
@@ -16,7 +16,6 @@ export function SlideBody({
   bold = false,
   bullet = false,
   fontSize = 0.35,
-  lineHeight = 1,
   color = 'black',
 
   position,
@@ -26,48 +25,23 @@ export function SlideBody({
 
   ...props
 }: SlideBodyProps) {
-  const onHover = (event: ThreeEvent<PointerEvent>) => {
-    const mesh = event.object as Mesh
-    const material = mesh.material as MeshBasicMaterial
-    material.color.set('dodgerblue')
-  }
-
-  const onLeave = (event: ThreeEvent<PointerEvent>) => {
-    const mesh = event.object as Mesh
-    const material = mesh.material as MeshBasicMaterial
-    material.color.set('black')
-  }
-
   return (
     <Suspense>
       <group position={[-3.8 + offset, 0, -1]}>
         <group position={position} scale={scale} rotation={rotation} quaternion={quaternion}>
-          {Children.map(children, (child, i) => (
-            <Hoverable
-              enabled={!!child.props.onClick}
-              onPointerOver={onHover}
-              onPointerLeave={onLeave}
-            >
-              <Text
-                font={
-                  child.props.bold || bold
-                    ? '/fonts/EncodeSansSemiExpanded-Bold.ttf'
-                    : '/fonts/EncodeSansSemiExpanded-Regular.ttf'
-                }
-                fontSize={fontSize}
-                position-z={i * ((child.props.fontSize || fontSize) + 0.1)}
-                rotation-x={MathUtils.degToRad(-90)}
-                color={child.props.color || color}
-                anchorX={0}
-                {...props}
-                {...child.props}
-              >
-                {(child.props.bullet || bullet) && '• '}
-                {child.props.children}
-                {child.props.onClick && ' ↗'}
-              </Text>
-            </Hoverable>
-          ))}
+          {Children.map(children, (child, i) =>
+            cloneElement(child, {
+              bold: child.props.bold || bold,
+              bullet: child.props.bullet || bullet,
+              fontSize: child.props.fontSize || fontSize,
+              position: [0, 0, i * ((child.props.fontSize || fontSize) + 0.1)],
+              rotation: [MathUtils.degToRad(-90), 0, 0],
+              color: child.props.color || color,
+              anchorX: 0,
+              ...props,
+              ...child.props,
+            }),
+          )}
         </group>
       </group>
     </Suspense>
@@ -77,8 +51,47 @@ export function SlideBody({
 interface SlideTextProps extends TextProps {
   bold?: boolean
   bullet?: boolean
+  color?: ColorRepresentation
 }
 
-export function SlideText(_props: SlideTextProps) {
-  return <></>
+export function SlideText({
+  children,
+  bold = false,
+  bullet = false,
+  fontSize = 0.35,
+  color = 'black',
+  onClick,
+  ...props
+}: SlideTextProps) {
+  const onHover = (event: ThreeEvent<PointerEvent>) => {
+    const mesh = event.object as Mesh
+    const material = mesh.material as MeshBasicMaterial
+    material.color.set('dodgerblue')
+  }
+
+  const onLeave = (event: ThreeEvent<PointerEvent>) => {
+    const mesh = event.object as Mesh
+    const material = mesh.material as MeshBasicMaterial
+    material.color.set(color)
+  }
+
+  return (
+    <Hoverable enabled={!!onClick} onPointerOver={onHover} onPointerLeave={onLeave}>
+      <Text
+        font={
+          bold
+            ? '/fonts/EncodeSansSemiExpanded-Bold.ttf'
+            : '/fonts/EncodeSansSemiExpanded-Regular.ttf'
+        }
+        fontSize={fontSize}
+        color={color}
+        onClick={onClick}
+        {...props}
+      >
+        {bullet && '• '}
+        {children}
+        {onClick && ' ↗'}
+      </Text>
+    </Hoverable>
+  )
 }

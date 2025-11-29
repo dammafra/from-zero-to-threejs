@@ -5,7 +5,10 @@ import {
   Camera,
   Controls,
   FirstScene,
+  Geometry,
   Goal,
+  Grid,
+  Player,
   Resizing,
   Summary,
   Title,
@@ -49,9 +52,9 @@ export function Experience() {
         <Animating />
         <Camera />
         <Controls />
-        <Slide title="Geometries" />
-        <Slide title="Player" />
-        <Slide title="Grid" />
+        <Geometry />
+        <Player />
+        <Grid />
         <Slide title="Lights..." />
         <Slide title="... and Materials" />
         <Slide title="Shadows" />
