@@ -17,22 +17,19 @@ export function Controls(props: SlideProps) {
     <Slide title="Controls" {...props}>
       <SlideBody fontSize={0.25}>
         <SlideText>Classi che permettono di controllare</SlideText>
-        <SlideText>gli oggetti, tra cui le Camere:</SlideText>
+        <SlideText>gli oggetti, tra cui la Camera:</SlideText>
         <SlideText
           bullet
-          onClick={() => window.open('https://threejs.org/examples/?q=fly#misc_controls_fly')}
+          onClick={() => window.open('https://threejs.org/examples#misc_controls_fly')}
         >
           FlyControls
         </SlideText>
-        <SlideText
-          bullet
-          onClick={() => window.open('https://threejs.org/examples/?q=fps#games_fps')}
-        >
+        <SlideText bullet onClick={() => window.open('https://threejs.org/examples#games_fps')}>
           FirstPersonControls
         </SlideText>
         <SlideText
           bullet
-          onClick={() => window.open('https://threejs.org/examples/?q=orbit#misc_controls_orbit')}
+          onClick={() => window.open('https://threejs.org/examples#misc_controls_orbit')}
         >
           OrbitControls
         </SlideText>
@@ -47,7 +44,7 @@ export function Controls(props: SlideProps) {
       </SlideBody>
 
       <group ref={cameraRef} position={[-1.8, 2, 2.1]} scale={0.2}>
-        <PivotControls anchor={[0, 0, 0]} activeAxes={[true, false, true]}>
+        <PivotControls anchor={[0, 0, 0]} disableScaling>
           <Camera />
         </PivotControls>
       </group>

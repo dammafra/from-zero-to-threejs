@@ -23,7 +23,7 @@ export function OverlayDemo({ index }: OverlayProps) {
   const demoIndexes = Object.keys(demoSrcs).map(Number)
 
   const demoSpring = useSpring({
-    position: demoIndexes.includes(index) ? [2, 1.5, 1] : [20, 0, 0],
+    position: demoIndexes.includes(index) ? [2.2, 1.5, 1] : [20, 0, 0],
     scale: demoIndexes.includes(index) ? 1 : 0.001,
     rotation: [0, MathUtils.degToRad(index * 360), 0],
   })

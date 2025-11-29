@@ -1,3 +1,4 @@
+import { Hoverable } from '@components/helpers'
 import { ThreeLogo, WebGLLogo } from '@components/models'
 import { animated, config, useSpring } from '@react-spring/three'
 import { Billboard, Center, Float, type BillboardProps } from '@react-three/drei'
@@ -12,9 +13,9 @@ export function OverlayLogo({ index }: OverlayProps) {
     3: [-0.1, 1.7, 1.3],
     4: [-2, 0, 0],
     5: [-20, 0, 20],
-    6: [-1.5, 0.5, 0.3],
-    7: [-1.2, 1.3, 0.9],
-    8: [-1.2, 1.3, 0.9],
+    6: [-0.3, 0.5, 0.5],
+    7: [-2.5, 0.8, 1.5],
+    8: [-3, 1, 1],
   }
 
   const rotationMap: Record<number, EulerTuple> = {
@@ -33,8 +34,8 @@ export function OverlayLogo({ index }: OverlayProps) {
     3: 0.1,
     4: 0.5,
     6: 0.2,
-    7: 0.4,
-    8: 0.4,
+    7: 0.2,
+    8: 0.3,
   }
 
   const threeLogoPositionSpring = useSpring({
@@ -53,8 +54,8 @@ export function OverlayLogo({ index }: OverlayProps) {
     to: async next => {
       if (index === 7) {
         while (true) {
-          await next({ scale: 0.5 })
-          await next({ scale: 0.4 })
+          await next({ scale: 0.3 })
+          await next({ scale: 0.2 })
         }
       } else await next({ scale: scaleMap[index] ?? 0.001 })
     },
@@ -88,7 +89,9 @@ const OverlayThreeLogo = animated(({ rotation, ...props }: BillboardProps) => {
     <Billboard {...props}>
       <Float rotation={rotation}>
         <Center scale={0.05}>
-          <ThreeLogo />
+          <Hoverable>
+            <ThreeLogo onClick={() => window.open('https://threejs.org/')} />
+          </Hoverable>
         </Center>
       </Float>
     </Billboard>

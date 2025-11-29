@@ -2,7 +2,7 @@ import { Canvas, Helpers } from '@components/helpers'
 import {
   AboutMe,
   Animating,
-  Cameras,
+  Camera,
   Controls,
   FirstScene,
   Goal,
@@ -47,7 +47,7 @@ export function Experience() {
         <FirstScene />
         <Resizing />
         <Animating />
-        <Cameras />
+        <Camera />
         <Controls />
         <Slide title="Geometries" />
         <Slide title="Player" />

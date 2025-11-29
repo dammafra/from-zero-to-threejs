@@ -3,14 +3,7 @@ import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm'
 import { CameraControls, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, type JSX } from 'react'
-import {
-  AnimationMixer,
-  MathUtils,
-  Mesh,
-  MeshBasicMaterial,
-  MeshStandardMaterial,
-  Quaternion,
-} from 'three'
+import { AnimationMixer, MathUtils, Mesh, Quaternion } from 'three'
 
 export function Avatar(props: JSX.IntrinsicElements['mesh']) {
   const gltf = useGLTF('/models/avatar.vrm')
@@ -27,24 +20,7 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
   useEffect(() => {
     if (!gltf) return
     gltf.scene.traverse(child => {
-      if (child instanceof Mesh && child.isMesh) {
-        child.castShadow = true
-        child.frustumCulled = false
-
-        if (child.material && child.material instanceof MeshBasicMaterial) {
-          const newMat = new MeshStandardMaterial()
-
-          newMat.map = child.material.map
-          newMat.color.copy(child.material.color)
-          newMat.transparent = child.material.transparent
-          newMat.opacity = child.material.opacity
-          newMat.side = child.material.side
-          newMat.name = child.material.name
-          newMat.alphaTest = child.material.alphaTest
-
-          child.material = newMat
-        }
-      }
+      child.castShadow = child instanceof Mesh && child.isMesh
     })
 
     const vrm = gltf.userData.vrm

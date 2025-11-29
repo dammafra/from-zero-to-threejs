@@ -17,9 +17,6 @@ export function AboutMe(props: SlideProps) {
     <Slide title="Francesco Dammacco" {...props}>
       <Avatar position={[2, 0.02, 1]} scale={1.5} />
 
-      {/* <Popcorn scale={0.5} /> */}
-      {/* <Console scale={0.25} position={[-2, 0, 0]} /> */}
-
       <Desk scale={1.5} position={[-1.5, 0, 0.6]} rotation-y={MathUtils.degToRad(-70)} />
       <Chair scale={0.045} position={[-1.25, 0, 1.45]} rotation-y={MathUtils.degToRad(-170)} />
       <Macbook scale={0.3} position={[-1.5, 1.4, 0.6]} rotation-y={MathUtils.degToRad(25)} />

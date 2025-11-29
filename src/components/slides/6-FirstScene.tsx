@@ -1,8 +1,9 @@
 import { Camera, Stage } from '@components/models'
 import { Slide, type SlideProps } from '@components/Slide'
+import { SlideBody, SlideText } from '@components/SlideBody'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
-import { Object3D, SpotLight } from 'three'
+import { MathUtils, Object3D, SpotLight } from 'three'
 
 export function FirstScene(props: SlideProps) {
   const cameraRef = useRef<Object3D>(null)
@@ -18,8 +19,14 @@ export function FirstScene(props: SlideProps) {
 
   return (
     <Slide title="Prima scena" {...props}>
-      <Camera ref={cameraRef} position={[-2, 2, 1.7]} scale={0.2} />
-      <Stage ref={stageRef} position={[-1.5, 0, -0.3]} scale={0.1} />
+      <SlideBody>
+        <SlideText>Canvas</SlideText>
+        <SlideText>+ Scene</SlideText>
+        <SlideText>+ Camera</SlideText>
+        <SlideText>= Render</SlideText>
+      </SlideBody>
+      <Camera ref={cameraRef} position={[-1.8, 2, 1.8]} scale={0.15} />
+      <Stage ref={stageRef} scale={0.08} rotation-y={MathUtils.degToRad(-30)} />
       <spotLight ref={spotLightRef} intensity={10} penumbra={0.6} />
     </Slide>
   )

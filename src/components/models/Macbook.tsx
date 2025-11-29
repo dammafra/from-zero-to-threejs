@@ -46,18 +46,8 @@ export function Macbook(props: JSX.IntrinsicElements['group']) {
           geometry={nodes.mesh485226736_1.geometry}
           material={materials.mat23}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.mesh485226736_2.geometry}
-          material={materials.mat17}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.mesh485226736_3.geometry}
-          material={materials.mat15}
-        />
+        <mesh receiveShadow geometry={nodes.mesh485226736_2.geometry} material={materials.mat17} />
+        <mesh receiveShadow geometry={nodes.mesh485226736_3.geometry} material={materials.mat15} />
         <mesh
           castShadow
           receiveShadow
@@ -70,12 +60,7 @@ export function Macbook(props: JSX.IntrinsicElements['group']) {
           geometry={nodes.mesh256948792_1.geometry}
           material={materials.mat23}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.mesh256948792_2.geometry}
-          material={materials.mat17}
-        />
+        <mesh castShadow geometry={nodes.mesh256948792_2.geometry} material={materials.mat17} />
         <mesh
           castShadow
           receiveShadow
