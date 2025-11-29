@@ -8,6 +8,7 @@ import {
   Geometry,
   Goal,
   Grid,
+  Light,
   Player,
   Resizing,
   Summary,
@@ -16,8 +17,10 @@ import {
 import { CameraControls } from '@react-three/drei'
 
 import { Environment } from './Environment'
+import { Frame } from './Frame'
 import { Presentation } from './Presentation'
 import { Slide } from './Slide'
+import { SlideBody, SlideText } from './SlideBody'
 
 export function Experience() {
   return (
@@ -55,12 +58,55 @@ export function Experience() {
         <Geometry />
         <Player />
         <Grid />
-        <Slide title="Lights..." />
-        <Slide title="... and Materials" />
-        <Slide title="Shadows" />
-        <Slide title="Animazione Player" />
-        <Slide title="Animazione Grid" />
-        <Slide title="Fine..." />
+        <Light />
+        <Slide title="Light e Material">
+          <SlideBody bullet fontSize={0.28}>
+            <SlideText>Utilizzare MeshStandardMaterial</SlideText>
+            <SlideText>Aggiungere DirectionalLight</SlideText>
+            <SlideText>Aggiungere AmbientLight</SlideText>
+          </SlideBody>
+        </Slide>
+        <Slide title="Shadow">
+          <SlideBody fontSize={0.28}>
+            <SlideText bullet>Abilitare le ombre nel Renderer</SlideText>
+            <SlideText bullet>Specificare quali luci</SlideText>
+            <SlideText anchorX={-0.18}>proiettano ombre</SlideText>
+            <SlideText bullet>Specificare quali oggetti</SlideText>
+            <SlideText anchorX={-0.18}>proiettano ombre</SlideText>
+            <SlideText bullet>Specificare quali oggetti</SlideText>
+            <SlideText anchorX={-0.18}>ricevono ombre</SlideText>
+          </SlideBody>
+        </Slide>
+        <Slide title="Animazione Player">
+          <SlideBody bullet>
+            <SlideText>Animazione dei passi</SlideText>
+            <SlideText>Camminata in circolo</SlideText>
+          </SlideBody>
+        </Slide>
+        <Slide title="Animazione Grid">
+          <SlideBody fontSize={0.3}>
+            <SlideText bullet>Ogni 5 secondi una mattonella</SlideText>
+            <SlideText anchorX={-0.2}>deve sparire per poi ricomparire</SlideText>
+            <SlideText bullet>Prima di scomparire deve</SlideText>
+            <SlideText anchorX={-0.2}>cambiare colore come un</SlideText>
+            <SlideText anchorX={-0.2}>semaforo</SlideText>
+          </SlideBody>
+        </Slide>
+        <Slide title="Fine?">
+          <Frame position={[-1.8, 1.5, 1.4]} scale={1.25}>
+            <img src="/images/linktree.png" className="fixed inset-0 size-full" />
+          </Frame>
+        </Slide>
+        <Slide background={false}>
+          <Frame scale={2}>
+            <img src="/images/quiz.png" className="fixed inset-0 size-full" />
+          </Frame>
+        </Slide>
+        <Slide background={false}>
+          <Frame scale={2}>
+            <img src="/images/game.png" className="fixed inset-0 size-full" />
+          </Frame>
+        </Slide>
       </Presentation>
     </Canvas>
   )

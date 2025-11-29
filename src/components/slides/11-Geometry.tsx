@@ -24,11 +24,11 @@ import { MathUtils, MeshNormalMaterial } from 'three'
 
 const AnimatedBillboard = animated(Billboard)
 
-type LabelProps = Omit<JSX.IntrinsicElements['group'], 'id'> & {
+type GeometryItemProps = Omit<JSX.IntrinsicElements['group'], 'id'> & {
   id: string
 }
 
-function GeometryItem({ children, id, ...props }: LabelProps) {
+function GeometryItem({ children, id, ...props }: GeometryItemProps) {
   const [visible, setVisible] = useState(false)
   const hoverSpring = useSpring({ scale: visible ? 1 : 0, config: config.wobbly })
 

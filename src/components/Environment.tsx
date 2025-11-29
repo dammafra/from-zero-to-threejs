@@ -1,8 +1,13 @@
+import { a, useSpring } from '@react-spring/three'
 import { Helper, SoftShadows } from '@react-three/drei'
 import { useControls } from 'leva'
 import { CameraHelper } from 'three'
+import { useRoute } from 'wouter'
 
 export function Environment() {
+  const [, params] = useRoute('/slides/:index')
+  const index = params?.index && !isNaN(+params.index) ? +params.index : 0
+
   const { helpers, ambientLightIntensity, directionalLightIntensity, directionalLightPosition } =
     useControls(
       'environment',
@@ -33,12 +38,24 @@ export function Environment() {
       { collapsed: true },
     )
 
+  const ambientSpring = useSpring({
+    intensity: index === 14 ? 0 : ambientLightIntensity,
+    config: { duration: 500 },
+    delay: 500,
+  })
+
+  const directionalSpring = useSpring({
+    intensity: index === 14 ? 0 : directionalLightIntensity,
+    config: { duration: 500 },
+    delay: 500,
+  })
+
   return (
     <>
-      <directionalLight
+      <a.directionalLight
         castShadow
         position={directionalLightPosition}
-        intensity={directionalLightIntensity}
+        intensity={directionalSpring.intensity}
         shadow-mapSize={[1024, 1024]}
       >
         <orthographicCamera
@@ -52,9 +69,9 @@ export function Environment() {
         >
           {helpers && <Helper type={CameraHelper} />}
         </orthographicCamera>
-      </directionalLight>
+      </a.directionalLight>
 
-      <ambientLight intensity={ambientLightIntensity} />
+      <a.ambientLight intensity={ambientSpring.intensity} />
 
       <SoftShadows samples={50} />
     </>

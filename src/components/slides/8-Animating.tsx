@@ -11,7 +11,7 @@ export function Animating(props: SlideProps) {
         <SlideText>la scena a ogni frame</SlideText>
       </SlideBody>
 
-      <SlideBody fontSize={0.3} position={[1.62, 0, 1.2]}>
+      <SlideBody fontSize={0.3} position={[1.5, 0, 1.2]}>
         <SlideText bold>Tempo o delta</SlideText>
         <SlideText>rendono le animazioni</SlideText>
         <SlideText>costanti su ogni</SlideText>

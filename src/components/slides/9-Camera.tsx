@@ -33,6 +33,10 @@ export function Camera(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
+      <SlideBody position={[6, 0, 1.8]}>
+        <SlideText>👆</SlideText>
+      </SlideBody>
+
       <OrthographicCamera makeDefault={orthographic} position={1} near={-50} far={50} />
 
       <Hoverable>

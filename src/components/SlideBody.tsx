@@ -26,25 +26,23 @@ export function SlideBody({
   ...props
 }: SlideBodyProps) {
   return (
-    <Suspense>
-      <group position={[-3.8 + offset, 0, -1]}>
-        <group position={position} scale={scale} rotation={rotation} quaternion={quaternion}>
-          {Children.map(children, (child, i) =>
-            cloneElement(child, {
-              bold: child.props.bold || bold,
-              bullet: child.props.bullet || bullet,
-              fontSize: child.props.fontSize || fontSize,
-              position: [0, 0, i * ((child.props.fontSize || fontSize) + 0.1)],
-              rotation: [MathUtils.degToRad(-90), 0, 0],
-              color: child.props.color || color,
-              anchorX: 0,
-              ...props,
-              ...child.props,
-            }),
-          )}
-        </group>
+    <group position={[-3.8 + offset, 0, -1]}>
+      <group position={position} scale={scale} rotation={rotation} quaternion={quaternion}>
+        {Children.map(children, (child, i) =>
+          cloneElement(child, {
+            bold: child.props.bold || bold,
+            bullet: child.props.bullet || bullet,
+            fontSize: child.props.fontSize || fontSize,
+            position: [0, 0, i * ((child.props.fontSize || fontSize) + 0.1)],
+            rotation: [MathUtils.degToRad(-90), 0, 0],
+            color: child.props.color || color,
+            anchorX: 0,
+            ...props,
+            ...child.props,
+          }),
+        )}
       </group>
-    </Suspense>
+    </group>
   )
 }
 
@@ -76,22 +74,24 @@ export function SlideText({
   }
 
   return (
-    <Hoverable enabled={!!onClick} onPointerOver={onHover} onPointerLeave={onLeave}>
-      <Text
-        font={
-          bold
-            ? '/fonts/EncodeSansSemiExpanded-Bold.ttf'
-            : '/fonts/EncodeSansSemiExpanded-Regular.ttf'
-        }
-        fontSize={fontSize}
-        color={color}
-        onClick={onClick}
-        {...props}
-      >
-        {bullet && '• '}
-        {children}
-        {onClick && ' ↗'}
-      </Text>
-    </Hoverable>
+    <Suspense>
+      <Hoverable enabled={!!onClick} onPointerOver={onHover} onPointerLeave={onLeave}>
+        <Text
+          font={
+            bold
+              ? '/fonts/EncodeSansSemiExpanded-Bold.ttf'
+              : '/fonts/EncodeSansSemiExpanded-Regular.ttf'
+          }
+          fontSize={fontSize}
+          color={color}
+          onClick={onClick}
+          {...props}
+        >
+          {bullet && '• '}
+          {children}
+          {onClick && ' ↗'}
+        </Text>
+      </Hoverable>
+    </Suspense>
   )
 }
