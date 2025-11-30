@@ -14,7 +14,7 @@ export function FirstScene(props: SlideProps) {
   const spotLightRef = useRef<SpotLight>(null)
 
   useEffect(() => {
-    setLogo({ position: [-0.3, 0.5, 0.5], scale: 0.15 })
+    setLogo({ position: [-0.2, 0.6, 0.5], scale: 0.15 })
     setDemo('0-blank')
   }, [setLogo, setDemo])
 
