@@ -66,7 +66,7 @@ export function Lights(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <SlideBody color={textSpring.color} position={[3.5, 0, 1.8]}>
+      <SlideBody color={textSpring.color} position={[3.6, 0, 1.8]}>
         <SlideText>👆</SlideText>
       </SlideBody>
 

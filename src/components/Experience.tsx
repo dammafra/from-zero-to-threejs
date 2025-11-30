@@ -41,7 +41,7 @@ export function Experience() {
       <Environment />
       <CameraControls
         makeDefault
-        maxDistance={15}
+        maxDistance={40}
         minPolarAngle={MathUtils.degToRad(0)}
         maxPolarAngle={MathUtils.degToRad(80)}
       />

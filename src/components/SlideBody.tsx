@@ -90,7 +90,7 @@ function _SlideText({
           {bullet && '• '}
           {children}
           {onClick && ' ↗'}
-          <animated.meshBasicMaterial color={color} />
+          <animated.meshBasicMaterial color={color} transparent />
         </Text>
       </Hoverable>
     </Suspense>

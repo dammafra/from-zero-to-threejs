@@ -1,4 +1,5 @@
 import { Frame, type FrameProps } from '@components'
+import { useIsTouch } from '@hooks'
 import { useSpring as useSpringThree } from '@react-spring/three'
 import { a, useSpring as useSpringWeb } from '@react-spring/web'
 import { useOverlay } from '@stores'
@@ -7,6 +8,7 @@ import { MathUtils } from 'three'
 import { useLocation } from 'wouter'
 
 export function DemoFrame(props: FrameProps) {
+  const isTouch = useIsTouch()
   const demo = useOverlay(s => s.demo)
 
   const [src, setSrc] = useState<string>()
@@ -31,6 +33,7 @@ export function DemoFrame(props: FrameProps) {
     // @ts-expect-error spring typings
     <Frame
       onDoubleClick={() => src && navigate(`/demo/${encodeURIComponent(src)}`)}
+      onClick={() => isTouch && src && navigate(`/demo/${encodeURIComponent(src)}`)}
       {...props}
       {...demoSpring}
     >

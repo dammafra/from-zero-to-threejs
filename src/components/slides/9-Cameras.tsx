@@ -42,7 +42,7 @@ export function Cameras(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <SlideBody position={[6, 0, 1.8]}>
+      <SlideBody position={[5.9, 0, 1.8]}>
         <SlideText>👆</SlideText>
       </SlideBody>
 

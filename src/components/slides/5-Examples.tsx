@@ -1,10 +1,13 @@
 import { Frame, Slide, type SlideProps } from '@components'
+import { useIsTouch } from '@hooks'
 import { useSprings } from '@react-spring/three'
 import { useOverlay } from '@stores'
 import { useEffect } from 'react'
 import type { Vector3Tuple } from 'three'
 
 export function Examples(props: SlideProps) {
+  const isTouch = useIsTouch()
+
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -55,6 +58,7 @@ export function Examples(props: SlideProps) {
         <Frame
           key={`example-${i}`}
           onDoubleClick={() => window.location.assign(examples.at(i)!.url)}
+          onClick={() => isTouch && window.location.assign(examples.at(i)!.url)}
           {...spring}
         >
           <img src={examples.at(i)!.image} className="fixed inset-0 size-full" />

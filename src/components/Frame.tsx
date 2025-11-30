@@ -1,3 +1,4 @@
+import { useIsTouch } from '@hooks'
 import { animated } from '@react-spring/three'
 import {
   Billboard,
@@ -13,9 +14,22 @@ import { Mesh } from 'three'
 
 export type FrameProps = BillboardProps
 
-function Frame_({ children, onDoubleClick, rotation, ...props }: FrameProps) {
+function Frame_({ children, onDoubleClick, onClick, rotation, ...props }: FrameProps) {
+  const isTouch = useIsTouch()
   const { controls } = useThree()
   const ref = useRef<Mesh>(null)
+
+  const transition = () => {
+    const cameraControls = controls as CameraControls
+    if (!ref.current || !cameraControls) return
+
+    cameraControls.fitToBox(ref.current, true, {
+      paddingTop: -1,
+      paddingBottom: -1,
+      paddingRight: -1,
+      paddingLeft: -1,
+    })
+  }
 
   return (
     <Billboard {...props}>
@@ -47,17 +61,14 @@ function Frame_({ children, onDoubleClick, rotation, ...props }: FrameProps) {
           {children}
           <div
             className="fixed inset-0 cursor-pointer"
+            onClick={() => {
+              if (!isTouch) return
+              transition()
+              // @ts-expect-error r3f makes onClick readonly
+              if (onClick) setTimeout(onClick, 500)
+            }}
             onDoubleClick={() => {
-              const cameraControls = controls as CameraControls
-              if (!ref.current || !cameraControls) return
-
-              cameraControls.fitToBox(ref.current, true, {
-                paddingTop: -1,
-                paddingBottom: -1,
-                paddingRight: -1,
-                paddingLeft: -1,
-              })
-
+              transition()
               // @ts-expect-error r3f makes onDoubleClick readonly
               if (onDoubleClick) setTimeout(onDoubleClick, 500)
             }}
