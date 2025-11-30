@@ -10,12 +10,13 @@ import { Vector3, type Object3D } from 'three'
 export function Controls(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
+
   const cameraRef = useRef<Object3D>(null)
 
   useEffect(() => {
     setLogo({ visible: false })
     setDemo('3-animating')
-  }, [setLogo])
+  }, [setLogo, setDemo])
 
   useFrame(() => {
     cameraRef.current?.lookAt(new Vector3(-1, 0, 0))

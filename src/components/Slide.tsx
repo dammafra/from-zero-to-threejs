@@ -12,7 +12,7 @@ export type SlideProps = JSX.IntrinsicElements['group'] &
     titleColor?: ColorRepresentation
   }
 
-function _Slide({
+function Slide_({
   background = true,
   backgroundColor = 'white',
   title,
@@ -92,6 +92,6 @@ function _Slide({
   )
 }
 
-export const Slide = a(_Slide)
+export const Slide = a(Slide_)
 
 useFont.preload('/fonts/Encode Sans Semi Expanded_Regular.json')

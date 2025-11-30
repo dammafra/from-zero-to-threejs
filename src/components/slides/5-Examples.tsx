@@ -11,7 +11,7 @@ export function Examples(props: SlideProps) {
   useEffect(() => {
     setLogo({ position: [0, 0, 0], rotation: [0, 0, 0], scale: 0 })
     setDemo(undefined)
-  }, [setLogo])
+  }, [setLogo, setDemo])
 
   const examples = [
     { image: '/images/drysland.png', url: 'https://drysland.vercel.app' },

@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 export function Light2(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
-  useEffect(() => setDemo('6-grid'), [])
+
+  useEffect(() => setDemo('6-grid'), [setDemo])
 
   return (
     <Slide title="Light e Material" {...props}>

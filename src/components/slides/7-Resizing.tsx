@@ -21,13 +21,13 @@ export function Resizing(props: SlideProps) {
   useEffect(() => {
     setLogo({ position: [-2.5, 0.8, 1.5] })
     setDemo('1-first-scene')
-    api.start()
 
+    api.start()
     return () => {
       api.stop()
       setLogo({ scale: 0.2 })
     }
-  }, [setLogo])
+  }, [setLogo, setDemo, api])
 
   return (
     <Slide title="Resizing" {...props}>

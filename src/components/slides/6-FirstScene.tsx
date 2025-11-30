@@ -17,7 +17,7 @@ export function FirstScene(props: SlideProps) {
   useEffect(() => {
     setLogo({ position: [-0.3, 0.5, 0.5], scale: 0.2 })
     setDemo('0-blank')
-  }, [setLogo])
+  }, [setLogo, setDemo])
 
   useFrame(() => {
     if (!cameraRef.current || !stageRef.current || !spotLightRef.current) return

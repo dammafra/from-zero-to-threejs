@@ -7,12 +7,13 @@ import { MeshStandardMaterial } from 'three'
 export function Title(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
+
   const material = useRef(new MeshStandardMaterial({ color: 'orange' }))
 
   useEffect(() => {
     setLogo({ position: [0.001, -1, 0], scale: 1 })
     setDemo(undefined)
-  }, [setLogo])
+  }, [setLogo, setDemo])
 
   return (
     <Slide background={false} {...props}>

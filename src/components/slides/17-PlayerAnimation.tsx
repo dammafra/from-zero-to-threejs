@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 export function PlayerAnimation(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
-  useEffect(() => setDemo('8-shadows'), [])
+
+  useEffect(() => setDemo('8-shadows'), [setDemo])
 
   return (
     <Slide title="Animazione Player" {...props}>

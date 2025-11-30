@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 export function End(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
-  useEffect(() => setDemo('10-grid-animation'), [])
+
+  useEffect(() => setDemo('10-grid-animation'), [setDemo])
 
   return (
     <Slide title="Fine?" {...props}>

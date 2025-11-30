@@ -11,9 +11,9 @@ import { useThree } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Mesh } from 'three'
 
-export interface FrameProps extends BillboardProps {}
+export type FrameProps = BillboardProps
 
-function _Frame({ children, onDoubleClick, rotation, ...props }: FrameProps) {
+function Frame_({ children, onDoubleClick, rotation, ...props }: FrameProps) {
   const { controls } = useThree()
   const ref = useRef<Mesh>(null)
 
@@ -58,8 +58,8 @@ function _Frame({ children, onDoubleClick, rotation, ...props }: FrameProps) {
                 paddingLeft: -1,
               })
 
-              // @ts-expect-error
-              onDoubleClick && setTimeout(onDoubleClick, 500)
+              // @ts-expect-error r3f makes onDoubleClick readonly
+              if (onDoubleClick) setTimeout(onDoubleClick, 500)
             }}
           />
         </Html>
@@ -68,4 +68,4 @@ function _Frame({ children, onDoubleClick, rotation, ...props }: FrameProps) {
   )
 }
 
-export const Frame = animated(_Frame)
+export const Frame = animated(Frame_)

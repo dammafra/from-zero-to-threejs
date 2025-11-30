@@ -57,9 +57,10 @@ function GeometryItem({ children, id, ...props }: GeometryItemProps) {
 
 export function Geometry(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
+
   const material = new MeshNormalMaterial({ flatShading: true })
 
-  useEffect(() => setDemo(undefined), [])
+  useEffect(() => setDemo(undefined), [setDemo])
 
   return (
     <Slide title="Geometry" {...props}>

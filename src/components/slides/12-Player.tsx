@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 export function Player(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
-  useEffect(() => setDemo('4-camera-and-controls'), [])
+
+  useEffect(() => setDemo('4-camera-and-controls'), [setDemo])
 
   return (
     <Slide title="Player" {...props}>

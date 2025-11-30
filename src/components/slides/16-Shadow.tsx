@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 export function Shadow(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
-  useEffect(() => setDemo('7-lights-and-materials'), [])
+
+  useEffect(() => setDemo('7-lights-and-materials'), [setDemo])
 
   return (
     <Slide title="Shadow" {...props}>

@@ -10,12 +10,13 @@ import { MathUtils } from 'three'
 export function Camera(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
+
   const [orthographic, setOrthographic] = useState(false)
 
   useEffect(() => {
     setLogo({ visible: true, position: [-20, 0, 0], scale: 0 })
     setDemo(undefined)
-  }, [setLogo])
+  }, [setLogo, setDemo])
 
   return (
     <Slide title="Camera" {...props}>

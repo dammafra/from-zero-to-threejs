@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 export function Grid(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
-  useEffect(() => setDemo('5-player'), [])
+
+  useEffect(() => setDemo('5-player'), [setDemo])
 
   return (
     <Slide title="Grid" {...props}>

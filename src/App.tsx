@@ -1,5 +1,5 @@
 import { Experience, PresentationControls } from '@components'
-import { DemoFull } from '@components/DemoFull'
+import { Demo } from '@components/Demo'
 import { DoubleTapPreventer, GUI } from '@components/helpers'
 import { StrictMode } from 'react'
 import { Redirect, Route, Switch } from 'wouter'
@@ -14,7 +14,7 @@ export default function App() {
         <Experience />
         <Switch>
           <Route path="/slides/:index?" component={PresentationControls} />
-          <Route path="/demo/:src" component={DemoFull} />
+          <Route path="/demo/:src" component={Demo} />
           <Route>
             <Redirect to="/slides/0" />
           </Route>

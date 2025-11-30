@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 export function GridAnimation(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
-  useEffect(() => setDemo('9-player-animation'), [])
+
+  useEffect(() => setDemo('9-player-animation'), [setDemo])
 
   return (
     <Slide title="Animazione Grid" {...props}>

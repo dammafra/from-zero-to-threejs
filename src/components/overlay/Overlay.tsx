@@ -1,4 +1,4 @@
-import { DemoFrame } from '@components/DemoFrame'
+import { DemoFrame } from './DemoFrame'
 import { OverlayLogo } from './OverlayLogo'
 
 export function Overlay() {
