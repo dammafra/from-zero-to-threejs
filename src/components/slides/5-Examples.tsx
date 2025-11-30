@@ -55,11 +55,13 @@ export function Examples(props: SlideProps) {
   return (
     <Slide background={false} {...props}>
       <SlideBody color="white" fontSize={0.3} anchorX="center" position={[3.8, 0, 2.7]}>
-        <SlideText fontSize={0.2}>👆{`${isTouch ? 'Tap' : 'Double click'} to explore`}</SlideText>
+        <SlideText fontSize={0.2} anchorY="top">
+          👆{`${isTouch ? 'Tap' : 'Double click'} to explore`}
+        </SlideText>
         <SlideText>Here's a preview of what you can achieve with Three.js</SlideText>
       </SlideBody>
 
-      <group scale={0.7} position-z={-0.5}>
+      <group scale={0.72} position-z={-0.5}>
         {examplesSprings.map((spring, i) => (
           <Frame
             key={`example-${i}`}
