@@ -8,6 +8,9 @@ export function PresentationControls() {
 
   return (
     <div className="controls">
+      <button title="Home" onClick={() => emulatePressKey('KeyH')}>
+        <Icon icon="icon-park-twotone:circle-double-left" />
+      </button>
       <button title="Reset" onClick={() => emulatePressKey('KeyR')}>
         <Icon icon="icon-park-twotone:radio-two" />
       </button>

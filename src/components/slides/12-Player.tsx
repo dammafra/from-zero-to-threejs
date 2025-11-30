@@ -1,7 +1,12 @@
 import { Slide, type SlideProps } from '@components/Slide'
 import { SlideBody, SlideText } from '@components/SlideBody'
+import { useOverlay } from '@stores'
+import { useEffect } from 'react'
 
 export function Player(props: SlideProps) {
+  const setDemo = useOverlay(s => s.setDemo)
+  useEffect(() => setDemo('4-camera-and-controls'), [])
+
   return (
     <Slide title="Player" {...props}>
       <SlideBody fontSize={0.25}>

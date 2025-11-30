@@ -11,14 +11,19 @@ interface LogoStore {
 type OverlayStore = {
   logo: LogoStore
   setLogo: (params: Partial<LogoStore>) => void
+
+  demo?: string
+  setDemo: (demo?: string) => void
 }
 
 export const useOverlay = create<OverlayStore>()(set => ({
-  logo: { visible: true, position: [0, 0, 0], rotation: [0, 0, 0], scale: 1 },
+  logo: { visible: true, position: [0, 0, 0], rotation: [0, 0, 0], scale: 0 },
   setLogo: params => {
     set(state => {
       // console.log(params)
       return { logo: { ...state.logo, ...params } }
     })
   },
+
+  setDemo: demo => set({ demo }),
 }))

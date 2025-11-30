@@ -33,14 +33,14 @@ export function Presentation({
   const previousIndexRef = useRef(0)
 
   useEffect(() => {
-    const value = localStorage.getItem('demo:last-slide-index')
+    const value = localStorage.getItem('last-slide-index')
     if (value !== null) setIndex(+value)
-    localStorage.removeItem('demo:last-slide-index')
   }, [])
 
   useEffect(() => {
     if (!match) return
     navigate(`/slides/${index}`)
+    localStorage.setItem('last-slide-index', index.toString())
   }, [match, index, navigate])
 
   const slides = useMemo(() => Children.map(children, c => c), [children])
@@ -56,6 +56,7 @@ export function Presentation({
       <Environment index={index} />
       <KeyboardControls
         map={[
+          { name: 'home', keys: ['KeyH'], up: false },
           { name: 'next', keys: ['ArrowDown', 'ArrowRight'], up: false },
           { name: 'previous', keys: ['ArrowUp', 'ArrowLeft'], up: false },
           { name: 'reset', keys: ['KeyR'] },
@@ -64,13 +65,13 @@ export function Presentation({
           setIndex(value => {
             previousIndexRef.current = value
             const index = value + ({ next: 1, previous: -1 }[name] || 0)
-            if (index < 0) return 0
+            if (name === 'home' || index < 0) return 0
             if (index > slides.length - 1) return slides.length - 1
             return index
           })
         }
       >
-        <Overlay show={match} index={index} />
+        <Overlay />
         <Route path="/slides/:index?">
           {transition(
             (spring, slide) =>

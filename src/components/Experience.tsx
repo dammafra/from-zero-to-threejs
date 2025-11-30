@@ -4,14 +4,19 @@ import {
   Animating,
   Camera,
   Controls,
+  End,
   Examples,
   FirstScene,
   Geometry,
   Goal,
   Grid,
+  GridAnimation,
   Light,
+  Light2,
   Player,
+  PlayerAnimation,
   Resizing,
+  Shadow,
   Summary,
   Title,
   WebGL,
@@ -19,10 +24,7 @@ import {
 import { CameraControls } from '@react-three/drei'
 import { MathUtils } from 'three'
 
-import { Frame } from './Frame'
 import { Presentation } from './Presentation'
-import { Slide } from './Slide'
-import { SlideBody, SlideText } from './SlideBody'
 
 export function Experience() {
   return (
@@ -60,49 +62,11 @@ export function Experience() {
         <Player />
         <Grid />
         <Light />
-
-        <Slide title="Light e Material">
-          <SlideBody bullet fontSize={0.28}>
-            <SlideText>Utilizzare MeshStandardMaterial</SlideText>
-            <SlideText>Aggiungere DirectionalLight</SlideText>
-            <SlideText>Aggiungere AmbientLight</SlideText>
-          </SlideBody>
-        </Slide>
-
-        <Slide title="Shadow">
-          <SlideBody fontSize={0.28}>
-            <SlideText bullet>Abilitare le ombre nel Renderer</SlideText>
-            <SlideText bullet>Specificare quali luci</SlideText>
-            <SlideText anchorX={-0.18}>proiettano ombre</SlideText>
-            <SlideText bullet>Specificare quali oggetti</SlideText>
-            <SlideText anchorX={-0.18}>proiettano ombre</SlideText>
-            <SlideText bullet>Specificare quali oggetti</SlideText>
-            <SlideText anchorX={-0.18}>ricevono ombre</SlideText>
-          </SlideBody>
-        </Slide>
-
-        <Slide title="Animazione Player">
-          <SlideBody bullet>
-            <SlideText>Animazione dei passi</SlideText>
-            <SlideText>Camminata in circolo</SlideText>
-          </SlideBody>
-        </Slide>
-
-        <Slide title="Animazione Grid">
-          <SlideBody fontSize={0.3}>
-            <SlideText bullet>Ogni 5 secondi una mattonella</SlideText>
-            <SlideText anchorX={-0.2}>deve sparire per poi ricomparire</SlideText>
-            <SlideText bullet>Prima di scomparire deve</SlideText>
-            <SlideText anchorX={-0.2}>cambiare colore come un</SlideText>
-            <SlideText anchorX={-0.2}>semaforo</SlideText>
-          </SlideBody>
-        </Slide>
-
-        <Slide title="Fine?">
-          <Frame position={[-1.5, 1.5, 1.3]} scale={1.1}>
-            <img src="/images/linktree.png" className="fixed inset-0 size-full" />
-          </Frame>
-        </Slide>
+        <Light2 />
+        <Shadow />
+        <PlayerAnimation />
+        <GridAnimation />
+        <End />
       </Presentation>
     </Canvas>
   )

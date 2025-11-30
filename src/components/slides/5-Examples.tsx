@@ -6,9 +6,11 @@ import type { Vector3Tuple } from 'three'
 
 export function Examples(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
+  const setDemo = useOverlay(s => s.setDemo)
 
   useEffect(() => {
     setLogo({ position: [0, 0, 0], rotation: [0, 0, 0], scale: 0 })
+    setDemo(undefined)
   }, [setLogo])
 
   const examples = [

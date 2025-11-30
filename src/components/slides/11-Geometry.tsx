@@ -19,7 +19,8 @@ import {
   Torus,
   TorusKnot,
 } from '@react-three/drei'
-import { useState, type JSX } from 'react'
+import { useOverlay } from '@stores'
+import { useEffect, useState, type JSX } from 'react'
 import { MathUtils, MeshNormalMaterial } from 'three'
 
 const AnimatedBillboard = animated(Billboard)
@@ -40,7 +41,7 @@ function GeometryItem({ children, id, ...props }: GeometryItemProps) {
     >
       {children}
       <AnimatedBillboard position-y={0.7} {...hoverSpring}>
-        <Plane scale={[1.4, 0.25, 1]} material-color="black" />
+        <Plane scale={[1.5, 0.25, 1]} material-color="black" />
         <SlideText
           bold
           fontSize={0.1}
@@ -55,7 +56,10 @@ function GeometryItem({ children, id, ...props }: GeometryItemProps) {
 }
 
 export function Geometry(props: SlideProps) {
+  const setDemo = useOverlay(s => s.setDemo)
   const material = new MeshNormalMaterial({ flatShading: true })
+
+  useEffect(() => setDemo(undefined), [])
 
   return (
     <Slide title="Geometry" {...props}>

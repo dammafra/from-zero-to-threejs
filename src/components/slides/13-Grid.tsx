@@ -1,7 +1,12 @@
 import { Slide, type SlideProps } from '@components/Slide'
 import { SlideBody, SlideText } from '@components/SlideBody'
+import { useOverlay } from '@stores'
+import { useEffect } from 'react'
 
 export function Grid(props: SlideProps) {
+  const setDemo = useOverlay(s => s.setDemo)
+  useEffect(() => setDemo('5-player'), [])
+
   return (
     <Slide title="Grid" {...props}>
       <SlideBody>

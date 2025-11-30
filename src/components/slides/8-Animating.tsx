@@ -8,6 +8,7 @@ import { MathUtils } from 'three'
 
 export function Animating(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
+  const setDemo = useOverlay(s => s.setDemo)
   const [loops, setLoops] = useState(0)
 
   const [, api] = useSpring(
@@ -22,6 +23,7 @@ export function Animating(props: SlideProps) {
 
   useEffect(() => {
     setLogo({ position: [-3, 1, 1], scale: 0.3 })
+    setDemo('2-resizing')
     api.start()
 
     return () => {

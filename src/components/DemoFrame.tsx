@@ -1,37 +1,27 @@
 import { Frame, type FrameProps } from '@components'
 import { useSpring as useSpringThree } from '@react-spring/three'
 import { a, useSpring as useSpringWeb } from '@react-spring/web'
-import { useState } from 'react'
+import { useOverlay } from '@stores'
+import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
 import { useLocation } from 'wouter'
 
-interface DemoFrameProps extends FrameProps {
-  index: number
-}
+export function DemoFrame(props: FrameProps) {
+  const demo = useOverlay(s => s.demo)
 
-export function DemoFrame({ index, ...props }: DemoFrameProps) {
+  const [src, setSrc] = useState<string>()
+  const [rotationY, setRotationY] = useState(0)
   const [, navigate] = useLocation()
 
-  const demoSrcs: Record<number, string> = {
-    6: '/demo/0-blank/index.html',
-    7: '/demo/1-first-scene/index.html',
-    8: '/demo/2-resizing/index.html',
-    10: '/demo/3-animating/index.html',
-    12: '/demo/4-camera-and-controls/index.html',
-    13: '/demo/5-player/index.html',
-    15: '/demo/6-grid/index.html',
-    16: '/demo/7-lights-and-materials/index.html',
-    17: '/demo/8-shadows/index.html',
-    18: '/demo/9-player-animation/index.html',
-    19: '/demo/10-grid-animation/index.html',
-  }
-
-  const demoIndexes = Object.keys(demoSrcs).map(Number)
+  useEffect(() => {
+    setSrc(demo ? `/demo/${demo}/index.html` : undefined)
+    setRotationY(r => r + 360)
+  }, [demo])
 
   const demoSpring = useSpringThree({
-    position: demoIndexes.includes(index) ? [2.2, 1.5, 1] : [20, 0, 0],
-    scale: demoIndexes.includes(index) ? 1 : 0.001,
-    rotation: [0, MathUtils.degToRad(index * 360), 0],
+    position: demo ? [2.2, 1.5, 1] : [20, 0, 0],
+    scale: demo ? 1 : 0.001,
+    rotation: [0, MathUtils.degToRad(rotationY), 0],
   })
 
   const [loaded, setLoaded] = useState(false)
@@ -40,16 +30,13 @@ export function DemoFrame({ index, ...props }: DemoFrameProps) {
   return (
     // @ts-expect-error spring typings
     <Frame
-      onDoubleClick={() => {
-        localStorage.setItem('demo:last-slide-index', index.toString())
-        navigate(`/demo/${encodeURIComponent(demoSrcs[index])}`)
-      }}
+      onDoubleClick={() => src && navigate(`/demo/${encodeURIComponent(src)}`)}
       {...props}
       {...demoSpring}
     >
       <a.iframe
         className=" h-full w-full pointer-events-none "
-        src={demoSrcs[index]}
+        src={src}
         onLoad={() => setLoaded(true)}
         style={springs}
       />

@@ -8,6 +8,7 @@ import { MathUtils, Object3D, SpotLight } from 'three'
 
 export function FirstScene(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
+  const setDemo = useOverlay(s => s.setDemo)
 
   const cameraRef = useRef<Object3D>(null)
   const stageRef = useRef<Object3D>(null)
@@ -15,6 +16,7 @@ export function FirstScene(props: SlideProps) {
 
   useEffect(() => {
     setLogo({ position: [-0.3, 0.5, 0.5], scale: 0.2 })
+    setDemo('0-blank')
   }, [setLogo])
 
   useFrame(() => {

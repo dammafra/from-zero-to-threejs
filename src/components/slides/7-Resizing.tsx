@@ -8,6 +8,7 @@ import { MathUtils } from 'three'
 
 export function Resizing(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
+  const setDemo = useOverlay(s => s.setDemo)
 
   const [, api] = useSpring(() => ({
     from: { scale: 0.2 },
@@ -19,6 +20,7 @@ export function Resizing(props: SlideProps) {
 
   useEffect(() => {
     setLogo({ position: [-2.5, 0.8, 1.5] })
+    setDemo('1-first-scene')
     api.start()
 
     return () => {
