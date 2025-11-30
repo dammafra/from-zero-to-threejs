@@ -2,12 +2,12 @@ import { a, useSpring } from '@react-spring/three'
 import { Helper, SoftShadows } from '@react-three/drei'
 import { useControls } from 'leva'
 import { CameraHelper } from 'three'
-import { useRoute } from 'wouter'
 
-export function Environment() {
-  const [, params] = useRoute('/slides/:index')
-  const index = params?.index && !isNaN(+params.index) ? +params.index : 0
+interface EnvironmentProps {
+  index: number
+}
 
+export function Environment({ index }: EnvironmentProps) {
   const { helpers, ambientLightIntensity, directionalLightIntensity, directionalLightPosition } =
     useControls(
       'environment',

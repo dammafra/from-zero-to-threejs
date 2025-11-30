@@ -17,7 +17,6 @@ import {
 import { CameraControls } from '@react-three/drei'
 import { MathUtils } from 'three'
 
-import { Environment } from './Environment'
 import { Frame } from './Frame'
 import { Presentation } from './Presentation'
 import { Slide } from './Slide'
@@ -34,7 +33,6 @@ export function Experience() {
         position: [2, 4, 6],
       }}
     >
-      <Environment />
       <CameraControls
         makeDefault
         maxDistance={15}
@@ -60,6 +58,7 @@ export function Experience() {
         <Player />
         <Grid />
         <Light />
+
         <Slide title="Light e Material">
           <SlideBody bullet fontSize={0.28}>
             <SlideText>Utilizzare MeshStandardMaterial</SlideText>
@@ -67,6 +66,7 @@ export function Experience() {
             <SlideText>Aggiungere AmbientLight</SlideText>
           </SlideBody>
         </Slide>
+
         <Slide title="Shadow">
           <SlideBody fontSize={0.28}>
             <SlideText bullet>Abilitare le ombre nel Renderer</SlideText>
@@ -78,12 +78,14 @@ export function Experience() {
             <SlideText anchorX={-0.18}>ricevono ombre</SlideText>
           </SlideBody>
         </Slide>
+
         <Slide title="Animazione Player">
           <SlideBody bullet>
             <SlideText>Animazione dei passi</SlideText>
             <SlideText>Camminata in circolo</SlideText>
           </SlideBody>
         </Slide>
+
         <Slide title="Animazione Grid">
           <SlideBody fontSize={0.3}>
             <SlideText bullet>Ogni 5 secondi una mattonella</SlideText>
@@ -93,19 +95,10 @@ export function Experience() {
             <SlideText anchorX={-0.2}>semaforo</SlideText>
           </SlideBody>
         </Slide>
+
         <Slide title="Fine?">
           <Frame position={[-1.5, 1.5, 1.3]} scale={1.1}>
             <img src="/images/linktree.png" className="fixed inset-0 size-full" />
-          </Frame>
-        </Slide>
-        <Slide background={false}>
-          <Frame scale={1.8}>
-            <img src="/images/quiz.png" className="fixed inset-0 size-full" />
-          </Frame>
-        </Slide>
-        <Slide background={false}>
-          <Frame scale={1.8}>
-            <img src="/images/game.png" className="fixed inset-0 size-full" />
           </Frame>
         </Slide>
       </Presentation>

@@ -1,3 +1,4 @@
+import { animated } from '@react-spring/three'
 import { Text, type TextProps } from '@react-three/drei'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Children, cloneElement, Suspense, type ReactElement } from 'react'
@@ -9,7 +10,7 @@ interface SlideBodyProps extends SlideTextProps {
   offset?: number
 }
 
-export function SlideBody({
+function _SlideBody({
   children,
   offset = 0,
 
@@ -52,7 +53,7 @@ interface SlideTextProps extends TextProps {
   color?: ColorRepresentation
 }
 
-export function SlideText({
+function _SlideText({
   children,
   bold = false,
   bullet = false,
@@ -83,15 +84,18 @@ export function SlideText({
               : '/fonts/EncodeSansSemiExpanded-Regular.ttf'
           }
           fontSize={fontSize}
-          color={color}
           onClick={onClick}
           {...props}
         >
           {bullet && '• '}
           {children}
           {onClick && ' ↗'}
+          <animated.meshBasicMaterial color={color} />
         </Text>
       </Hoverable>
     </Suspense>
   )
 }
+
+export const SlideBody = animated(_SlideBody)
+export const SlideText = animated(_SlideText)
