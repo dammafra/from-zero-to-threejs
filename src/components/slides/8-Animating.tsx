@@ -1,11 +1,14 @@
 import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Clock } from '@components/models'
+import { useIsTouch } from '@hooks'
 import { useSpring } from '@react-spring/three'
 import { useOverlay } from '@stores'
 import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
 
 export function Animating(props: SlideProps) {
+  const isTouch = useIsTouch()
+
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -22,7 +25,7 @@ export function Animating(props: SlideProps) {
 
   useEffect(() => {
     setLogo({ position: [-2.8, 1, 0.8], scale: 0.3 })
-    setDemo('2-resizing')
+    setDemo('3-animating')
 
     api.start()
     return () => {
@@ -38,11 +41,15 @@ export function Animating(props: SlideProps) {
         <SlideText>the scene every frame</SlideText>
       </SlideBody>
 
-      <SlideBody fontSize={0.3} position={[1.8, 0, 1.5]}>
+      <SlideBody fontSize={0.3} position={[1.8, 0, 1]}>
         <SlideText bold>Time or delta</SlideText>
         <SlideText>keep animations</SlideText>
         <SlideText>consistent across</SlideText>
         <SlideText>any framerate</SlideText>
+      </SlideBody>
+
+      <SlideBody fontSize={0.15} position={[isTouch ? 2.9 : 2.4, 0, 3]}>
+        <SlideText>{`${isTouch ? 'Tap' : 'Double click'} to see the code 👉`}</SlideText>
       </SlideBody>
 
       <Clock position={[-3, 0.1, 1.5]} rotation-x={MathUtils.degToRad(-90)} />

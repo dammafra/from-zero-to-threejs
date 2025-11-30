@@ -1,12 +1,15 @@
 import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Hoverable } from '@components/helpers'
 import { Camera as CameraModel, Headset } from '@components/models'
+import { useIsTouch } from '@hooks'
 import { OrthographicCamera } from '@react-three/drei'
 import { useOverlay } from '@stores'
 import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
 
 export function Cameras(props: SlideProps) {
+  const isTouch = useIsTouch()
+
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -21,12 +24,17 @@ export function Cameras(props: SlideProps) {
     <Slide title="Cameras" {...props}>
       <SlideBody>
         <SlideText>There are several types:</SlideText>
-        <SlideText bullet onClick={() => window.open('https://threejs.org/docs#PerspectiveCamera')}>
+        <SlideText
+          bullet
+          onClick={() => window.open('https://threejs.org/docs#PerspectiveCamera')}
+          color={orthographic ? 'black' : 'dodgerblue'}
+        >
           PerspectiveCamera
         </SlideText>
         <SlideText
           bullet
           onClick={() => window.open('https://threejs.org/docs#OrthographicCamera')}
+          color={orthographic ? 'dodgerblue' : 'black'}
         >
           OrthographicCamera
         </SlideText>
@@ -42,7 +50,7 @@ export function Cameras(props: SlideProps) {
       </SlideBody>
 
       <SlideBody position={[5.9, 0, 1.8]}>
-        <SlideText>👆</SlideText>
+        <SlideText fontSize={0.2}>👆{`${isTouch ? 'Touch' : 'Click'} Me`}</SlideText>
       </SlideBody>
 
       <OrthographicCamera makeDefault={orthographic} position={1} near={-50} far={50} />

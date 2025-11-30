@@ -1,11 +1,14 @@
 import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Camera, Stage } from '@components/models'
+import { useIsTouch } from '@hooks'
 import { useFrame } from '@react-three/fiber'
 import { useOverlay } from '@stores'
 import { useEffect, useRef } from 'react'
 import { MathUtils, Object3D, SpotLight } from 'three'
 
 export function FirstScene(props: SlideProps) {
+  const isTouch = useIsTouch()
+
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -14,8 +17,8 @@ export function FirstScene(props: SlideProps) {
   const spotLightRef = useRef<SpotLight>(null)
 
   useEffect(() => {
-    setLogo({ position: [-0.2, 0.6, 0.5], scale: 0.15 })
-    setDemo('0-blank')
+    setLogo({ position: [-0.15, 0.6, 0.2], scale: 0.15 })
+    setDemo('1-first-scene')
   }, [setLogo, setDemo])
 
   useFrame(() => {
@@ -33,9 +36,16 @@ export function FirstScene(props: SlideProps) {
         <SlideText>+ Camera</SlideText>
         <SlideText>= Render</SlideText>
       </SlideBody>
-      <Camera ref={cameraRef} position={[-1.8, 2, 1.8]} scale={0.15} />
-      <Stage ref={stageRef} scale={0.07} rotation-y={MathUtils.degToRad(-30)} />
-      <spotLight ref={spotLightRef} intensity={10} penumbra={0.6} />
+
+      <SlideBody fontSize={0.15} position={[isTouch ? 2.9 : 2.4, 0, 3]}>
+        <SlideText>{`${isTouch ? 'Tap' : 'Double click'} to see the code 👉`}</SlideText>
+      </SlideBody>
+
+      <group position={[0, 0, -0.3]}>
+        <Camera ref={cameraRef} position={[-1.8, 2, 1.8]} scale={0.15} />
+        <Stage ref={stageRef} scale={0.07} rotation-y={MathUtils.degToRad(-30)} />
+        <spotLight ref={spotLightRef} intensity={10} penumbra={0.6} />
+      </group>
     </Slide>
   )
 }

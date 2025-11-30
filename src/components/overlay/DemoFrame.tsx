@@ -5,7 +5,6 @@ import { a, useSpring as useSpringWeb } from '@react-spring/web'
 import { useOverlay } from '@stores'
 import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
-import { useLocation } from 'wouter'
 
 export function DemoFrame(props: FrameProps) {
   const isTouch = useIsTouch()
@@ -13,7 +12,6 @@ export function DemoFrame(props: FrameProps) {
 
   const [src, setSrc] = useState<string>()
   const [rotationY, setRotationY] = useState(0)
-  const [, navigate] = useLocation()
 
   useEffect(() => {
     setSrc(demo ? `/demo/${demo}/index.html` : undefined)
@@ -32,8 +30,8 @@ export function DemoFrame(props: FrameProps) {
   return (
     // @ts-expect-error spring typings
     <Frame
-      onDoubleClick={() => src && navigate(`/demo/${encodeURIComponent(src)}`)}
-      onClick={() => isTouch && src && navigate(`/demo/${encodeURIComponent(src)}`)}
+      onDoubleClick={() => src && window.location.assign(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} //prettier-ignore
+      onClick={() => isTouch && src && window.location.assign(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} //prettier-ignore
       {...props}
       {...demoSpring}
     >

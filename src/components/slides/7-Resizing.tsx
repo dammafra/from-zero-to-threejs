@@ -1,11 +1,14 @@
 import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Ruler } from '@components/models'
+import { useIsTouch } from '@hooks'
 import { useSpring } from '@react-spring/three'
 import { useOverlay } from '@stores'
 import { useEffect } from 'react'
 import { MathUtils } from 'three'
 
 export function Resizing(props: SlideProps) {
+  const isTouch = useIsTouch()
+
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -19,7 +22,7 @@ export function Resizing(props: SlideProps) {
 
   useEffect(() => {
     setLogo({ position: [-2.5, 0.8, 1.5] })
-    setDemo('1-first-scene')
+    setDemo('2-resizing')
 
     api.start()
     return () => {
@@ -38,6 +41,10 @@ export function Resizing(props: SlideProps) {
       <SlideBody bullet position={[0.5, 0, 0.9]}>
         <SlideText>Update the camera</SlideText>
         <SlideText>Update the renderer</SlideText>
+      </SlideBody>
+
+      <SlideBody fontSize={0.15} position={[isTouch ? 2.9 : 2.4, 0, 3]}>
+        <SlideText>{`${isTouch ? 'Tap' : 'Double click'} to see the code 👉`}</SlideText>
       </SlideBody>
 
       <Ruler

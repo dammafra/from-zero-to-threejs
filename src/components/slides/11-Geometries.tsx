@@ -1,4 +1,4 @@
-import { Slide, SlideText, type SlideProps } from '@components'
+import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Hoverable } from '@components/helpers'
 import { useIsTouch } from '@hooks'
 import { animated, config, useSpring } from '@react-spring/three'
@@ -54,6 +54,7 @@ function GeometryItem({ children, id, ...props }: GeometryItemProps) {
 }
 
 export function Geometries(props: SlideProps) {
+  const isTouch = useIsTouch()
   const setDemo = useOverlay(s => s.setDemo)
 
   const material = new MeshNormalMaterial({ flatShading: true })
@@ -161,6 +162,12 @@ export function Geometries(props: SlideProps) {
           </group>
         </group>
       </group>
+
+      {!isTouch && (
+        <SlideBody fontSize={0.15} position={[7, 0, 3]}>
+          <SlideText>Hover 👆</SlideText>
+        </SlideBody>
+      )}
     </Slide>
   )
 }

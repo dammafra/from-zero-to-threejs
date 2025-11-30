@@ -1,4 +1,4 @@
-import { Frame, Slide, type SlideProps } from '@components'
+import { Frame, Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { useIsTouch } from '@hooks'
 import { useSprings } from '@react-spring/three'
 import { useOverlay } from '@stores'
@@ -54,16 +54,23 @@ export function Examples(props: SlideProps) {
 
   return (
     <Slide background={false} {...props}>
-      {examplesSprings.map((spring, i) => (
-        <Frame
-          key={`example-${i}`}
-          onDoubleClick={() => window.location.assign(examples.at(i)!.url)}
-          onClick={() => isTouch && window.location.assign(examples.at(i)!.url)}
-          {...spring}
-        >
-          <img src={examples.at(i)!.image} className="fixed inset-0 size-full" />
-        </Frame>
-      ))}
+      <SlideBody color="white" fontSize={0.3} anchorX="center" position={[3.8, 0, 2.7]}>
+        <SlideText fontSize={0.2}>👆{`${isTouch ? 'Tap' : 'Double click'} to explore`}</SlideText>
+        <SlideText>Here's a preview of what you can achieve with Three.js</SlideText>
+      </SlideBody>
+
+      <group scale={0.7} position-z={-0.5}>
+        {examplesSprings.map((spring, i) => (
+          <Frame
+            key={`example-${i}`}
+            onDoubleClick={() => window.location.assign(examples.at(i)!.url)}
+            onClick={() => isTouch && window.location.assign(examples.at(i)!.url)}
+            {...spring}
+          >
+            <img src={examples.at(i)!.image} className="fixed inset-0 size-full" />
+          </Frame>
+        ))}
+      </group>
     </Slide>
   )
 }

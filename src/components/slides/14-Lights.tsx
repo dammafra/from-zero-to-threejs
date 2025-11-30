@@ -1,5 +1,6 @@
 import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Hoverable } from '@components/helpers'
+import { useIsTouch } from '@hooks'
 import { useSpring } from '@react-spring/three'
 import { Box, SpotLight } from '@react-three/drei'
 import { useEnvironment, useOverlay } from '@stores'
@@ -7,6 +8,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { Material, MeshBasicMaterial, MeshStandardMaterial } from 'three'
 
 export function Lights(props: SlideProps) {
+  const isTouch = useIsTouch()
+
   const setDemo = useOverlay(s => s.setDemo)
   const setLights = useEnvironment(s => s.setLights)
 
@@ -65,8 +68,8 @@ export function Lights(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <SlideBody color={textSpring.color} position={[3.6, 0, 1.8]}>
-        <SlideText>👆</SlideText>
+      <SlideBody color={textSpring.color} position={[3.2, 0, 1.8]}>
+        <SlideText fontSize={0.2}>👆{`${isTouch ? 'Touch' : 'Click'} Me`}</SlideText>
       </SlideBody>
 
       <SpotLight
