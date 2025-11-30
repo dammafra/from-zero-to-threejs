@@ -32,6 +32,12 @@ export function Presentation({
   const previousIndexRef = useRef(0)
 
   useEffect(() => {
+    const value = localStorage.getItem('demo:last-slide-index')
+    if (value !== null) setIndex(+value)
+    localStorage.removeItem('demo:last-slide-index')
+  }, [])
+
+  useEffect(() => {
     if (!match) return
     navigate(`/slides/${index}`)
   }, [match, index, navigate])
