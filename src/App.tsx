@@ -1,5 +1,4 @@
-import { Experience, PresentationControls } from '@components'
-import { Demo } from '@components/Demo'
+import { Demo, Experience, PresentationControls } from '@components'
 import { DoubleTapPreventer, GUI } from '@components/helpers'
 import { StrictMode } from 'react'
 import { Redirect, Route, Switch } from 'wouter'

@@ -1,5 +1,4 @@
-import { Frame } from '@components/Frame'
-import { Slide, type SlideProps } from '@components/Slide'
+import { Frame, Slide, type SlideProps } from '@components'
 import { useIsTouch } from '@hooks'
 import { useOverlay } from '@stores'
 import { useEffect } from 'react'
