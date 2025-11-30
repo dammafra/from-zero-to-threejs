@@ -21,7 +21,7 @@ export function Animating(props: SlideProps) {
   )
 
   useEffect(() => {
-    setLogo({ position: [-3, 1, 1], scale: 0.3 })
+    setLogo({ position: [-2.8, 1, 0.8], scale: 0.3 })
     setDemo('2-resizing')
 
     api.start()

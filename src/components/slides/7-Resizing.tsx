@@ -24,7 +24,7 @@ export function Resizing(props: SlideProps) {
     api.start()
     return () => {
       api.stop()
-      setLogo({ scale: 0.2 })
+      setLogo({ scale: 0.15 })
     }
   }, [setLogo, setDemo, api])
 
