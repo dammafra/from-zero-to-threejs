@@ -1,6 +1,5 @@
+import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Camera } from '@components/models'
-import { Slide, type SlideProps } from '@components/Slide'
-import { SlideBody, SlideText } from '@components/SlideBody'
 import { PivotControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useOverlay } from '@stores'

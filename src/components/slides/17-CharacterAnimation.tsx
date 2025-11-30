@@ -1,5 +1,4 @@
-import { Slide, type SlideProps } from '@components/Slide'
-import { SlideBody, SlideText } from '@components/SlideBody'
+import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { useOverlay } from '@stores'
 import { useEffect } from 'react'
 

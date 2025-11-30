@@ -1,6 +1,5 @@
+import { Slide, SlideText, type SlideProps } from '@components'
 import { Hoverable } from '@components/helpers'
-import { Slide, type SlideProps } from '@components/Slide'
-import { SlideText } from '@components/SlideBody'
 import { useIsTouch } from '@hooks'
 import { animated, config, useSpring } from '@react-spring/three'
 import {

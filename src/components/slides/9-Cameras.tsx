@@ -1,7 +1,6 @@
+import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Hoverable } from '@components/helpers'
 import { Camera as CameraModel, Headset } from '@components/models'
-import { Slide, type SlideProps } from '@components/Slide'
-import { SlideBody, SlideText } from '@components/SlideBody'
 import { OrthographicCamera } from '@react-three/drei'
 import { useOverlay } from '@stores'
 import { useEffect, useState } from 'react'
