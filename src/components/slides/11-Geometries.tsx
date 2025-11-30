@@ -55,7 +55,7 @@ function GeometryItem({ children, id, ...props }: GeometryItemProps) {
   )
 }
 
-export function Geometry(props: SlideProps) {
+export function Geometries(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
 
   const material = new MeshNormalMaterial({ flatShading: true })
@@ -63,7 +63,7 @@ export function Geometry(props: SlideProps) {
   useEffect(() => setDemo(undefined), [setDemo])
 
   return (
-    <Slide title="Geometry" {...props}>
+    <Slide title="Geometries" {...props}>
       <group scale={0.85}>
         {/* Box */}
         <GeometryItem id="BoxGeometry" position={[-3, 0.5, -0.5]}>

@@ -13,19 +13,19 @@ export function Goal(props: SlideProps) {
   }, [setLogo])
 
   return (
-    <Slide title="Obiettivo" {...props}>
+    <Slide title="Goal" {...props}>
       <Target scale={3.5} position={[3, 0, -0.5]} rotation-y={MathUtils.degToRad(-45)} />
       <SlideBody>
-        <SlideText>Creare le basi per un mini videogioco:</SlideText>
+        <SlideText>Create the foundations</SlideText>
+        <SlideText>for a minigame:</SlideText>
         <SlideText bullet bold>
-          Personaggio
+          Character
         </SlideText>
-        <SlideText anchorX={-0.25}>con animazione del movimento</SlideText>
+        <SlideText anchorX={-0.25}>with movement animation</SlideText>
         <SlideText bullet bold>
-          Ambientazione
+          Environment
         </SlideText>
-        <SlideText anchorX={-0.25}>griglia con mattonelle che</SlideText>
-        <SlideText anchorX={-0.25}>scompaiono</SlideText>
+        <SlideText anchorX={-0.25}>grid with tiles that disappear</SlideText>
       </SlideBody>
     </Slide>
   )

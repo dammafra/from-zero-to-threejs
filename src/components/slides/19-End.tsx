@@ -9,7 +9,7 @@ export function End(props: SlideProps) {
   useEffect(() => setDemo('10-grid-animation'), [setDemo])
 
   return (
-    <Slide title="Fine?" {...props}>
+    <Slide title="The End... ?" {...props}>
       <Frame position={[-1.5, 1.5, 1.3]} scale={1.1}>
         <img src="/images/linktree.png" className="fixed inset-0 size-full" />
       </Frame>

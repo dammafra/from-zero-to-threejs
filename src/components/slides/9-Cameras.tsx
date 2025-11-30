@@ -7,7 +7,7 @@ import { useOverlay } from '@stores'
 import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
 
-export function Camera(props: SlideProps) {
+export function Cameras(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -19,9 +19,9 @@ export function Camera(props: SlideProps) {
   }, [setLogo, setDemo])
 
   return (
-    <Slide title="Camera" {...props}>
+    <Slide title="Cameras" {...props}>
       <SlideBody>
-        <SlideText>Esistono diverse tipologie:</SlideText>
+        <SlideText>There are several types:</SlideText>
         <SlideText bullet onClick={() => window.open('https://threejs.org/docs#PerspectiveCamera')}>
           PerspectiveCamera
         </SlideText>

@@ -5,7 +5,7 @@ import { useOverlay } from '@stores'
 import { useEffect } from 'react'
 import { MathUtils } from 'three'
 
-export function Summary(props: SlideProps) {
+export function Overview(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
 
   useEffect(() => {
@@ -13,16 +13,16 @@ export function Summary(props: SlideProps) {
   }, [setLogo])
 
   return (
-    <Slide title="Cosa scopriremo" {...props}>
+    <Slide title="Overview" {...props}>
       <Book scale={2.5} position={[-2.5, 0, 0.2]} rotation-y={MathUtils.degToRad(25)} />
       <SlideBody bullet offset={3}>
-        <SlideText>Setup di una scena</SlideText>
-        <SlideText>Camera e Controls</SlideText>
-        <SlideText>Geometry e Material</SlideText>
-        <SlideText>Creazione di oggetti</SlideText>
-        <SlideText>Trasformazione di oggetti</SlideText>
-        <SlideText>Animazione di oggetti</SlideText>
-        <SlideText>Luci e Ombre</SlideText>
+        <SlideText>Scene setup</SlideText>
+        <SlideText>Camera and Controls</SlideText>
+        <SlideText>Geometries and Materials</SlideText>
+        <SlideText>Objects Creation</SlideText>
+        <SlideText>Objects Transformations</SlideText>
+        <SlideText>Animating</SlideText>
+        <SlideText>Lights and Shadow</SlideText>
       </SlideBody>
     </Slide>
   )

@@ -7,7 +7,7 @@ import { useEnvironment, useOverlay } from '@stores'
 import { useEffect, useMemo, useState } from 'react'
 import { Material, MeshBasicMaterial, MeshStandardMaterial } from 'three'
 
-export function Light(props: SlideProps) {
+export function Lights(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
   const setLights = useEnvironment(s => s.setLights)
 
@@ -38,7 +38,7 @@ export function Light(props: SlideProps) {
   })
 
   return (
-    <Slide title="Light e Material" {...props}>
+    <Slide title="Lights and Materials" {...props}>
       <SlideBody color={textSpring.color} bullet fontSize={0.25}>
         <SlideText onClick={() => window.open('https://threejs.org/docs#AmbientLight')}>
           AmbientLight

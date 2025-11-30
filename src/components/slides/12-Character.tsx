@@ -3,20 +3,20 @@ import { SlideBody, SlideText } from '@components/SlideBody'
 import { useOverlay } from '@stores'
 import { useEffect } from 'react'
 
-export function Player(props: SlideProps) {
+export function Character(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
 
   useEffect(() => setDemo('4-camera-and-controls'), [setDemo])
 
   return (
-    <Slide title="Player" {...props}>
+    <Slide title="Character" {...props}>
       <SlideBody fontSize={0.25}>
-        <SlideText>Personaggio stilizzato:</SlideText>
-        <SlideText bullet>Cubo per il corpo</SlideText>
-        <SlideText bullet>Tronco di cono per i piedi</SlideText>
-        <SlideText bullet>Occhi rettangolari</SlideText>
+        <SlideText>Stylized character:</SlideText>
+        <SlideText bullet>Cube for the body</SlideText>
+        <SlideText bullet>Truncated cone for the feet</SlideText>
+        <SlideText bullet>Rectangular eyes</SlideText>
         <SlideText> </SlideText>
-        <SlideText>Per farlo utilizzeremo le trasformazioni:</SlideText>
+        <SlideText>We will use transformations:</SlideText>
         <SlideText bullet bold>
           Position
         </SlideText>

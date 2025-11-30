@@ -12,11 +12,9 @@ const scene = new THREE.Scene()
 
 // Helpers
 const axesHelper = new THREE.AxesHelper(10)
-axesHelper.visible = false
 
 const gridHelper = new THREE.GridHelper(10, 20)
 gridHelper.position.y = -0.001
-gridHelper.visible = false
 
 scene.add(axesHelper, gridHelper)
 
@@ -49,8 +47,9 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100)
-camera.position.y = 8
-camera.position.z = 10
+camera.position.x = 2
+camera.position.y = 2
+camera.position.z = 2
 scene.add(camera)
 
 // Controls
@@ -63,38 +62,20 @@ controls.enableDamping = true
 const renderer = new THREE.WebGLRenderer({ canvas: canvas })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(sizes.pixelRatio)
-renderer.shadowMap.enabled = true
 
 /**
- * Lights *********************************************************************
+ * Charachter *****************************************************************
  */
-// Ambient light
-const ambientLight = new THREE.AmbientLight('white', 0.5)
-scene.add(ambientLight)
+const character = new THREE.Group()
+character.position.y = 0.35
+character.scale.setScalar(0.5)
+scene.add(character)
 
-// Directional light
-const directionalLight = new THREE.DirectionalLight('white', 3)
-directionalLight.position.set(2, 4, 4)
-directionalLight.castShadow = true
-scene.add(directionalLight)
+const characterBodyMaterial = new THREE.MeshBasicMaterial({ color: 'orange' })
 
-/**
- * Player *********************************************************************
- */
-const player = new THREE.Group()
-player.position.y = 0.35
-player.scale.setScalar(0.5)
-scene.add(player)
+const body = new THREE.Mesh(new THREE.BoxGeometry(), characterBodyMaterial)
 
-const playerBodyMaterial = new THREE.MeshStandardMaterial({
-  color: 'orange',
-  roughness: 0.7,
-})
-
-const body = new THREE.Mesh(new THREE.BoxGeometry(), playerBodyMaterial)
-body.castShadow = true
-
-const foot1 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.8, 0.75, 16), playerBodyMaterial)
+const foot1 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.8, 0.75, 16), characterBodyMaterial)
 foot1.position.x = 0.25
 foot1.position.y = -0.6
 foot1.scale.setScalar(0.25)
@@ -104,10 +85,7 @@ foot2.position.x *= -1
 
 const eye1 = new THREE.Mesh(
   new THREE.PlaneGeometry(1, 4),
-  new THREE.MeshStandardMaterial({
-    color: 'black',
-    roughness: 0.1,
-  })
+  new THREE.MeshBasicMaterial({ color: 'black' }),
 )
 eye1.position.set(0.25, 0.1, 0.501)
 eye1.scale.setScalar(0.125)
@@ -115,52 +93,7 @@ eye1.scale.setScalar(0.125)
 const eye2 = eye1.clone()
 eye2.position.x *= -1
 
-player.add(body, foot1, foot2, eye1, eye2)
-
-const updatePlayer = (elapsedTime, delta) => {
-  // Feet animation
-  foot1.position.z = Math.sin(elapsedTime * 10) * 0.25
-  foot2.position.z = -foot1.position.z
-
-  // Walk animation - position
-  const angle = elapsedTime * 0.75
-  player.position.x = Math.sin(angle) * 2
-  player.position.z = Math.cos(angle) * 2
-
-  // Walk animation - direction
-  const dirX = Math.cos(angle) // derivative of sin
-  const dirZ = -Math.sin(angle) // derivative of cos
-  player.rotation.y = Math.atan2(dirX, dirZ)
-}
-
-/**
- * Grid ***********************************************************************
- */
-const grid = new THREE.Group()
-grid.position.set(-3.5, -0.115, -2.5)
-scene.add(grid)
-
-const tileGeometry = new THREE.BoxGeometry(1, 0.25, 1)
-const tileMaterial = new THREE.MeshStandardMaterial({
-  color: 'dodgerblue',
-  roughness: 0,
-  transparent: true,
-  opacity: 0.9,
-})
-
-const width = 8
-const height = 6
-
-for (let i = 0; i < width; i++) {
-  for (let j = 0; j < height; j++) {
-    const tile = new THREE.Mesh(tileGeometry, tileMaterial)
-    tile.position.x = i
-    tile.position.z = j
-    tile.scale.setScalar(0.92)
-    tile.receiveShadow = true
-    grid.add(tile)
-  }
-}
+character.add(body, foot1, foot2, eye1, eye2)
 
 /**
  * Animate ********************************************************************
@@ -174,9 +107,6 @@ const tick = () => {
 
   // Update controls
   controls.update(delta)
-
-  // Update player
-  updatePlayer(elapsedTime, delta)
 
   // Render
   renderer.render(scene, camera)

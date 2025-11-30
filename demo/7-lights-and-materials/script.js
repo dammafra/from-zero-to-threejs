@@ -77,21 +77,21 @@ directionalLight.position.set(2, 4, 4)
 scene.add(directionalLight)
 
 /**
- * Player *********************************************************************
+ * Charachter *****************************************************************
  */
-const player = new THREE.Group()
-player.position.y = 0.35
-player.scale.setScalar(0.5)
-scene.add(player)
+const character = new THREE.Group()
+character.position.y = 0.35
+character.scale.setScalar(0.5)
+scene.add(character)
 
-const playerBodyMaterial = new THREE.MeshStandardMaterial({
+const characterBodyMaterial = new THREE.MeshStandardMaterial({
   color: 'orange',
   roughness: 0.7,
 })
 
-const body = new THREE.Mesh(new THREE.BoxGeometry(), playerBodyMaterial)
+const body = new THREE.Mesh(new THREE.BoxGeometry(), characterBodyMaterial)
 
-const foot1 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.8, 0.75, 16), playerBodyMaterial)
+const foot1 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.8, 0.75, 16), characterBodyMaterial)
 foot1.position.x = 0.25
 foot1.position.y = -0.6
 foot1.scale.setScalar(0.25)
@@ -104,7 +104,7 @@ const eye1 = new THREE.Mesh(
   new THREE.MeshStandardMaterial({
     color: 'black',
     roughness: 0.1,
-  })
+  }),
 )
 eye1.position.set(0.25, 0.1, 0.501)
 eye1.scale.setScalar(0.125)
@@ -112,7 +112,7 @@ eye1.scale.setScalar(0.125)
 const eye2 = eye1.clone()
 eye2.position.x *= -1
 
-player.add(body, foot1, foot2, eye1, eye2)
+character.add(body, foot1, foot2, eye1, eye2)
 
 /**
  * Grid ***********************************************************************

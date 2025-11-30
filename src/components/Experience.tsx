@@ -2,22 +2,22 @@ import { Canvas, Helpers } from '@components/helpers'
 import {
   AboutMe,
   Animating,
-  Camera,
+  Cameras,
+  Character,
+  CharacterAnimation,
   Controls,
   End,
   Examples,
   FirstScene,
-  Geometry,
+  Geometries,
   Goal,
   Grid,
   GridAnimation,
-  Light,
-  Light2,
-  Player,
-  PlayerAnimation,
+  Lights,
+  Lights2,
+  Overview,
   Resizing,
   Shadow,
-  Summary,
   Title,
   WebGL,
 } from '@components/slides'
@@ -51,22 +51,22 @@ export function Experience() {
       <Presentation backgroundColor="orange">
         <Title />
         <Goal />
-        <Summary />
+        <Overview />
         <AboutMe />
         <WebGL />
         <Examples />
         <FirstScene />
         <Resizing />
         <Animating />
-        <Camera />
+        <Cameras />
         <Controls />
-        <Geometry />
-        <Player />
+        <Geometries />
+        <Character />
         <Grid />
-        <Light />
-        <Light2 />
+        <Lights />
+        <Lights2 />
         <Shadow />
-        <PlayerAnimation />
+        <CharacterAnimation />
         <GridAnimation />
         <End />
       </Presentation>

@@ -11,13 +11,13 @@ export function Shadow(props: SlideProps) {
   return (
     <Slide title="Shadow" {...props}>
       <SlideBody fontSize={0.28}>
-        <SlideText bullet>Abilitare le ombre nel Renderer</SlideText>
-        <SlideText bullet>Specificare quali luci</SlideText>
-        <SlideText anchorX={-0.18}>proiettano ombre</SlideText>
-        <SlideText bullet>Specificare quali oggetti</SlideText>
-        <SlideText anchorX={-0.18}>proiettano ombre</SlideText>
-        <SlideText bullet>Specificare quali oggetti</SlideText>
-        <SlideText anchorX={-0.18}>ricevono ombre</SlideText>
+        <SlideText bullet>Enable Renderer shadows</SlideText>
+        <SlideText bullet>Specify which lights</SlideText>
+        <SlideText anchorX={-0.18}>cast shadows</SlideText>
+        <SlideText bullet>Specify which objects</SlideText>
+        <SlideText anchorX={-0.18}>cast shadows</SlideText>
+        <SlideText bullet>Specify which objects</SlideText>
+        <SlideText anchorX={-0.18}>receive shadows</SlideText>
       </SlideBody>
     </Slide>
   )

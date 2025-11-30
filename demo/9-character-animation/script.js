@@ -63,6 +63,20 @@ controls.enableDamping = true
 const renderer = new THREE.WebGLRenderer({ canvas: canvas })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(sizes.pixelRatio)
+renderer.shadowMap.enabled = true
+
+/**
+ * Lights *********************************************************************
+ */
+// Ambient light
+const ambientLight = new THREE.AmbientLight('white', 0.5)
+scene.add(ambientLight)
+
+// Directional light
+const directionalLight = new THREE.DirectionalLight('white', 3)
+directionalLight.position.set(2, 4, 4)
+directionalLight.castShadow = true
+scene.add(directionalLight)
 
 /**
  * Charachter *****************************************************************
@@ -72,9 +86,13 @@ character.position.y = 0.35
 character.scale.setScalar(0.5)
 scene.add(character)
 
-const characterBodyMaterial = new THREE.MeshBasicMaterial({ color: 'orange' })
+const characterBodyMaterial = new THREE.MeshStandardMaterial({
+  color: 'orange',
+  roughness: 0.7,
+})
 
 const body = new THREE.Mesh(new THREE.BoxGeometry(), characterBodyMaterial)
+body.castShadow = true
 
 const foot1 = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.8, 0.75, 16), characterBodyMaterial)
 foot1.position.x = 0.25
@@ -86,7 +104,10 @@ foot2.position.x *= -1
 
 const eye1 = new THREE.Mesh(
   new THREE.PlaneGeometry(1, 4),
-  new THREE.MeshBasicMaterial({ color: 'black' }),
+  new THREE.MeshStandardMaterial({
+    color: 'black',
+    roughness: 0.1,
+  }),
 )
 eye1.position.set(0.25, 0.1, 0.501)
 eye1.scale.setScalar(0.125)
@@ -96,6 +117,22 @@ eye2.position.x *= -1
 
 character.add(body, foot1, foot2, eye1, eye2)
 
+const updateCharachter = (elapsedTime, delta) => {
+  // Feet animation
+  foot1.position.z = Math.sin(elapsedTime * 10) * 0.25
+  foot2.position.z = -foot1.position.z
+
+  // Walk animation - position
+  const angle = elapsedTime * 0.75
+  character.position.x = Math.sin(angle) * 2
+  character.position.z = Math.cos(angle) * 2
+
+  // Walk animation - direction
+  const dirX = Math.cos(angle) // derivative of sin
+  const dirZ = -Math.sin(angle) // derivative of cos
+  character.rotation.y = Math.atan2(dirX, dirZ)
+}
+
 /**
  * Grid ***********************************************************************
  */
@@ -104,8 +141,9 @@ grid.position.set(-3.5, -0.115, -2.5)
 scene.add(grid)
 
 const tileGeometry = new THREE.BoxGeometry(1, 0.25, 1)
-const tileMaterial = new THREE.MeshBasicMaterial({
+const tileMaterial = new THREE.MeshStandardMaterial({
   color: 'dodgerblue',
+  roughness: 0,
   transparent: true,
   opacity: 0.9,
 })
@@ -119,6 +157,7 @@ for (let i = 0; i < width; i++) {
     tile.position.x = i
     tile.position.z = j
     tile.scale.setScalar(0.92)
+    tile.receiveShadow = true
     grid.add(tile)
   }
 }
@@ -135,6 +174,9 @@ const tick = () => {
 
   // Update controls
   controls.update(delta)
+
+  // Update character
+  updateCharachter(elapsedTime, delta)
 
   // Render
   renderer.render(scene, camera)

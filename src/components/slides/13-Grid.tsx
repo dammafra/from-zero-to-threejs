@@ -6,14 +6,14 @@ import { useEffect } from 'react'
 export function Grid(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
 
-  useEffect(() => setDemo('5-player'), [setDemo])
+  useEffect(() => setDemo('5-character'), [setDemo])
 
   return (
     <Slide title="Grid" {...props}>
       <SlideBody>
-        <SlideText>Pavimento rettangolare:</SlideText>
-        <SlideText bullet>Dimensione 8x6 </SlideText>
-        <SlideText bullet>Mattonelle quadrate </SlideText>
+        <SlideText>Rectangular floor:</SlideText>
+        <SlideText bullet>Squared tiles</SlideText>
+        <SlideText bullet>8x6 dimension</SlideText>
       </SlideBody>
     </Slide>
   )

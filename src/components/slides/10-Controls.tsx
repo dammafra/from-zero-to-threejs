@@ -25,8 +25,8 @@ export function Controls(props: SlideProps) {
   return (
     <Slide title="Controls" {...props}>
       <SlideBody fontSize={0.25}>
-        <SlideText>Classi che permettono di controllare</SlideText>
-        <SlideText>gli oggetti, tra cui la Camera:</SlideText>
+        <SlideText>Classes that allow controlling</SlideText>
+        <SlideText>objects, including the Camera:</SlideText>
         <SlideText
           bullet
           onClick={() => window.open('https://threejs.org/examples#misc_controls_fly')}

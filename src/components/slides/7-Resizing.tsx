@@ -32,13 +32,13 @@ export function Resizing(props: SlideProps) {
   return (
     <Slide title="Resizing" {...props}>
       <SlideBody bullet>
-        <SlideText>Canvas fullscreen</SlideText>
-        <SlideText>Canvas responsive:</SlideText>
+        <SlideText>Fullscreen canvas</SlideText>
+        <SlideText>Responsive canvas:</SlideText>
       </SlideBody>
 
       <SlideBody bullet position={[0.5, 0, 0.9]}>
-        <SlideText>Aggiornare Camera</SlideText>
-        <SlideText>Aggiornare Renderer</SlideText>
+        <SlideText>Update the camera</SlideText>
+        <SlideText>Update the renderer</SlideText>
       </SlideBody>
 
       <Ruler

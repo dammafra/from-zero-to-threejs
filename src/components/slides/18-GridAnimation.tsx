@@ -6,16 +6,15 @@ import { useEffect } from 'react'
 export function GridAnimation(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
 
-  useEffect(() => setDemo('9-player-animation'), [setDemo])
+  useEffect(() => setDemo('9-character-animation'), [setDemo])
 
   return (
-    <Slide title="Animazione Grid" {...props}>
+    <Slide title="Grid Animation" {...props}>
       <SlideBody fontSize={0.3}>
-        <SlideText bullet>Ogni 5 secondi una mattonella</SlideText>
-        <SlideText anchorX={-0.2}>deve sparire per poi ricomparire</SlideText>
-        <SlideText bullet>Prima di scomparire deve</SlideText>
-        <SlideText anchorX={-0.2}>cambiare colore come un</SlideText>
-        <SlideText anchorX={-0.2}>semaforo</SlideText>
+        <SlideText bullet>Every 5 seconds a tile must</SlideText>
+        <SlideText anchorX={-0.2}>disappear and then reappear</SlideText>
+        <SlideText bullet>Before disappearing it must</SlideText>
+        <SlideText anchorX={-0.2}>change color like a traffic light</SlideText>
       </SlideBody>
     </Slide>
   )

@@ -27,7 +27,7 @@ export function FirstScene(props: SlideProps) {
   })
 
   return (
-    <Slide title="Prima scena" {...props}>
+    <Slide title="First Scene" {...props}>
       <SlideBody>
         <SlideText>Canvas</SlideText>
         <SlideText>+ Scene</SlideText>
