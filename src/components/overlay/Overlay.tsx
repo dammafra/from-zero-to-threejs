@@ -1,5 +1,4 @@
 import { DemoFrame } from '@components/DemoFrame'
-import { OverlayExamples } from './OverlayExamples'
 import { OverlayLogo } from './OverlayLogo'
 
 export interface OverlayProps {
@@ -12,7 +11,6 @@ export function Overlay({ show, index }: OverlayProps) {
     show && (
       <>
         <OverlayLogo />
-        <OverlayExamples index={index} />
         <DemoFrame index={index} />
       </>
     )
