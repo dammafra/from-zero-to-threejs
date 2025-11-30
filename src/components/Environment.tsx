@@ -1,13 +1,12 @@
 import { a, useSpring } from '@react-spring/three'
 import { Helper, SoftShadows } from '@react-three/drei'
+import { useEnvironment } from '@stores'
 import { useControls } from 'leva'
 import { CameraHelper } from 'three'
 
-interface EnvironmentProps {
-  index: number
-}
+export function Environment() {
+  const lights = useEnvironment(s => s.lights)
 
-export function Environment({ index }: EnvironmentProps) {
   const { helpers, ambientLightIntensity, directionalLightIntensity, directionalLightPosition } =
     useControls(
       'environment',
@@ -39,15 +38,15 @@ export function Environment({ index }: EnvironmentProps) {
     )
 
   const ambientSpring = useSpring({
-    intensity: index === 14 ? 0 : ambientLightIntensity,
+    intensity: lights ? ambientLightIntensity : 0,
     config: { duration: 500 },
-    delay: 500,
+    delay: lights ? 0 : 500,
   })
 
   const directionalSpring = useSpring({
-    intensity: index === 14 ? 0 : directionalLightIntensity,
+    intensity: lights ? directionalLightIntensity : 0,
     config: { duration: 500 },
-    delay: 500,
+    delay: lights ? 0 : 500,
   })
 
   return (

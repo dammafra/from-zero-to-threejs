@@ -24,6 +24,7 @@ import {
 import { CameraControls } from '@react-three/drei'
 import { MathUtils } from 'three'
 
+import { Environment } from './Environment'
 import { Presentation } from './Presentation'
 
 export function Experience() {
@@ -37,6 +38,7 @@ export function Experience() {
         position: [2, 4, 6],
       }}
     >
+      <Environment />
       <CameraControls
         makeDefault
         maxDistance={15}

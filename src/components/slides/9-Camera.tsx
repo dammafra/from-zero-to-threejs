@@ -61,13 +61,7 @@ export function Camera(props: SlideProps) {
       </Hoverable>
       <CameraModel position={[2.1, 1.2, 0.2]} scale={0.2} rotation-y={MathUtils.degToRad(30)} />
 
-      <mesh
-        castShadow
-        receiveShadow
-        position={[1.5, 0.35, 1]}
-        scale={0.7}
-        onClick={() => setOrthographic(!orthographic)}
-      >
+      <mesh castShadow receiveShadow position={[1.5, 0.35, 1]} scale={0.7}>
         <boxGeometry />
         <meshStandardMaterial color="limegreen" />
       </mesh>

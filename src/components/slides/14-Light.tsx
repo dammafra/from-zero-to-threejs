@@ -3,12 +3,13 @@ import { Slide, type SlideProps } from '@components/Slide'
 import { SlideBody, SlideText } from '@components/SlideBody'
 import { useSpring } from '@react-spring/three'
 import { Box, SpotLight } from '@react-three/drei'
-import { useOverlay } from '@stores'
+import { useEnvironment, useOverlay } from '@stores'
 import { useEffect, useMemo, useState } from 'react'
 import { Material, MeshBasicMaterial, MeshStandardMaterial } from 'three'
 
 export function Light(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
+  const setLights = useEnvironment(s => s.setLights)
 
   const basicMaterial = useMemo(() => new MeshBasicMaterial({ color: 'red' }), [])
   const standardMaterial = useMemo(() => new MeshStandardMaterial({ color: 'red' }), [])
@@ -17,7 +18,12 @@ export function Light(props: SlideProps) {
   const [material, setMaterial] = useState<Material>(basicMaterial)
   const [materialId, setMaterialId] = useState('MeshBasicMaterial')
 
-  useEffect(() => setDemo(undefined), [setDemo])
+  useEffect(() => {
+    setDemo(undefined)
+
+    setLights(false)
+    return () => setLights(true)
+  }, [setDemo, setLights])
 
   useEffect(() => {
     setMaterial(toggleMaterial ? standardMaterial : basicMaterial)
