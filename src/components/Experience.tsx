@@ -17,7 +17,7 @@ import {
   Lights2,
   Overview,
   Resizing,
-  Shadow,
+  Shadows,
   Title,
   WebGL,
 } from '@components/slides'
@@ -65,7 +65,7 @@ export function Experience() {
         <Grid />
         <Lights />
         <Lights2 />
-        <Shadow />
+        <Shadows />
         <CharacterAnimation />
         <GridAnimation />
         <End />

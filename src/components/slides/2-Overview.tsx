@@ -22,7 +22,7 @@ export function Overview(props: SlideProps) {
         <SlideText>Objects Creation</SlideText>
         <SlideText>Objects Transformations</SlideText>
         <SlideText>Animating</SlideText>
-        <SlideText>Lights and Shadow</SlideText>
+        <SlideText>Lights and Shadows</SlideText>
       </SlideBody>
     </Slide>
   )

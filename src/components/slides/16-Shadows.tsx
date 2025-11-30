@@ -3,13 +3,13 @@ import { SlideBody, SlideText } from '@components/SlideBody'
 import { useOverlay } from '@stores'
 import { useEffect } from 'react'
 
-export function Shadow(props: SlideProps) {
+export function Shadows(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
 
   useEffect(() => setDemo('7-lights-and-materials'), [setDemo])
 
   return (
-    <Slide title="Shadow" {...props}>
+    <Slide title="Shadows" {...props}>
       <SlideBody fontSize={0.28}>
         <SlideText bullet>Enable Renderer shadows</SlideText>
         <SlideText bullet>Specify which lights</SlideText>
