@@ -2,7 +2,7 @@ import { a } from '@react-spring/three'
 import { CameraControls, Text3D, useFont, useKeyboardControls } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useEffect, useRef, type JSX, type PropsWithChildren } from 'react'
-import { DoubleSide, MathUtils, Mesh, type ColorRepresentation } from 'three'
+import { DoubleSide, MathUtils, Mesh, type ColorRepresentation, type Vector3Tuple } from 'three'
 
 export type SlideProps = JSX.IntrinsicElements['group'] &
   PropsWithChildren & {
@@ -10,6 +10,7 @@ export type SlideProps = JSX.IntrinsicElements['group'] &
     backgroundColor?: ColorRepresentation
     title?: string
     titleSize?: number
+    titlePosition?: Vector3Tuple
     titleColor?: ColorRepresentation
   }
 
@@ -18,6 +19,7 @@ function Slide_({
   backgroundColor = 'white',
   title,
   titleSize = 0.5,
+  titlePosition = [-3.8, 0.02, -1.5],
   titleColor = 'red',
   children,
   ...props
@@ -53,7 +55,7 @@ function Slide_({
         {title && (
           <Text3D
             castShadow
-            position={[-3.8, 0.02, -1.5]}
+            position={titlePosition}
             size={titleSize}
             rotation-x={MathUtils.degToRad(-90)}
             font="/fonts/Encode Sans Semi Expanded_Regular.json"
