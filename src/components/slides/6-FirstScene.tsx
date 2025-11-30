@@ -14,7 +14,7 @@ export function FirstScene(props: SlideProps) {
   const spotLightRef = useRef<SpotLight>(null)
 
   useEffect(() => {
-    setLogo({ position: [-0.3, 0.5, 0.5], scale: 0.2 })
+    setLogo({ position: [-0.3, 0.5, 0.5], scale: 0.15 })
     setDemo('0-blank')
   }, [setLogo, setDemo])
 
@@ -34,7 +34,7 @@ export function FirstScene(props: SlideProps) {
         <SlideText>= Render</SlideText>
       </SlideBody>
       <Camera ref={cameraRef} position={[-1.8, 2, 1.8]} scale={0.15} />
-      <Stage ref={stageRef} scale={0.08} rotation-y={MathUtils.degToRad(-30)} />
+      <Stage ref={stageRef} scale={0.07} rotation-y={MathUtils.degToRad(-30)} />
       <spotLight ref={spotLightRef} intensity={10} penumbra={0.6} />
     </Slide>
   )
