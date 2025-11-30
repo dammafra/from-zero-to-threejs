@@ -2,13 +2,20 @@ import { Camera, Stage } from '@components/models'
 import { Slide, type SlideProps } from '@components/Slide'
 import { SlideBody, SlideText } from '@components/SlideBody'
 import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useOverlay } from '@stores'
+import { useEffect, useRef } from 'react'
 import { MathUtils, Object3D, SpotLight } from 'three'
 
 export function FirstScene(props: SlideProps) {
+  const setLogo = useOverlay(s => s.setLogo)
+
   const cameraRef = useRef<Object3D>(null)
   const stageRef = useRef<Object3D>(null)
   const spotLightRef = useRef<SpotLight>(null)
+
+  useEffect(() => {
+    setLogo({ position: [-0.3, 0.5, 0.5], scale: 0.2 })
+  }, [setLogo])
 
   useFrame(() => {
     if (!cameraRef.current || !stageRef.current || !spotLightRef.current) return

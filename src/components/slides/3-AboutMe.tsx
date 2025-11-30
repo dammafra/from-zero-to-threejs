@@ -10,9 +10,17 @@ import {
   Macbook,
   Popcorn,
 } from '@components/models'
+import { useOverlay } from '@stores'
+import { useEffect } from 'react'
 import { MathUtils } from 'three'
 
 export function AboutMe(props: SlideProps) {
+  const setLogo = useOverlay(s => s.setLogo)
+
+  useEffect(() => {
+    setLogo({ position: [-0.1, 1.7, 1.3], scale: 0.1 })
+  }, [setLogo])
+
   return (
     <Slide title="Francesco Dammacco" {...props}>
       <Avatar position={[2, 0.02, 1]} scale={1.5} />

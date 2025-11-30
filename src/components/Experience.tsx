@@ -4,6 +4,7 @@ import {
   Animating,
   Camera,
   Controls,
+  Examples,
   FirstScene,
   Geometry,
   Goal,
@@ -13,6 +14,7 @@ import {
   Resizing,
   Summary,
   Title,
+  WebGL,
 } from '@components/slides'
 import { CameraControls } from '@react-three/drei'
 import { MathUtils } from 'three'
@@ -47,8 +49,8 @@ export function Experience() {
         <Goal />
         <Summary />
         <AboutMe />
-        <Slide background={false} />
-        <Slide background={false} />
+        <WebGL />
+        <Examples />
         <FirstScene />
         <Resizing />
         <Animating />

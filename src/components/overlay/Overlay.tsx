@@ -11,7 +11,7 @@ export function Overlay({ show, index }: OverlayProps) {
   return (
     show && (
       <>
-        <OverlayLogo index={index} />
+        <OverlayLogo />
         <OverlayExamples index={index} />
         <DemoFrame index={index} />
       </>

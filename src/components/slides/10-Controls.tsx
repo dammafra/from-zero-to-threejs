@@ -3,11 +3,17 @@ import { Slide, type SlideProps } from '@components/Slide'
 import { SlideBody, SlideText } from '@components/SlideBody'
 import { PivotControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useOverlay } from '@stores'
+import { useEffect, useRef } from 'react'
 import { Vector3, type Object3D } from 'three'
 
 export function Controls(props: SlideProps) {
+  const setLogo = useOverlay(s => s.setLogo)
   const cameraRef = useRef<Object3D>(null)
+
+  useEffect(() => {
+    setLogo({ visible: false })
+  }, [setLogo])
 
   useFrame(() => {
     cameraRef.current?.lookAt(new Vector3(-1, 0, 0))

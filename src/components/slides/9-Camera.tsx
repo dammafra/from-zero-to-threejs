@@ -3,11 +3,17 @@ import { Camera as CameraModel, Headset } from '@components/models'
 import { Slide, type SlideProps } from '@components/Slide'
 import { SlideBody, SlideText } from '@components/SlideBody'
 import { OrthographicCamera } from '@react-three/drei'
-import { useState } from 'react'
+import { useOverlay } from '@stores'
+import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
 
 export function Camera(props: SlideProps) {
+  const setLogo = useOverlay(s => s.setLogo)
   const [orthographic, setOrthographic] = useState(false)
+
+  useEffect(() => {
+    setLogo({ visible: true, position: [-20, 0, 0], scale: 0 })
+  }, [setLogo])
 
   return (
     <Slide title="Camera" {...props}>

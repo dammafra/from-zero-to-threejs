@@ -1,9 +1,32 @@
 import { Ruler } from '@components/models'
 import { Slide, type SlideProps } from '@components/Slide'
 import { SlideBody, SlideText } from '@components/SlideBody'
+import { useSpring } from '@react-spring/three'
+import { useOverlay } from '@stores'
+import { useEffect } from 'react'
 import { MathUtils } from 'three'
 
 export function Resizing(props: SlideProps) {
+  const setLogo = useOverlay(s => s.setLogo)
+
+  const [, api] = useSpring(() => ({
+    from: { scale: 0.2 },
+    to: { scale: 0.3 },
+    loop: { reverse: true },
+    config: { tension: 30, friction: 10 },
+    onChange: ({ value, cancelled }) => !cancelled && setLogo({ scale: value.scale }),
+  }))
+
+  useEffect(() => {
+    setLogo({ position: [-2.5, 0.8, 1.5] })
+    api.start()
+
+    return () => {
+      api.stop()
+      setLogo({ scale: 0.2 })
+    }
+  }, [setLogo])
+
   return (
     <Slide title="Resizing" {...props}>
       <SlideBody bullet>

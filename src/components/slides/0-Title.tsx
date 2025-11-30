@@ -1,10 +1,16 @@
 import { type SlideProps, Slide } from '@components'
 import { Billboard, Center, Float, Text3D, useFont } from '@react-three/drei'
-import { useRef } from 'react'
+import { useOverlay } from '@stores'
+import { useEffect, useRef } from 'react'
 import { MeshStandardMaterial } from 'three'
 
 export function Title(props: SlideProps) {
+  const setLogo = useOverlay(s => s.setLogo)
   const material = useRef(new MeshStandardMaterial({ color: 'orange' }))
+
+  useEffect(() => {
+    setLogo({ position: [0.001, -1, 0], scale: 1 })
+  }, [setLogo])
 
   return (
     <Slide background={false} {...props}>
