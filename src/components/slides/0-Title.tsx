@@ -11,7 +11,7 @@ export function Title(props: SlideProps) {
   const material = useRef(new MeshStandardMaterial({ color: 'orange' }))
 
   useEffect(() => {
-    setLogo({ position: [0.001, -1, 0], scale: 1 })
+    setLogo({ position: [0.001, -1, 0], scale: 1, visible: true })
     setDemo(undefined)
   }, [setLogo, setDemo])
 
