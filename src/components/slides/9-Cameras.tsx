@@ -55,24 +55,26 @@ export function Cameras(props: SlideProps) {
 
       <OrthographicCamera makeDefault={orthographic} position={1} near={-50} far={50} />
 
-      <Hoverable>
+      <Hoverable position={[2, 0, 0]}>
         <mesh
           castShadow
           receiveShadow
-          position={[2, 0.5, 0]}
+          position-y={0.5}
           onClick={() => setOrthographic(!orthographic)}
         >
           <boxGeometry />
           <meshStandardMaterial color="red" />
         </mesh>
+        <CameraModel position-y={1.4} scale={0.2} rotation-y={MathUtils.degToRad(30)} />
       </Hoverable>
-      <CameraModel position={[2.1, 1.2, 0.2]} scale={0.2} rotation-y={MathUtils.degToRad(30)} />
 
-      <mesh castShadow receiveShadow position={[1.5, 0.35, 1]} scale={0.7}>
-        <boxGeometry />
-        <meshStandardMaterial color="limegreen" />
-      </mesh>
-      <Headset scale={0.5} position={[1.5, 0.76, 1]} rotation-y={MathUtils.degToRad(110)} />
+      <group position={[1.5, 0, 1]}>
+        <mesh castShadow receiveShadow position-y={0.35} scale={0.7}>
+          <boxGeometry />
+          <meshStandardMaterial color="limegreen" />
+        </mesh>
+        <Headset scale={0.5} position-y={0.76} rotation-y={MathUtils.degToRad(110)} />
+      </group>
     </Slide>
   )
 }
