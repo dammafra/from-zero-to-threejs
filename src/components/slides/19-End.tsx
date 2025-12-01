@@ -13,7 +13,7 @@ export function End(props: SlideProps) {
   return (
     <Slide title="The End... ?" {...props}>
       <Frame
-        position={[1.5, 1.5, 1.3]}
+        position={[1.8, 1.7, 0.7]}
         scale={1.1}
         onDoubleClick={() => window.open('https://overfloor.vercel.app')}
         onClick={() => isTouch && window.open('https://overfloor.vercel.app')}
@@ -30,7 +30,8 @@ export function End(props: SlideProps) {
 
       <SlideBody position={[0, 0, 3]}>
         <SlideText
-          fontSize={0.2}
+          bold
+          fontSize={0.25}
           color="dodgerblue"
           onClick={() => window.open('https://github.com/dammafra/from-zero-to-threejs/tree/public?tab=readme-ov-file#credits')} //prettier-ignore
         >

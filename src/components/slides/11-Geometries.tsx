@@ -164,7 +164,7 @@ export function Geometries(props: SlideProps) {
       </group>
 
       {!isTouch && (
-        <SlideBody fontSize={0.15} position={[7, 0, 3]}>
+        <SlideBody fontSize={0.2} position={[6.8, 0, 3]}>
           <SlideText>Hover 👆</SlideText>
         </SlideBody>
       )}

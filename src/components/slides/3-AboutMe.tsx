@@ -23,8 +23,12 @@ export function AboutMe(props: SlideProps) {
 
   return (
     <Slide title="dammafra" titlePosition={[0.3, 0.02, -1.5]} {...props}>
-      <SlideBody position={[4.35, 0, -0.1]} fontSize={0.3}>
-        <SlideText color="dodgerblue" onClick={() => window.open('https://linktr.ee/dammafra')}>
+      <SlideBody position={[4.05, 0, -0.1]} fontSize={0.3}>
+        <SlideText
+          bold
+          color="dodgerblue"
+          onClick={() => window.open('https://linktr.ee/dammafra')}
+        >
           linktr.ee/dammafra
         </SlideText>
       </SlideBody>
