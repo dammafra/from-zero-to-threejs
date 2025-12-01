@@ -16,7 +16,7 @@ export function DemoHint() {
         anchorX={isTouch ? -0.1 : -0.68}
         onClick={() => window.open(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} // prettier-ignore
       >
-        Sourcecode
+        Source Code
       </SlideText>
     </SlideBody>
   )
