@@ -51,6 +51,7 @@ interface SlideTextProps extends TextProps {
   bold?: boolean
   bullet?: boolean
   color?: ColorRepresentation
+  opacity?: number
 }
 
 function _SlideText({
@@ -59,6 +60,7 @@ function _SlideText({
   bullet = false,
   fontSize = 0.35,
   color = 'black',
+  opacity = 1,
   onClick,
   ...props
 }: SlideTextProps) {
@@ -86,7 +88,7 @@ function _SlideText({
           {bullet && '• '}
           {children}
           {onClick && ' ↗'}
-          <animated.meshBasicMaterial color={color} transparent />
+          <animated.meshBasicMaterial color={color} transparent opacity={opacity} />
         </Text>
       </Hoverable>
     </Suspense>
