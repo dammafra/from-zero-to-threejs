@@ -1,6 +1,13 @@
 import type { VRM, VRMHumanBoneName } from '@pixiv/three-vrm'
 import { useEffect, useState } from 'react'
-import * as THREE from 'three'
+import {
+  AnimationClip,
+  Group,
+  Quaternion,
+  QuaternionKeyframeTrack,
+  VectorKeyframeTrack,
+  type Object3DEventMap,
+} from 'three'
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js'
 
 const mixamoVRMRigMap: Record<string, VRMHumanBoneName> = {
@@ -58,21 +65,24 @@ const mixamoVRMRigMap: Record<string, VRMHumanBoneName> = {
   mixamorigRightToeBase: 'rightToes',
 }
 
+const loader = new FBXLoader()
+const rawClipsCache = new Map<string, Group<Object3DEventMap>>()
+const vrmClipsCache = new WeakMap<VRM, Map<string, AnimationClip>>()
+
 export function useMixamoAnimation(url: string | null, vrm: VRM | null) {
-  const [clip, setClip] = useState<THREE.AnimationClip | null>(null)
+  const [clip, setClip] = useState<AnimationClip | null>(null)
 
   useEffect(() => {
     if (!url || !vrm) return
 
-    const loader = new FBXLoader()
-    loader.loadAsync(url).then(asset => {
-      const baseClip = THREE.AnimationClip.findByName(asset.animations, 'mixamo.com')
+    const process = (asset: Group<Object3DEventMap>) => {
+      const baseClip = AnimationClip.findByName(asset.animations, 'mixamo.com')
       if (!baseClip) return
 
-      const tracks: (THREE.QuaternionKeyframeTrack | THREE.VectorKeyframeTrack)[] = []
-      const restRotationInverse = new THREE.Quaternion()
-      const parentRestWorldRotation = new THREE.Quaternion()
-      const _quatA = new THREE.Quaternion()
+      const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = []
+      const restRotationInverse = new Quaternion()
+      const parentRestWorldRotation = new Quaternion()
+      const _quatA = new Quaternion()
 
       const motionHipsHeight = asset.getObjectByName('mixamorigHips')?.position.y ?? 1
       const vrmHipsHeight = vrm.humanoid.normalizedRestPose.hips?.position?.[1] ?? 1
@@ -80,46 +90,68 @@ export function useMixamoAnimation(url: string | null, vrm: VRM | null) {
 
       baseClip.tracks.forEach(track => {
         const [mixamoRigName, propertyName] = track.name.split('.')
-        const vrmBoneName = mixamoVRMRigMap[mixamoRigName]
+        const vrmBoneName = mixamoVRMRigMap[mixamoRigName] // assume imported elsewhere
         const vrmNodeName = vrm.humanoid?.getNormalizedBoneNode(vrmBoneName)?.name
         const mixamoRigNode = asset.getObjectByName(mixamoRigName)
 
-        if (vrmNodeName && mixamoRigNode) {
-          mixamoRigNode.getWorldQuaternion(restRotationInverse).invert()
-          mixamoRigNode.parent?.getWorldQuaternion(parentRestWorldRotation)
+        if (!vrmNodeName || !mixamoRigNode) return
 
-          if (track instanceof THREE.QuaternionKeyframeTrack) {
-            for (let i = 0; i < track.values.length; i += 4) {
-              const flatQuaternion = track.values.slice(i, i + 4)
-              _quatA.fromArray(flatQuaternion)
-              _quatA.premultiply(parentRestWorldRotation).multiply(restRotationInverse)
-              _quatA.toArray(flatQuaternion)
-              flatQuaternion.forEach((v, index) => {
-                track.values[index + i] = v
-              })
-            }
+        mixamoRigNode.getWorldQuaternion(restRotationInverse).invert()
+        mixamoRigNode.parent?.getWorldQuaternion(parentRestWorldRotation)
 
-            tracks.push(
-              new THREE.QuaternionKeyframeTrack(
-                `${vrmNodeName}.${propertyName}`,
-                track.times,
-                track.values.map((v, i) => (vrm.meta?.metaVersion === '0' && i % 2 === 0 ? -v : v)),
-              ),
-            )
-          } else if (track instanceof THREE.VectorKeyframeTrack) {
-            const value = track.values.map(
-              (v, i) => (vrm.meta?.metaVersion === '0' && i % 3 !== 1 ? -v : v) * hipsPositionScale,
-            )
-            tracks.push(
-              new THREE.VectorKeyframeTrack(`${vrmNodeName}.${propertyName}`, track.times, value),
-            )
+        if (track instanceof QuaternionKeyframeTrack) {
+          for (let i = 0; i < track.values.length; i += 4) {
+            const flatQuat = track.values.slice(i, i + 4)
+            _quatA.fromArray(flatQuat)
+            _quatA.premultiply(parentRestWorldRotation).multiply(restRotationInverse)
+            _quatA.toArray(flatQuat)
+            flatQuat.forEach((v, idx) => (track.values[i + idx] = v))
           }
+          tracks.push(
+            new QuaternionKeyframeTrack(
+              `${vrmNodeName}.${propertyName}`,
+              track.times,
+              track.values.map((v, i) => (vrm.meta?.metaVersion === '0' && i % 2 === 0 ? -v : v)),
+            ),
+          )
+        } else if (track instanceof VectorKeyframeTrack) {
+          const value = track.values.map(
+            (v, i) => (vrm.meta?.metaVersion === '0' && i % 3 !== 1 ? -v : v) * hipsPositionScale,
+          )
+          tracks.push(new VectorKeyframeTrack(`${vrmNodeName}.${propertyName}`, track.times, value))
         }
       })
 
-      setClip(new THREE.AnimationClip('vrmAnimation', baseClip.duration, tracks))
-    })
+      const vrmClip = new AnimationClip('vrmAnimation', baseClip.duration, tracks)
+      vrmCache!.set(url, vrmClip)
+      setClip(vrmClip)
+    }
+
+    let vrmCache = vrmClipsCache.get(vrm)
+    if (!vrmCache) {
+      vrmCache = new Map()
+      vrmClipsCache.set(vrm, vrmCache)
+    }
+
+    if (vrmCache.has(url)) {
+      setClip(vrmCache.get(url)!)
+      return
+    }
+
+    if (rawClipsCache.has(url)) {
+      process(rawClipsCache.get(url)!)
+    } else {
+      loader.loadAsync(url).then(asset => {
+        rawClipsCache.set(url, asset)
+        process(asset)
+      })
+    }
   }, [url, vrm])
 
   return clip
+}
+
+useMixamoAnimation.preload = (url: string) => {
+  if (!url || rawClipsCache.has(url)) return
+  loader.loadAsync(url).then(asset => rawClipsCache.set(url, asset))
 }
