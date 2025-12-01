@@ -16,7 +16,8 @@ export function DemoFrame(props: FrameProps) {
   const [, navigate] = useLocation()
 
   useEffect(() => {
-    setSrc(demo ? `/demo/${demo}/index.html` : undefined)
+    if (!demo) return
+    setSrc(`/demo/${demo}/index.html`)
     setRotationY(r => r + 360)
   }, [demo])
 
