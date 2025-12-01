@@ -58,7 +58,7 @@ function Slide_({
             position={titlePosition}
             size={titleSize}
             rotation-x={MathUtils.degToRad(-90)}
-            font="/fonts/Encode Sans Semi Expanded_Regular.json"
+            font="/fonts/encode-sans.json"
             height={0.1}
             curveSegments={5}
             bevelEnabled
@@ -98,4 +98,4 @@ function Slide_({
 
 export const Slide = a(Slide_)
 
-useFont.preload('/fonts/Encode Sans Semi Expanded_Regular.json')
+useFont.preload('/fonts/encode-sans.json')
