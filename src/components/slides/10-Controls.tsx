@@ -1,10 +1,10 @@
 import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Camera } from '@components/models'
+import { a, useSpring } from '@react-spring/three'
 import { PivotControls } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { useOverlay } from '@stores'
 import { useEffect, useRef } from 'react'
-import { Vector3, type Object3D } from 'three'
+import { MathUtils, Vector3, type Object3D } from 'three'
 
 export function Controls(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
@@ -17,8 +17,22 @@ export function Controls(props: SlideProps) {
     setDemo('3-animating')
   }, [setLogo, setDemo])
 
-  useFrame(() => {
-    cameraRef.current?.lookAt(new Vector3(-1, 0, 0))
+  useSpring({
+    from: { t: MathUtils.degToRad(70) },
+    to: { t: MathUtils.degToRad(120) },
+    loop: { reverse: true },
+    config: { duration: 3000 },
+    onChange: result => {
+      if (!cameraRef.current) return
+
+      const t = result.value.t
+      const r = 2
+      const x = Math.cos(t) * r
+      const z = Math.sin(t) * r
+
+      cameraRef.current.position.set(x, 2, z)
+      cameraRef.current.lookAt(new Vector3())
+    },
   })
 
   return (
@@ -51,11 +65,11 @@ export function Controls(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <group ref={cameraRef} position={[-1.8, 2, 2.1]} scale={0.2}>
+      <a.group ref={cameraRef} scale={0.2}>
         <PivotControls anchor={[0, 0, 0]} disableScaling>
           <Camera />
         </PivotControls>
-      </group>
+      </a.group>
     </Slide>
   )
 }
