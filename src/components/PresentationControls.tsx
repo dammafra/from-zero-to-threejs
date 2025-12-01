@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 export function PresentationControls() {
   const emulatePressKey = (code: string) => {
     dispatchEvent(new KeyboardEvent('keydown', { code }))
-    setTimeout(() => dispatchEvent(new KeyboardEvent('keyup', { code })))
+    setTimeout(() => dispatchEvent(new KeyboardEvent('keyup', { code })), 50)
   }
 
   return (
