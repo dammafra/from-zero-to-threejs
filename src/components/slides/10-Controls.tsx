@@ -1,6 +1,5 @@
-import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
+import { DemoHint, Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Camera } from '@components/models'
-import { useIsTouch } from '@hooks'
 import { PivotControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useOverlay } from '@stores'
@@ -8,8 +7,6 @@ import { useEffect, useRef } from 'react'
 import { Vector3, type Object3D } from 'three'
 
 export function Controls(props: SlideProps) {
-  const isTouch = useIsTouch()
-
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -54,9 +51,7 @@ export function Controls(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <SlideBody fontSize={0.15} position={[isTouch ? 2.9 : 2.4, 0, 3]}>
-        <SlideText>{`${isTouch ? 'Tap' : 'Double click'} to see the code 👉`}</SlideText>
-      </SlideBody>
+      <DemoHint />
 
       <group ref={cameraRef} position={[-1.8, 2, 2.1]} scale={0.2}>
         <PivotControls anchor={[0, 0, 0]} disableScaling>

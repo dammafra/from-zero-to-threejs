@@ -1,4 +1,5 @@
 export * from './Demo'
+export * from './DemoHint'
 export * from './Environment'
 export * from './Experience'
 export * from './Frame'

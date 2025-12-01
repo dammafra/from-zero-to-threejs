@@ -1,14 +1,11 @@
-import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
+import { DemoHint, Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Clock } from '@components/models'
-import { useIsTouch } from '@hooks'
 import { useSpring } from '@react-spring/three'
 import { useOverlay } from '@stores'
 import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
 
 export function Animating(props: SlideProps) {
-  const isTouch = useIsTouch()
-
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -48,9 +45,7 @@ export function Animating(props: SlideProps) {
         <SlideText>any framerate</SlideText>
       </SlideBody>
 
-      <SlideBody fontSize={0.15} position={[isTouch ? 2.9 : 2.4, 0, 3]}>
-        <SlideText>{`${isTouch ? 'Tap' : 'Double click'} to see the code 👉`}</SlideText>
-      </SlideBody>
+      <DemoHint />
 
       <Clock position={[-3, 0.1, 1.5]} rotation-x={MathUtils.degToRad(-90)} />
     </Slide>

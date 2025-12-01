@@ -21,12 +21,11 @@ export function End(props: SlideProps) {
         <img src="/images/overfloor.png" className="fixed inset-0 size-full object-cover" />
       </Frame>
 
-      <SlideBody>
+      <SlideBody position={[0, 0, 1]}>
         <SlideText>Try out the full game!</SlideText>
-      </SlideBody>
-
-      <SlideBody fontSize={0.15} position={[isTouch ? 2.9 : 2.5, 0, 3]}>
-        <SlideText>{`${isTouch ? 'Touch' : 'Double click'} 👉`}</SlideText>
+        <SlideText fontSize={0.2} anchorX={-2.65} anchorY="top">
+          {`${isTouch ? 'Touch' : 'Double click'} 👉`}
+        </SlideText>
       </SlideBody>
     </Slide>
   )

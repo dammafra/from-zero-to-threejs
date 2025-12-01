@@ -1,14 +1,11 @@
-import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
+import { DemoHint, Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Camera, Stage } from '@components/models'
-import { useIsTouch } from '@hooks'
 import { useFrame } from '@react-three/fiber'
 import { useOverlay } from '@stores'
 import { useEffect, useRef } from 'react'
 import { MathUtils, Object3D, SpotLight } from 'three'
 
 export function FirstScene(props: SlideProps) {
-  const isTouch = useIsTouch()
-
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
@@ -37,9 +34,7 @@ export function FirstScene(props: SlideProps) {
         <SlideText>= Render</SlideText>
       </SlideBody>
 
-      <SlideBody fontSize={0.15} position={[isTouch ? 2.9 : 2.4, 0, 3]}>
-        <SlideText>{`${isTouch ? 'Tap' : 'Double click'} to see the code 👉`}</SlideText>
-      </SlideBody>
+      <DemoHint />
 
       <group position={[0, 0, -0.3]}>
         <Camera ref={cameraRef} position={[-1.8, 2, 1.8]} scale={0.15} />
