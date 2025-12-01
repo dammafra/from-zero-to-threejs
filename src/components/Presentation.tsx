@@ -32,14 +32,8 @@ export function Presentation({
   const previousIndexRef = useRef(0)
 
   useEffect(() => {
-    const value = localStorage.getItem('last-slide-index')
-    if (value !== null) setIndex(+value)
-  }, [])
-
-  useEffect(() => {
     if (!match) return
     navigate(`/slides/${index}`)
-    localStorage.setItem('last-slide-index', index.toString())
   }, [match, index, navigate])
 
   const slides = useMemo(() => Children.map(children, c => c), [children])

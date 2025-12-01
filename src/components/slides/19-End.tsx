@@ -23,8 +23,18 @@ export function End(props: SlideProps) {
 
       <SlideBody position={[0, 0, 1]}>
         <SlideText>Try out the full game!</SlideText>
-        <SlideText fontSize={0.2} anchorX={-2.65} anchorY="top">
+        <SlideText fontSize={0.2} anchorX={isTouch ? -2.65 : -2.1} anchorY="top">
           {`${isTouch ? 'Touch' : 'Double click'} 👉`}
+        </SlideText>
+      </SlideBody>
+
+      <SlideBody position={[0, 0, 3]}>
+        <SlideText
+          fontSize={0.2}
+          color="dodgerblue"
+          onClick={() => window.open('https://github.com/dammafra/from-zero-to-threejs/tree/public?tab=readme-ov-file#credits')} //prettier-ignore
+        >
+          Credits
         </SlideText>
       </SlideBody>
     </Slide>
