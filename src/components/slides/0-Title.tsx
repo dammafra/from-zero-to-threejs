@@ -23,7 +23,7 @@ export function Title(props: SlideProps) {
             <Text3D
               castShadow
               receiveShadow
-              font="/fonts/Audiowide_Regular.json"
+              font="/fonts/audiowide.json"
               size={0.8}
               height={0.1}
               bevelEnabled
@@ -41,7 +41,7 @@ export function Title(props: SlideProps) {
             <Text3D
               castShadow
               receiveShadow
-              font="/fonts/Audiowide_Regular.json"
+              font="/fonts/audiowide.json"
               size={0.8}
               height={0.1}
               bevelEnabled
@@ -58,4 +58,4 @@ export function Title(props: SlideProps) {
   )
 }
 
-useFont.preload('/fonts/Audiowide_Regular.json')
+useFont.preload('/fonts/audiowide.json')

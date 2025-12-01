@@ -78,11 +78,7 @@ function _SlideText({
     <Suspense>
       <Hoverable enabled={!!onClick} onPointerOver={onHover} onPointerLeave={onLeave}>
         <Text
-          font={
-            bold
-              ? '/fonts/EncodeSansSemiExpanded-Bold.ttf'
-              : '/fonts/EncodeSansSemiExpanded-Regular.ttf'
-          }
+          font={`/fonts/encode-sans-${bold ? 'bold' : 'regular'}.ttf`}
           fontSize={fontSize}
           onClick={onClick}
           {...props}
