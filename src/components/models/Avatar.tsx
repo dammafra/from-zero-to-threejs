@@ -73,7 +73,7 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
     lastQuat.current = head.quaternion.clone()
   })
 
-  return <primitive object={gltf.scene} {...props} />
+  return clip && <primitive object={gltf.scene} {...props} />
 }
 
 // @ts-expect-error GLTFLoaderPlugin version mismatch
