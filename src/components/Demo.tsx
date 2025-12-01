@@ -11,7 +11,7 @@ export function Demo() {
   const springs = useSpring({ opacity: loaded ? 1 : 0 })
 
   return (
-    <div className="controls size-fit top-4 left-4">
+    <div className="controls size-fit bottom-4 left-4">
       <button title="Back" onClick={() => history.back()} className="z-10">
         <Icon icon="icon-park-twotone:left-c" />
       </button>
