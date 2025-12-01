@@ -12,14 +12,23 @@ import { useThree } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Mesh } from 'three'
 
-export type FrameProps = BillboardProps
+export interface FrameProps extends BillboardProps {
+  transition?: boolean
+}
 
-function Frame_({ children, onDoubleClick, onClick, rotation, ...props }: FrameProps) {
+function Frame_({
+  children,
+  transition = true,
+  onDoubleClick,
+  onClick,
+  rotation,
+  ...props
+}: FrameProps) {
   const isTouch = useIsTouch()
   const { controls } = useThree()
   const ref = useRef<Mesh>(null)
 
-  const transition = () => {
+  const translate = () => {
     const cameraControls = controls as CameraControls
     if (!ref.current || !cameraControls) return
 
@@ -63,12 +72,12 @@ function Frame_({ children, onDoubleClick, onClick, rotation, ...props }: FrameP
             className="fixed inset-0 cursor-pointer"
             onClick={() => {
               if (!isTouch) return
-              transition()
+              if (transition) translate()
               // @ts-expect-error r3f makes onClick readonly
               if (onClick) setTimeout(onClick, 500)
             }}
             onDoubleClick={() => {
-              transition()
+              if (transition) translate()
               // @ts-expect-error r3f makes onDoubleClick readonly
               if (onDoubleClick) setTimeout(onDoubleClick, 500)
             }}
