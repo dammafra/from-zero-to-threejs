@@ -10,7 +10,7 @@ const AnimatedLogo = animated(({ rotation, ...props }: BillboardProps) => {
       <Float rotation={rotation}>
         <Center scale={0.05}>
           <Hoverable>
-            <ThreeLogo onClick={() => window.open('https://threejs.org/')} />
+            <ThreeLogo />
           </Hoverable>
         </Center>
       </Float>

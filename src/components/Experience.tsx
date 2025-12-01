@@ -24,7 +24,9 @@ import {
 import { CameraControls } from '@react-three/drei'
 import { MathUtils } from 'three'
 
+import { Suspense } from 'react'
 import { Environment } from './Environment'
+import { Loader } from './Loader'
 import { Presentation } from './Presentation'
 
 export function Experience() {
@@ -48,28 +50,30 @@ export function Experience() {
 
       <Helpers />
 
-      <Presentation backgroundColor="orange">
-        <Title />
-        <Goal />
-        <Overview />
-        <AboutMe />
-        <WebGL />
-        <Examples />
-        <FirstScene />
-        <Resizing />
-        <Animating />
-        <Cameras />
-        <Controls />
-        <Geometries />
-        <Character />
-        <Grid />
-        <Lights />
-        <Lights2 />
-        <Shadows />
-        <CharacterAnimation />
-        <GridAnimation />
-        <End />
-      </Presentation>
+      <Suspense fallback={<Loader />}>
+        <Presentation backgroundColor="orange">
+          <Title />
+          <Goal />
+          <Overview />
+          <AboutMe />
+          <WebGL />
+          <Examples />
+          <FirstScene />
+          <Resizing />
+          <Animating />
+          <Cameras />
+          <Controls />
+          <Geometries />
+          <Character />
+          <Grid />
+          <Lights />
+          <Lights2 />
+          <Shadows />
+          <CharacterAnimation />
+          <GridAnimation />
+          <End />
+        </Presentation>
+      </Suspense>
     </Canvas>
   )
 }

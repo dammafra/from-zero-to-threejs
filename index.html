@@ -39,8 +39,25 @@
 
     <link rel="canonical" href="https://from-zero-to-threejs.vercel.app/index.html" />
   </head>
-  <body data-theme="dark">
+  <body data-theme="dark" style="background: black">
     <div id="root"></div>
+    <div
+      id="loader"
+      style="
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        font-family: monospace;
+        color: white;
+        padding-top: 18rem;
+        visibility: hidden;
+      "
+    >
+      Loading
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

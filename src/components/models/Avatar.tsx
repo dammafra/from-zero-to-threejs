@@ -78,3 +78,4 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
 
 // @ts-expect-error GLTFLoaderPlugin version mismatch
 useGLTF.preload('/models/avatar.vrm', true, true, loader => loader.register(parser => new VRMLoaderPlugin(parser, { autoUpdateHumanBones: true }))) //prettier-ignore
+useMixamoAnimation.preload('/models/waving.fbx')
