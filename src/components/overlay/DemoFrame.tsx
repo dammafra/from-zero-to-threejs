@@ -30,8 +30,8 @@ export function DemoFrame(props: FrameProps) {
   return (
     // @ts-expect-error spring typings
     <Frame
-      onDoubleClick={() => src && window.location.assign(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} //prettier-ignore
-      onClick={() => isTouch && src && window.location.assign(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} //prettier-ignore
+      onDoubleClick={() => src && window.open(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} //prettier-ignore
+      onClick={() => isTouch && src && window.open(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} //prettier-ignore
       {...props}
       {...demoSpring}
     >

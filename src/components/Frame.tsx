@@ -1,14 +1,6 @@
 import { useIsTouch } from '@hooks'
 import { animated } from '@react-spring/three'
-import {
-  Billboard,
-  CameraControls,
-  Float,
-  Html,
-  RoundedBoxGeometry,
-  type BillboardProps,
-} from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
+import { Billboard, Float, Html, RoundedBoxGeometry, type BillboardProps } from '@react-three/drei'
 import { useRef } from 'react'
 import { Mesh } from 'three'
 
@@ -16,20 +8,7 @@ export type FrameProps = BillboardProps
 
 function Frame_({ children, onDoubleClick, onClick, rotation, ...props }: FrameProps) {
   const isTouch = useIsTouch()
-  const { controls } = useThree()
   const ref = useRef<Mesh>(null)
-
-  const transition = () => {
-    const cameraControls = controls as CameraControls
-    if (!ref.current || !cameraControls) return
-
-    cameraControls.fitToBox(ref.current, true, {
-      paddingTop: -1,
-      paddingBottom: -1,
-      paddingRight: -1,
-      paddingLeft: -1,
-    })
-  }
 
   return (
     <Billboard {...props}>
@@ -63,12 +42,10 @@ function Frame_({ children, onDoubleClick, onClick, rotation, ...props }: FrameP
             className="fixed inset-0 cursor-pointer"
             onClick={() => {
               if (!isTouch) return
-              transition()
               // @ts-expect-error r3f makes onClick readonly
               if (onClick) setTimeout(onClick, 500)
             }}
             onDoubleClick={() => {
-              transition()
               // @ts-expect-error r3f makes onDoubleClick readonly
               if (onDoubleClick) setTimeout(onDoubleClick, 500)
             }}

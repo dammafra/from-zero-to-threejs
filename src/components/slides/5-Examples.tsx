@@ -65,8 +65,8 @@ export function Examples(props: SlideProps) {
         {examplesSprings.map((spring, i) => (
           <Frame
             key={`example-${i}`}
-            onDoubleClick={() => window.location.assign(examples.at(i)!.url)}
-            onClick={() => isTouch && window.location.assign(examples.at(i)!.url)}
+            onDoubleClick={() => window.open(examples.at(i)!.url)}
+            onClick={() => isTouch && window.open(examples.at(i)!.url)}
             {...spring}
           >
             <img src={examples.at(i)!.image} className="fixed inset-0 size-full" />
