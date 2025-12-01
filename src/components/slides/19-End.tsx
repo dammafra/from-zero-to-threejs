@@ -6,9 +6,13 @@ import { useEffect } from 'react'
 
 export function End(props: SlideProps) {
   const isTouch = useIsTouch()
+  const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
-  useEffect(() => setDemo(undefined), [setDemo])
+  useEffect(() => {
+    setLogo({ visible: false })
+    setDemo(undefined)
+  }, [setLogo, setDemo])
 
   return (
     <Slide title="The End... ?" {...props}>
@@ -28,7 +32,7 @@ export function End(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <SlideBody position={[0, 0, 3]}>
+      <SlideBody position={[0, 0, 2.95]}>
         <SlideText
           bold
           fontSize={0.25}
