@@ -18,7 +18,7 @@ export interface FrameProps extends BillboardProps {
 
 function Frame_({
   children,
-  transition = true,
+  transition = false,
   onDoubleClick,
   onClick,
   rotation,

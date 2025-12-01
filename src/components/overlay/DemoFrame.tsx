@@ -79,9 +79,9 @@ export function DemoFrame(props: FrameProps) {
   return (
     // @ts-expect-error spring typings
     <Frame
+      transition
       onDoubleClick={() => src && navigate(`/demo/${encodeURIComponent(src)}`)}
       onClick={() => isTouch && src && navigate(`/demo/${encodeURIComponent(src)}`)}
-      transition
       {...props}
       {...demoSpring}
     >
