@@ -53,20 +53,22 @@ export function Presentation({
   return (
     <KeyboardControls
       map={[
-        { name: 'home', keys: ['KeyH'], up: false },
-        { name: 'next', keys: ['ArrowDown', 'ArrowRight'], up: false },
-        { name: 'previous', keys: ['ArrowUp', 'ArrowLeft'], up: false },
+        { name: 'next', keys: ['ArrowDown', 'ArrowRight'] },
+        { name: 'previous', keys: ['ArrowUp', 'ArrowLeft'] },
         { name: 'reset', keys: ['KeyR'] },
+        { name: 'shift', keys: ['ShiftLeft', 'ShiftRight'] },
       ]}
-      onChange={name =>
+      onChange={(name, pressed, state) => {
+        if (!pressed) return
+
         setIndex(value => {
           previousIndexRef.current = value
           const index = value + ({ next: 1, previous: -1 }[name] || 0)
-          if (name === 'home' || index < 0) return 0
-          if (index > slides.length - 1) return slides.length - 1
+          if (index < 0 || (name === 'previous' && state.shift)) return 0
+          if (index > slides.length - 1 || (name === 'next' && state.shift)) return slides.length - 1 //prettier-ignore
           return index
         })
-      }
+      }}
     >
       <Overlay />
       <Route path="/slides/:index?">

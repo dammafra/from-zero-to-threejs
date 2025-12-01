@@ -5,9 +5,13 @@ import { useEffect } from 'react'
 
 export function End(props: SlideProps) {
   const isTouch = useIsTouch()
+  const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
-  useEffect(() => setDemo('10-grid-animation'), [setDemo])
+  useEffect(() => {
+    setLogo({ visible: false })
+    setDemo('10-grid-animation')
+  }, [setLogo, setDemo])
 
   return (
     <Slide title="The End... ?" {...props}>
