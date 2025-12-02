@@ -1,4 +1,3 @@
-import { Hoverable } from '@components/helpers'
 import { ThreeLogo } from '@components/models'
 import { animated, useSpring } from '@react-spring/three'
 import { Billboard, Center, Float, type BillboardProps } from '@react-three/drei'
@@ -9,9 +8,7 @@ const AnimatedLogo = animated(({ rotation, ...props }: BillboardProps) => {
     <Billboard {...props}>
       <Float rotation={rotation}>
         <Center scale={0.05}>
-          <Hoverable>
-            <ThreeLogo />
-          </Hoverable>
+          <ThreeLogo />
         </Center>
       </Float>
     </Billboard>
