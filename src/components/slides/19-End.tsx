@@ -1,4 +1,4 @@
-import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
+import { FrameLoader, Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Frame } from '@components/Frame'
 import { useIsTouch } from '@hooks'
 import { useOverlay } from '@stores'
@@ -22,7 +22,7 @@ export function End(props: SlideProps) {
         onDoubleClick={() => window.open('https://overfloor.vercel.app')}
         onClick={() => isTouch && window.open('https://overfloor.vercel.app')}
       >
-        <img src="/images/overfloor.png" className="fixed inset-0 size-full object-cover" />
+        <FrameLoader src="/images/overfloor.png" className="size-full object-cover" />
       </Frame>
 
       <SlideBody position={[0, 0, 1]}>

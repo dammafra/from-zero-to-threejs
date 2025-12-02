@@ -1,4 +1,4 @@
-import { Frame, Slide, SlideBody, SlideText, type SlideProps } from '@components'
+import { Frame, FrameLoader, Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { useIsTouch } from '@hooks'
 import { useSprings } from '@react-spring/three'
 import { useOverlay } from '@stores'
@@ -69,7 +69,7 @@ export function Examples(props: SlideProps) {
             onClick={() => isTouch && window.open(examples.at(i)!.url)}
             {...spring}
           >
-            <img src={examples.at(i)!.image} className="fixed inset-0 size-full" />
+            <FrameLoader src={examples.at(i)!.image} className="size-full object-cover" />
           </Frame>
         ))}
       </group>
