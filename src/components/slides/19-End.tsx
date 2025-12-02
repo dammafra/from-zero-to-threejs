@@ -1,4 +1,4 @@
-import { Frame, Slide, type SlideProps } from '@components'
+import { Frame, FrameLoader, Slide, type SlideProps } from '@components'
 import { useIsTouch } from '@hooks'
 import { useOverlay } from '@stores'
 import { useEffect } from 'react'
@@ -21,7 +21,7 @@ export function End(props: SlideProps) {
         onDoubleClick={() => window.location.assign('https://linktr.ee/dammafra')}
         onClick={() => isTouch && window.location.assign('https://linktr.ee/dammafra')}
       >
-        <img src="/images/linktree.png" className="fixed inset-0 size-full" />
+        <FrameLoader src="/images/linktree.png" className="size-full object-cover" />
       </Frame>
     </Slide>
   )
