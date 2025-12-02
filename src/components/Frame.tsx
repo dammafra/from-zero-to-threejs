@@ -9,8 +9,9 @@ import {
   type BillboardProps,
 } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
+import { useEnvironment } from '@stores'
 import { useRef } from 'react'
-import { Mesh } from 'three'
+import { Color, Mesh } from 'three'
 
 export interface FrameProps extends BillboardProps {
   transition?: boolean
@@ -26,6 +27,7 @@ function Frame_({
 }: FrameProps) {
   const isTouch = useIsTouch()
   const { controls } = useThree()
+  const lights = useEnvironment(s => s.lights)
   const ref = useRef<Mesh>(null)
 
   const translate = () => {
@@ -57,7 +59,11 @@ function Frame_({
         </mesh>
         <mesh ref={ref} castShadow position={[0, 0, -0.06]} scale={[2.8, 2.8, 0.1]}>
           <RoundedBoxGeometry />
-          <meshStandardMaterial color="#cccccc" />
+          {lights ? (
+            <meshStandardMaterial color="#cccccc" />
+          ) : (
+            <meshMatcapMaterial color={new Color(2, 2, 2)} />
+          )}
         </mesh>
         <Html
           transform

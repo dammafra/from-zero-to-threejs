@@ -37,17 +37,8 @@ export function Environment() {
       { collapsed: true },
     )
 
-  const ambientSpring = useSpring({
-    intensity: lights ? ambientLightIntensity : 0,
-    config: { duration: 500 },
-    delay: lights ? 0 : 500,
-  })
-
-  const directionalSpring = useSpring({
-    intensity: lights ? directionalLightIntensity : 0,
-    config: { duration: 500 },
-    delay: lights ? 0 : 500,
-  })
+  const ambientSpring = useSpring({ intensity: lights ? ambientLightIntensity : 0 })
+  const directionalSpring = useSpring({ intensity: lights ? directionalLightIntensity : 0 })
 
   return (
     <>
