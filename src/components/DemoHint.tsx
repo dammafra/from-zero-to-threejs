@@ -13,7 +13,7 @@ export function DemoHint() {
         bold
         color="dodgerblue"
         anchorY={-0.15}
-        anchorX={isTouch ? -0.1 : -0.68}
+        anchorX={isTouch ? -0.03 : -0.62}
         onClick={() => window.open(`https://github.com/dammafra/from-zero-to-threejs/blob/public/demo/${demo}/script.js`)} // prettier-ignore
       >
         Source Code
