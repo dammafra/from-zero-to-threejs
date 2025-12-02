@@ -8,6 +8,4 @@ type EnvironemntStore = {
 export const useEnvironment = create<EnvironemntStore>()(set => ({
   lights: true,
   setLights: value => set({ lights: value }),
-
-  orthographic: true,
 }))

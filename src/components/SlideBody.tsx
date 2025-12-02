@@ -1,8 +1,8 @@
-import { animated } from '@react-spring/three'
+import { a, useSpring } from '@react-spring/three'
 import { Text, type TextProps } from '@react-three/drei'
-import type { ThreeEvent } from '@react-three/fiber'
+import { useEnvironment } from '@stores'
 import { Children, cloneElement, Suspense, type ReactElement } from 'react'
-import { MathUtils, Mesh, MeshBasicMaterial, type ColorRepresentation } from 'three'
+import { MathUtils, type ColorRepresentation } from 'three'
 import { Hoverable } from './helpers'
 
 interface SlideBodyProps extends SlideTextProps {
@@ -10,7 +10,7 @@ interface SlideBodyProps extends SlideTextProps {
   offset?: number
 }
 
-function _SlideBody({
+export function SlideBody({
   children,
   offset = 0,
 
@@ -54,7 +54,7 @@ interface SlideTextProps extends TextProps {
   opacity?: number
 }
 
-function _SlideText({
+export function SlideText({
   children,
   bold = false,
   bullet = false,
@@ -64,21 +64,16 @@ function _SlideText({
   onClick,
   ...props
 }: SlideTextProps) {
-  const onHover = (event: ThreeEvent<PointerEvent>) => {
-    const mesh = event.object as Mesh
-    const material = mesh.material as MeshBasicMaterial
-    material.color.set('dodgerblue')
-  }
-
-  const onLeave = (event: ThreeEvent<PointerEvent>) => {
-    const mesh = event.object as Mesh
-    const material = mesh.material as MeshBasicMaterial
-    material.color.set(color)
-  }
+  const lights = useEnvironment(s => s.lights)
+  const [spring, api] = useSpring(() => ({ color: lights ? color : 'white' }), [lights, color])
 
   return (
     <Suspense>
-      <Hoverable enabled={!!onClick} onPointerOver={onHover} onPointerLeave={onLeave}>
+      <Hoverable
+        enabled={!!onClick}
+        onPointerOver={() => api.start({ color: 'dodgerblue' })}
+        onPointerLeave={() => api.start({ color: lights ? color : 'white' })}
+      >
         <Text
           font={`/fonts/encode-sans-${bold ? 'bold' : 'regular'}.ttf`}
           fontSize={fontSize}
@@ -88,12 +83,10 @@ function _SlideText({
           {bullet && '• '}
           {children}
           {onClick && ' ↗'}
-          <animated.meshBasicMaterial color={color} transparent opacity={opacity} />
+          {/* @ts-expect-error spring typings */}
+          <a.meshBasicMaterial color={spring.color} transparent opacity={opacity} />
         </Text>
       </Hoverable>
     </Suspense>
   )
 }
-
-export const SlideBody = animated(_SlideBody)
-export const SlideText = animated(_SlideText)

@@ -1,6 +1,5 @@
 import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Hoverable } from '@components/helpers'
-import { useSpring } from '@react-spring/three'
 import { Box, SpotLight } from '@react-three/drei'
 import { useEnvironment, useOverlay } from '@stores'
 import { useEffect, useMemo, useState } from 'react'
@@ -20,7 +19,7 @@ export function Lights(props: SlideProps) {
   useEffect(() => {
     setDemo(undefined)
 
-    setLights(false)
+    setTimeout(() => setLights(false), 500)
     return () => setLights(true)
   }, [setDemo, setLights])
 
@@ -29,16 +28,9 @@ export function Lights(props: SlideProps) {
     setMaterialId(toggleMaterial ? 'MeshStandardMaterial' : 'MeshBasicMaterial')
   }, [toggleMaterial, setMaterial, setMaterialId, basicMaterial, standardMaterial])
 
-  const textSpring = useSpring({
-    from: { color: 'black' },
-    to: { color: 'white' },
-    config: { duration: 500 },
-    delay: 500,
-  })
-
   return (
     <Slide title="Lights and Materials" {...props}>
-      <SlideBody color={textSpring.color} bullet fontSize={0.25}>
+      <SlideBody bullet fontSize={0.25}>
         <SlideText onClick={() => window.open('https://threejs.org/docs#AmbientLight')}>
           AmbientLight
         </SlideText>
@@ -59,13 +51,13 @@ export function Lights(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <SlideBody color={textSpring.color} position={[4, 0, 2.8]} fontSize={0.3}>
+      <SlideBody position={[4, 0, 2.8]} fontSize={0.3}>
         <SlideText onClick={() => window.open(`https://threejs.org/docs#${materialId}`)}>
           {materialId}
         </SlideText>
       </SlideBody>
 
-      <SlideBody color={textSpring.color} position={[3.6, 0, 1.8]}>
+      <SlideBody position={[3.6, 0, 1.8]}>
         <SlideText>👆</SlideText>
       </SlideBody>
 
