@@ -12,7 +12,7 @@ export function Examples(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
 
   useEffect(() => {
-    setLogo({ position: [0, 0, 0], rotation: [0, 0, 0], scale: 0 })
+    setLogo({ position: [-20, 0, 0], rotation: [0, 0, 0] })
     setDemo(undefined)
   }, [setLogo, setDemo])
 

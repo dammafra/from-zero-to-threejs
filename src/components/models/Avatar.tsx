@@ -3,22 +3,25 @@ import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm'
 import { CameraControls, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, type JSX } from 'react'
-import { AnimationMixer, MathUtils, Mesh, Quaternion } from 'three'
+import { AnimationMixer, LoopRepeat, MathUtils, Mesh, Quaternion } from 'three'
 
 export function Avatar(props: JSX.IntrinsicElements['mesh']) {
   const gltf = useGLTF('/models/avatar.vrm')
-  const clip = useMixamoAnimation('/models/waving.fbx', gltf.userData.vrm)
+
+  const walkClip = useMixamoAnimation('/models/walking.fbx', gltf.userData.vrm)
+  const waveClip = useMixamoAnimation('/models/waving.fbx', gltf.userData.vrm)
 
   const { controls } = useThree()
   const avatar = useRef<VRM>(null)
   const animationMixer = useRef<AnimationMixer>(null)
 
-  const neutralQuat = useRef<Quaternion>(null!)
-  const lastQuat = useRef<Quaternion>(null!)
+  const headTracking = useRef(false)
+  const lastQuat = useRef<Quaternion>(new Quaternion(0, 0, 0, 1))
   const targetQuat = useRef<Quaternion>(null!)
 
   useEffect(() => {
     if (!gltf) return
+
     gltf.scene.traverse(child => {
       child.castShadow = child instanceof Mesh && child.isMesh
     })
@@ -29,20 +32,32 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
     VRMUtils.combineMorphs(vrm)
     VRMUtils.rotateVRM0(vrm)
     avatar.current = vrm
-
-    // save neutral head pose
-    const head = vrm.humanoid!.getRawBoneNode('head')!
-    neutralQuat.current = head.quaternion.clone()
-    lastQuat.current = head.quaternion.clone()
   }, [gltf])
 
   useEffect(() => {
-    if (!clip || !avatar.current) return
+    if (!avatar.current || !walkClip || !waveClip) return
+
     const mixer = new AnimationMixer(avatar.current.scene)
-    const action = mixer.clipAction(clip)
-    action.reset().play()
     animationMixer.current = mixer
-  }, [clip])
+
+    const walk = mixer.clipAction(walkClip)
+    const wave = mixer.clipAction(waveClip)
+
+    walk.clampWhenFinished = true
+    walk.setLoop(LoopRepeat, 3).play()
+
+    const onFinished = () => {
+      headTracking.current = true
+      walk.fadeOut(0.25)
+      wave.fadeIn(0.25).play()
+    }
+
+    mixer.addEventListener('finished', onFinished)
+    return () => {
+      mixer.removeEventListener('finished', onFinished)
+      mixer.stopAllAction()
+    }
+  }, [walkClip, waveClip, gltf])
 
   useFrame((_, delta) => {
     const cameraControls = controls as CameraControls
@@ -50,10 +65,11 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
 
     animationMixer.current.update(delta)
     avatar.current.update(delta)
-    avatar.current.scene.rotation.y = MathUtils.degToRad(144)
 
     const head = avatar.current.humanoid!.getRawBoneNode('head')!
     cameraControls.normalizeRotations()
+
+    if (!headTracking.current) return
 
     const azimuthAngle = Math.abs(Math.round(MathUtils.radToDeg(cameraControls.azimuthAngle)))
     const polarAngle = Math.abs(Math.round(MathUtils.radToDeg(cameraControls.polarAngle)))
@@ -65,17 +81,18 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
 
       head.setRotationFromQuaternion(lastQuat.current)
       head.quaternion.slerp(targetQuat.current, delta * 3)
-    } else if (neutralQuat.current) {
+    } else {
       head.setRotationFromQuaternion(lastQuat.current)
-      head.quaternion.slerp(neutralQuat.current, delta * 3)
+      head.quaternion.slerp(new Quaternion(0, 0, 0, 1), delta * 3)
     }
 
     lastQuat.current = head.quaternion.clone()
   })
 
-  return clip && <primitive object={gltf.scene} {...props} />
+  return <primitive object={gltf.scene} {...props} />
 }
 
 // @ts-expect-error GLTFLoaderPlugin version mismatch
 useGLTF.preload('/models/avatar.vrm', true, true, loader => loader.register(parser => new VRMLoaderPlugin(parser, { autoUpdateHumanBones: true }))) //prettier-ignore
+useMixamoAnimation.preload('/models/walking.fbx')
 useMixamoAnimation.preload('/models/waving.fbx')

@@ -10,9 +10,10 @@ import {
   Macbook,
   Popcorn,
 } from '@components/models'
+import { a, useSpring } from '@react-spring/three'
 import { useOverlay } from '@stores'
-import { useEffect } from 'react'
-import { MathUtils } from 'three'
+import { useEffect, useMemo } from 'react'
+import { MathUtils, Vector3, type Vector3Tuple } from 'three'
 
 export function AboutMe(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
@@ -20,6 +21,24 @@ export function AboutMe(props: SlideProps) {
   useEffect(() => {
     setLogo({ position: [-0.1, 1.7, 1], scale: 0.1 })
   }, [setLogo])
+
+  const distance = 6
+  const direction = -1
+  const rotationY = MathUtils.degToRad(-45)
+  const endPosition = useMemo(() => [2, 0.02, 1.3], [])
+  const startPosition = useMemo(() => {
+    const dir = new Vector3(Math.cos(rotationY), 0, Math.sin(rotationY)).multiplyScalar(
+      distance * direction,
+    )
+    return new Vector3().fromArray(endPosition).sub(dir).toArray()
+  }, [distance, direction, rotationY, endPosition])
+
+  const spring = useSpring({
+    from: { position: startPosition as Vector3Tuple },
+    to: { position: endPosition as Vector3Tuple },
+    config: { duration: 2500 },
+    delay: 500,
+  })
 
   return (
     <Slide title="dammafra" titlePosition={[0.3, 0.02, -1.5]} {...props}>
@@ -33,7 +52,9 @@ export function AboutMe(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
-      <Avatar position={[2, 0.02, 1.3]} scale={1.5} />
+      <a.group position={spring.position} rotation-y={rotationY} scale={1.5}>
+        <Avatar />
+      </a.group>
 
       <group position-z={-0.3}>
         <Desk scale={1.5} position={[-1.5, 0, 0.6]} rotation-y={MathUtils.degToRad(-70)} />
