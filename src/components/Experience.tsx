@@ -2,7 +2,7 @@ import { Canvas, Helpers } from '@components/helpers'
 import {
   AboutMe,
   Animating,
-  Cameras,
+  Cameras as CamerasSlide,
   Character,
   CharacterAnimation,
   Controls,
@@ -21,33 +21,18 @@ import {
   Title,
   WebGL,
 } from '@components/slides'
-import { CameraControls } from '@react-three/drei'
-import { MathUtils } from 'three'
 
 import { Suspense } from 'react'
+import { Cameras } from './Cameras'
 import { Environment } from './Environment'
 import { Loader } from './Loader'
 import { Presentation } from './Presentation'
 
 export function Experience() {
   return (
-    <Canvas
-      shadows
-      camera={{
-        fov: 45,
-        near: 0.1,
-        far: 50,
-        position: [2, 4, 6],
-      }}
-    >
+    <Canvas shadows>
       <Environment />
-      <CameraControls
-        makeDefault
-        maxDistance={40}
-        minPolarAngle={MathUtils.degToRad(0)}
-        maxPolarAngle={MathUtils.degToRad(80)}
-      />
-
+      <Cameras />
       <Helpers />
 
       <Suspense fallback={<Loader />}>
@@ -61,7 +46,7 @@ export function Experience() {
           <FirstScene />
           <Resizing />
           <Animating />
-          <Cameras />
+          <CamerasSlide />
           <Controls />
           <Geometries />
           <Character />

@@ -1,3 +1,4 @@
+export * from './Cameras'
 export * from './Demo'
 export * from './Environment'
 export * from './Experience'
