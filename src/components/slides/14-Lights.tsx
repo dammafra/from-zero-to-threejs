@@ -80,7 +80,10 @@ export function Lights(props: SlideProps) {
           ref={boxRef}
           position-y={0.5}
           material={material}
-          onClick={() => setToggle(!toggleMaterial)}
+          onClick={e => {
+            e.stopPropagation()
+            setToggle(!toggleMaterial)
+          }}
         />
       </Hoverable>
     </Slide>

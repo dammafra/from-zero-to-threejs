@@ -1,7 +1,7 @@
 import { Billboard, Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
-import { Object3D } from 'three'
+import { MathUtils, Object3D } from 'three'
 
 export function Loader() {
   const ref = useRef<Object3D>(null)
@@ -12,16 +12,14 @@ export function Loader() {
   })
 
   return (
-    <>
-      <mesh ref={ref}>
+    <Billboard>
+      <mesh ref={ref} rotation-x={MathUtils.degToRad(45)} scale={0.5}>
         <boxGeometry />
         <meshStandardMaterial color="orange" />
       </mesh>
-      <Billboard position-y={-1.5}>
-        <Html transform className="text-lg font-title text-white">
-          Loading
-        </Html>
-      </Billboard>
-    </>
+      <Html transform className="font-title text-white" position-y={-0.6} scale={0.6}>
+        Loading
+      </Html>
+    </Billboard>
   )
 }

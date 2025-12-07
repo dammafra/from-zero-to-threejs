@@ -1,7 +1,8 @@
 import { a } from '@react-spring/three'
 import { CameraControls, Text3D, useFont, useKeyboardControls } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
-import { useEffect, useRef, type JSX, type PropsWithChildren } from 'react'
+import { useThree, type Size } from '@react-three/fiber'
+import { useCameras } from '@stores'
+import { useCallback, useEffect, useRef, useState, type JSX, type PropsWithChildren } from 'react'
 import { DoubleSide, MathUtils, Mesh, type ColorRepresentation, type Vector3Tuple } from 'three'
 
 export type SlideProps = JSX.IntrinsicElements['group'] &
@@ -26,12 +27,15 @@ function Slide_({
 }: SlideProps) {
   const { controls, size } = useThree()
   const resetPressed = useKeyboardControls(s => s.reset)
+  const setOrthographic = useCameras(s => s.setOrthographic)
 
+  const [init, setInit] = useState(false)
   const frameRef = useRef<Mesh>(null)
+  const lastSizeRef = useRef<Size>(size)
 
-  useEffect(() => {
+  const resetView = useCallback(async () => {
     const cameraControls = controls as CameraControls
-    if (!frameRef.current || !cameraControls) return
+    if (!frameRef.current || !cameraControls) return false
 
     cameraControls.normalizeRotations()
     cameraControls.rotateAzimuthTo(0, true)
@@ -41,8 +45,26 @@ function Slide_({
       paddingRight: 1,
       paddingLeft: 1,
     })
-    cameraControls.rotatePolarTo(MathUtils.degToRad(20), true)
-  }, [controls, size, resetPressed])
+    await cameraControls.rotatePolarTo(MathUtils.degToRad(20), true)
+    return true
+  }, [controls])
+
+  useEffect(() => {
+    if (init) return
+    setOrthographic(false)
+    resetView().then(setInit)
+  }, [init, setInit, resetView, setOrthographic])
+
+  useEffect(() => {
+    if (resetPressed) resetView()
+  }, [resetPressed, resetView])
+
+  useEffect(() => {
+    if (lastSizeRef.current.width !== size.width || lastSizeRef.current.height !== size.height) {
+      lastSizeRef.current = size
+      resetView()
+    }
+  }, [size, resetView])
 
   useEffect(() => {
     document.title = document.title.replace(/.*\|\s/, '')
@@ -82,6 +104,7 @@ function Slide_({
           <meshStandardMaterial color={backgroundColor} side={DoubleSide} />
         </mesh>
       </group>
+
       <mesh
         visible={false}
         ref={frameRef}
@@ -97,5 +120,4 @@ function Slide_({
 }
 
 export const Slide = a(Slide_)
-
 useFont.preload('/fonts/encode-sans.json')

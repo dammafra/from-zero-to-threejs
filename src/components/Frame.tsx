@@ -70,7 +70,7 @@ function Frame_({
           occlude="blending"
           position-y={-0.05}
           scale={0.1}
-          className=" bg-white "
+          className="bg-white"
           style={{ width: 1000, height: 950 }}
         >
           {children}
