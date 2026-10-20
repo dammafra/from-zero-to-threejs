@@ -63,6 +63,7 @@ export function Examples(props: SlideProps) {
 
       <group scale={0.72} position-z={-0.5}>
         {examplesSprings.map((spring, i) => (
+          // @ts-expect-error spring typings
           <Frame
             key={`example-${i}`}
             onDoubleClick={() => window.open(examples.at(i)!.url)}

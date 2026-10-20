@@ -26,10 +26,10 @@ body,
 
 @layer components {
   .controls {
-    @apply absolute inset-4 top-auto flex gap-4 md:gap-2 text-6xl md:text-5xl text-black dark:text-white z-[99999999];
+    @apply absolute inset-4 top-auto z-[99999999] flex gap-4 text-6xl text-black md:gap-2 md:text-5xl dark:text-white;
 
     button {
-      @apply cursor-pointer opacity-30 md:opacity-10 hover:opacity-100 active:opacity-100 transition-[opacity] first:mr-auto;
+      @apply cursor-pointer opacity-30 transition-[opacity] first:mr-auto hover:opacity-100 active:opacity-100 md:opacity-10;
     }
   }
 }

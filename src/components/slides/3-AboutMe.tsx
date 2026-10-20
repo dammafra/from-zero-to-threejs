@@ -52,6 +52,7 @@ export function AboutMe(props: SlideProps) {
         </SlideText>
       </SlideBody>
 
+      {/* @ts-expect-error spring typings */}
       <a.group position={spring.position} rotation-y={rotationY} scale={1.5}>
         <Avatar />
       </a.group>

@@ -1,3 +1,6 @@
+import { Suspense } from 'react'
+import { PCFShadowMap } from 'three'
+
 import { Canvas, Helpers } from '@components/helpers'
 import {
   AboutMe,
@@ -22,42 +25,44 @@ import {
   WebGL,
 } from '@components/slides'
 
-import { Suspense } from 'react'
 import { Cameras } from './Cameras'
 import { Environment } from './Environment'
 import { Loader } from './Loader'
+import { Preloader } from './Preloader'
 import { Presentation } from './Presentation'
 
 export function Experience() {
   return (
-    <Canvas shadows>
+    <Canvas shadows={{ type: PCFShadowMap }}>
       <Environment />
       <Cameras />
       <Helpers />
 
       <Suspense fallback={<Loader />}>
-        <Presentation backgroundColor="orange">
-          <Title />
-          <Goal />
-          <Overview />
-          <AboutMe />
-          <WebGL />
-          <Examples />
-          <FirstScene />
-          <Resizing />
-          <Animating />
-          <CamerasSlide />
-          <Controls />
-          <Geometries />
-          <Character />
-          <Grid />
-          <Lights />
-          <Lights2 />
-          <Shadows />
-          <CharacterAnimation />
-          <GridAnimation />
-          <End />
-        </Presentation>
+        <Preloader>
+          <Presentation backgroundColor="orange">
+            <Title />
+            <Goal />
+            <Overview />
+            <AboutMe />
+            <WebGL />
+            <Examples />
+            <FirstScene />
+            <Resizing />
+            <Animating />
+            <CamerasSlide />
+            <Controls />
+            <Geometries />
+            <Character />
+            <Grid />
+            <Lights />
+            <Lights2 />
+            <Shadows />
+            <CharacterAnimation />
+            <GridAnimation />
+            <End />
+          </Presentation>
+        </Preloader>
       </Suspense>
     </Canvas>
   )

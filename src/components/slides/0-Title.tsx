@@ -1,14 +1,14 @@
 import { type SlideProps, Slide } from '@components'
 import { Billboard, Center, Float, Text3D, useFont } from '@react-three/drei'
 import { useOverlay } from '@stores'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo } from 'react'
 import { MeshStandardMaterial } from 'three'
 
 export function Title(props: SlideProps) {
   const setLogo = useOverlay(s => s.setLogo)
   const setDemo = useOverlay(s => s.setDemo)
 
-  const material = useRef(new MeshStandardMaterial({ color: 'orange' }))
+  const material = useMemo(() => new MeshStandardMaterial({ color: 'orange' }), [])
 
   useEffect(() => {
     setLogo({ position: [0.001, -1, 0], scale: 1, visible: true })
@@ -29,7 +29,7 @@ export function Title(props: SlideProps) {
               bevelEnabled
               bevelThickness={0.02}
               bevelSize={0.02}
-              material={material.current}
+              material={material}
             >
               From zero to...
             </Text3D>
@@ -47,7 +47,7 @@ export function Title(props: SlideProps) {
               bevelEnabled
               bevelThickness={0.02}
               bevelSize={0.02}
-              material={material.current}
+              material={material}
             >
               Three.js
             </Text3D>

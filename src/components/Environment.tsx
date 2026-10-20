@@ -1,5 +1,5 @@
 import { a, useSpring } from '@react-spring/three'
-import { Helper, SoftShadows } from '@react-three/drei'
+import { Helper } from '@react-three/drei'
 import { useEnvironment } from '@stores'
 import { useControls } from 'leva'
 import { CameraHelper } from 'three'
@@ -47,6 +47,7 @@ export function Environment() {
         position={directionalLightPosition}
         intensity={directionalSpring.intensity}
         shadow-mapSize={[1024, 1024]}
+        shadow-radius={5}
       >
         <orthographicCamera
           attach="shadow-camera"
@@ -62,8 +63,6 @@ export function Environment() {
       </a.directionalLight>
 
       <a.ambientLight intensity={ambientSpring.intensity} />
-
-      <SoftShadows samples={50} />
     </>
   )
 }

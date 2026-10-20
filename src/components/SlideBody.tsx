@@ -1,6 +1,7 @@
 import { a, useSpring } from '@react-spring/three'
 import { Text, type TextProps } from '@react-three/drei'
 import { useEnvironment } from '@stores'
+import { textCharacters, textFonts } from '@utils'
 import { Children, cloneElement, Suspense, type ReactElement } from 'react'
 import { MathUtils, type ColorRepresentation } from 'three'
 import { Hoverable } from './helpers'
@@ -75,7 +76,8 @@ export function SlideText({
         onPointerLeave={() => api.start({ color: lights ? color : 'white' })}
       >
         <Text
-          font={`/fonts/encode-sans-${bold ? 'bold' : 'regular'}.ttf`}
+          font={textFonts[bold ? 'bold' : 'regular']}
+          characters={textCharacters}
           fontSize={fontSize}
           onClick={onClick}
           {...props}

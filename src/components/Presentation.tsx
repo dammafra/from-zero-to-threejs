@@ -1,15 +1,7 @@
 import { Overlay } from '@components/overlay'
 import { useTransition } from '@react-spring/three'
 import { KeyboardControls } from '@react-three/drei'
-import {
-  Children,
-  cloneElement,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactElement,
-} from 'react'
+import { Children, cloneElement, useEffect, useMemo, useState, type ReactElement } from 'react'
 import { type ColorRepresentation } from 'three'
 import { Route, useLocation, useRoute } from 'wouter'
 import { type SlideProps } from './Slide'
@@ -28,8 +20,10 @@ export function Presentation({
   const [match, params] = useRoute('/slides/:index')
   const [, navigate] = useLocation()
 
-  const [index, setIndex] = useState(params?.index && !isNaN(+params.index) ? +params.index : 0)
-  const previousIndexRef = useRef(0)
+  const [{ index, previousIndex }, setSlide] = useState(() => ({
+    index: params?.index && !isNaN(+params.index) ? +params.index : 0,
+    previousIndex: 0,
+  }))
 
   useEffect(() => {
     if (!match) return
@@ -39,9 +33,9 @@ export function Presentation({
   const slides = useMemo(() => Children.map(children, c => c), [children])
 
   const transition = useTransition(slides.at(index), {
-    from: { position: [0, 0, index >= previousIndexRef.current ? 20 : -20] },
+    from: { position: [0, 0, index >= previousIndex ? 20 : -20] },
     enter: { position: [0, 0, 0] },
-    leave: { position: [0, 0, index >= previousIndexRef.current ? -20 : 20] },
+    leave: { position: [0, 0, index >= previousIndex ? -20 : 20] },
   })
 
   return (
@@ -55,12 +49,11 @@ export function Presentation({
       onChange={(name, pressed, state) => {
         if (!pressed) return
 
-        setIndex(value => {
-          previousIndexRef.current = value
-          const index = value + ({ next: 1, previous: -1 }[name] || 0)
-          if (index < 0 || (name === 'previous' && state.shift)) return 0
-          if (index > slides.length - 1 || (name === 'next' && state.shift)) return slides.length - 1 //prettier-ignore
-          return index
+        setSlide(({ index: value }) => {
+          let index = value + ({ next: 1, previous: -1 }[name] || 0)
+          if (index < 0 || (name === 'previous' && state.shift)) index = 0
+          if (index > slides.length - 1 || (name === 'next' && state.shift)) index = slides.length - 1 //prettier-ignore
+          return { index, previousIndex: value }
         })
       }}
     >

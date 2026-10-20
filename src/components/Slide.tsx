@@ -15,6 +15,13 @@ export type SlideProps = JSX.IntrinsicElements['group'] &
     titleColor?: ColorRepresentation
   }
 
+const frameSize: [number, number] = [16, 9]
+const frameProps = {
+  'position-y': -0.001,
+  'rotation-x': MathUtils.degToRad(-90),
+  scale: 0.5,
+}
+
 function Slide_({
   background = true,
   backgroundColor = 'white',
@@ -93,26 +100,14 @@ function Slide_({
           </Text3D>
         )}
         {children}
-        <mesh
-          receiveShadow
-          visible={background}
-          position={frameRef.current?.position}
-          rotation={frameRef.current?.rotation}
-          scale={frameRef.current?.scale}
-          geometry={frameRef.current?.geometry}
-        >
+        <mesh receiveShadow visible={background} {...frameProps}>
+          <planeGeometry args={frameSize} />
           <meshStandardMaterial color={backgroundColor} side={DoubleSide} />
         </mesh>
       </group>
 
-      <mesh
-        visible={false}
-        ref={frameRef}
-        position-y={-0.001}
-        rotation-x={MathUtils.degToRad(-90)}
-        scale={0.5}
-      >
-        <planeGeometry args={[16, 9]} />
+      <mesh visible={false} ref={frameRef} {...frameProps}>
+        <planeGeometry args={frameSize} />
         <meshBasicMaterial wireframe color="red" />
       </mesh>
     </>

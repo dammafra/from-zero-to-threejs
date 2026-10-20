@@ -1,7 +1,7 @@
 import { useDebug } from '@hooks'
 import { GizmoHelper, GizmoViewport } from '@react-three/drei'
 import { useControls } from 'leva'
-import { Perf } from 'r3f-perf'
+import { PerfMonitor } from 'r3f-monitor'
 
 export function Helpers() {
   const debug = useDebug()
@@ -27,7 +27,7 @@ export function Helpers() {
         </GizmoHelper>
       )}
 
-      {debug && <Perf showGraph={false} position="top-right" />}
+      {debug && <PerfMonitor showGraph={false} displayType="classic" position="top-right" />}
     </>
   )
 }

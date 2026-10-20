@@ -28,6 +28,7 @@ export function WebGL(props: SlideProps) {
         <SlideText>and rendering 3D graphics in the browser using WebGL</SlideText>
       </SlideBody>
 
+      {/* @ts-expect-error spring typings */}
       <AnimatedBillboard position={spring.position}>
         <Float speed={1.5}>
           <Center scale={2}>
