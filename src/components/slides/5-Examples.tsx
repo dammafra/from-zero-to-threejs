@@ -17,8 +17,8 @@ export function Examples(props: SlideProps) {
   }, [setLogo, setDemo])
 
   const examples = [
-    { image: '/images/drysland.png', url: 'https://drysland.vercel.app' },
-    // { image: '/images/hook-a-fish.png', url: 'https://hook-a-fish.vercel.app' },
+    { image: '/images/drysland.png', url: 'https://drysland.dammafra.dev' },
+    // { image: '/images/hook-a-fish.png', url: 'https://hook-a-fish.dammafra.dev' },
     { image: '/images/bruno.png', url: 'https://bruno-simon.com' },
     { image: '/images/chartogne.png', url: 'https://chartogne-taillet.com' },
     { image: '/images/cornrevolution.png', url: 'https://cornrevolution.resn.global' },
