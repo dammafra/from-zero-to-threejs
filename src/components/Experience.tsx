@@ -28,6 +28,7 @@ import {
 import { Cameras } from './Cameras'
 import { Environment } from './Environment'
 import { Loader } from './Loader'
+import { Preloader } from './Preloader'
 import { Presentation } from './Presentation'
 
 export function Experience() {
@@ -38,28 +39,30 @@ export function Experience() {
       <Helpers />
 
       <Suspense fallback={<Loader />}>
-        <Presentation backgroundColor="orange">
-          <Title />
-          <Goal />
-          <Overview />
-          <AboutMe />
-          <WebGL />
-          <Examples />
-          <FirstScene />
-          <Resizing />
-          <Animating />
-          <CamerasSlide />
-          <Controls />
-          <Geometries />
-          <Character />
-          <Grid />
-          <Lights />
-          <Lights2 />
-          <Shadows />
-          <CharacterAnimation />
-          <GridAnimation />
-          <End />
-        </Presentation>
+        <Preloader>
+          <Presentation backgroundColor="orange">
+            <Title />
+            <Goal />
+            <Overview />
+            <AboutMe />
+            <WebGL />
+            <Examples />
+            <FirstScene />
+            <Resizing />
+            <Animating />
+            <CamerasSlide />
+            <Controls />
+            <Geometries />
+            <Character />
+            <Grid />
+            <Lights />
+            <Lights2 />
+            <Shadows />
+            <CharacterAnimation />
+            <GridAnimation />
+            <End />
+          </Presentation>
+        </Preloader>
       </Suspense>
     </Canvas>
   )

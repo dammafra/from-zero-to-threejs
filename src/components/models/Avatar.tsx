@@ -1,18 +1,19 @@
 import { useMixamoAnimation } from '@hooks'
-import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm'
+import { VRMLoaderPlugin } from '@pixiv/three-vrm'
 import { CameraControls, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
+import { setupAvatar } from '@utils'
 import { useEffect, useRef, type JSX } from 'react'
-import { AnimationMixer, LoopRepeat, MathUtils, Mesh, Quaternion } from 'three'
+import { AnimationMixer, LoopRepeat, MathUtils, Quaternion } from 'three'
 
 export function Avatar(props: JSX.IntrinsicElements['mesh']) {
   const gltf = useGLTF('/models/avatar.vrm')
+  const vrm = setupAvatar(gltf)
 
-  const walkClip = useMixamoAnimation('/models/walking.fbx', gltf.userData.vrm)
-  const waveClip = useMixamoAnimation('/models/waving.fbx', gltf.userData.vrm)
+  const walkClip = useMixamoAnimation('/models/walking.fbx', vrm)
+  const waveClip = useMixamoAnimation('/models/waving.fbx', vrm)
 
   const { controls } = useThree()
-  const avatar = useRef<VRM>(null)
   const animationMixer = useRef<AnimationMixer>(null)
 
   const headTracking = useRef(false)
@@ -20,24 +21,9 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
   const targetQuat = useRef<Quaternion>(null!)
 
   useEffect(() => {
-    if (!gltf) return
+    if (!walkClip || !waveClip) return
 
-    gltf.scene.traverse(child => {
-      child.castShadow = child instanceof Mesh && child.isMesh
-    })
-
-    const vrm = gltf.userData.vrm
-    VRMUtils.removeUnnecessaryVertices(gltf.scene)
-    VRMUtils.combineSkeletons(gltf.scene)
-    VRMUtils.combineMorphs(vrm)
-    VRMUtils.rotateVRM0(vrm)
-    avatar.current = vrm
-  }, [gltf])
-
-  useEffect(() => {
-    if (!avatar.current || !walkClip || !waveClip) return
-
-    const mixer = new AnimationMixer(avatar.current.scene)
+    const mixer = new AnimationMixer(vrm.scene)
     animationMixer.current = mixer
 
     const walk = mixer.clipAction(walkClip)
@@ -57,16 +43,16 @@ export function Avatar(props: JSX.IntrinsicElements['mesh']) {
       mixer.removeEventListener('finished', onFinished)
       mixer.stopAllAction()
     }
-  }, [walkClip, waveClip, gltf])
+  }, [walkClip, waveClip, vrm])
 
   useFrame((_, delta) => {
     const cameraControls = controls as CameraControls
-    if (!animationMixer.current || !avatar.current || !cameraControls) return
+    if (!animationMixer.current || !cameraControls) return
 
     animationMixer.current.update(delta)
-    avatar.current.update(delta)
+    vrm.update(delta)
 
-    const head = avatar.current.humanoid!.getRawBoneNode('head')!
+    const head = vrm.humanoid!.getRawBoneNode('head')!
     cameraControls.normalizeRotations()
 
     if (!headTracking.current) return

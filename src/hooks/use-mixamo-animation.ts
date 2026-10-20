@@ -1,5 +1,5 @@
 import type { VRM, VRMHumanBoneName } from '@pixiv/three-vrm'
-import { useEffect, useState } from 'react'
+import { use, useMemo } from 'react'
 import {
   AnimationClip,
   Group,
@@ -66,90 +66,83 @@ const mixamoVRMRigMap: Record<string, VRMHumanBoneName> = {
 }
 
 const loader = new FBXLoader()
-const rawClipsCache = new Map<string, Group<Object3DEventMap>>()
+const rawClipsCache = new Map<string, Promise<Group<Object3DEventMap>>>()
 const vrmClipsCache = new WeakMap<VRM, Map<string, AnimationClip>>()
 
-export function useMixamoAnimation(url: string | null, vrm: VRM | null) {
-  const [clip, setClip] = useState<AnimationClip | null>(null)
-  const cachedClip = url && vrm ? (vrmClipsCache.get(vrm)?.get(url) ?? null) : null
-
-  useEffect(() => {
-    if (!url || !vrm) return
-
-    const process = (asset: Group<Object3DEventMap>) => {
-      const baseClip = AnimationClip.findByName(asset.animations, 'mixamo.com')
-      if (!baseClip) return
-
-      const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = []
-      const restRotationInverse = new Quaternion()
-      const parentRestWorldRotation = new Quaternion()
-      const _quatA = new Quaternion()
-
-      const motionHipsHeight = asset.getObjectByName('mixamorigHips')?.position.y ?? 1
-      const vrmHipsHeight = vrm.humanoid.normalizedRestPose.hips?.position?.[1] ?? 1
-      const hipsPositionScale = vrmHipsHeight / motionHipsHeight
-
-      baseClip.tracks.forEach(track => {
-        const [mixamoRigName, propertyName] = track.name.split('.')
-        const vrmBoneName = mixamoVRMRigMap[mixamoRigName] // assume imported elsewhere
-        const vrmNodeName = vrm.humanoid?.getNormalizedBoneNode(vrmBoneName)?.name
-        const mixamoRigNode = asset.getObjectByName(mixamoRigName)
-
-        if (!vrmNodeName || !mixamoRigNode) return
-
-        mixamoRigNode.getWorldQuaternion(restRotationInverse).invert()
-        mixamoRigNode.parent?.getWorldQuaternion(parentRestWorldRotation)
-
-        if (track instanceof QuaternionKeyframeTrack) {
-          for (let i = 0; i < track.values.length; i += 4) {
-            const flatQuat = track.values.slice(i, i + 4)
-            _quatA.fromArray(flatQuat)
-            _quatA.premultiply(parentRestWorldRotation).multiply(restRotationInverse)
-            _quatA.toArray(flatQuat)
-            flatQuat.forEach((v, idx) => (track.values[i + idx] = v))
-          }
-          tracks.push(
-            new QuaternionKeyframeTrack(
-              `${vrmNodeName}.${propertyName}`,
-              track.times,
-              track.values.map((v, i) => (vrm.meta?.metaVersion === '0' && i % 2 === 0 ? -v : v)),
-            ),
-          )
-        } else if (track instanceof VectorKeyframeTrack) {
-          const value = track.values.map(
-            (v, i) => (vrm.meta?.metaVersion === '0' && i % 3 !== 1 ? -v : v) * hipsPositionScale,
-          )
-          tracks.push(new VectorKeyframeTrack(`${vrmNodeName}.${propertyName}`, track.times, value))
-        }
-      })
-
-      const vrmClip = new AnimationClip('vrmAnimation', baseClip.duration, tracks)
-      vrmCache!.set(url, vrmClip)
-      setClip(vrmClip)
-    }
-
-    let vrmCache = vrmClipsCache.get(vrm)
-    if (!vrmCache) {
-      vrmCache = new Map()
-      vrmClipsCache.set(vrm, vrmCache)
-    }
-
-    if (vrmCache.has(url)) return
-
-    if (rawClipsCache.has(url)) {
-      process(rawClipsCache.get(url)!)
-    } else {
-      loader.loadAsync(url).then(asset => {
-        rawClipsCache.set(url, asset)
-        process(asset)
-      })
-    }
-  }, [url, vrm])
-
-  return cachedClip ?? clip
+function load(url: string) {
+  let promise = rawClipsCache.get(url)
+  if (!promise) {
+    promise = loader.loadAsync(url)
+    rawClipsCache.set(url, promise)
+  }
+  return promise
 }
 
-useMixamoAnimation.preload = (url: string) => {
-  if (!url || rawClipsCache.has(url)) return
-  loader.loadAsync(url).then(asset => rawClipsCache.set(url, asset))
+function retarget(url: string, asset: Group<Object3DEventMap>, vrm: VRM) {
+  let vrmCache = vrmClipsCache.get(vrm)
+  if (!vrmCache) {
+    vrmCache = new Map()
+    vrmClipsCache.set(vrm, vrmCache)
+  }
+
+  const cachedClip = vrmCache.get(url)
+  if (cachedClip) return cachedClip
+
+  const baseClip = AnimationClip.findByName(asset.animations, 'mixamo.com')
+  if (!baseClip) return null
+
+  const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = []
+  const restRotationInverse = new Quaternion()
+  const parentRestWorldRotation = new Quaternion()
+  const _quatA = new Quaternion()
+
+  const motionHipsHeight = asset.getObjectByName('mixamorigHips')?.position.y ?? 1
+  const vrmHipsHeight = vrm.humanoid.normalizedRestPose.hips?.position?.[1] ?? 1
+  const hipsPositionScale = vrmHipsHeight / motionHipsHeight
+
+  baseClip.tracks.forEach(track => {
+    const [mixamoRigName, propertyName] = track.name.split('.')
+    const vrmBoneName = mixamoVRMRigMap[mixamoRigName]
+    const vrmNodeName = vrm.humanoid?.getNormalizedBoneNode(vrmBoneName)?.name
+    const mixamoRigNode = asset.getObjectByName(mixamoRigName)
+
+    if (!vrmNodeName || !mixamoRigNode) return
+
+    mixamoRigNode.getWorldQuaternion(restRotationInverse).invert()
+    mixamoRigNode.parent?.getWorldQuaternion(parentRestWorldRotation)
+
+    if (track instanceof QuaternionKeyframeTrack) {
+      for (let i = 0; i < track.values.length; i += 4) {
+        const flatQuat = track.values.slice(i, i + 4)
+        _quatA.fromArray(flatQuat)
+        _quatA.premultiply(parentRestWorldRotation).multiply(restRotationInverse)
+        _quatA.toArray(flatQuat)
+        flatQuat.forEach((v, idx) => (track.values[i + idx] = v))
+      }
+      tracks.push(
+        new QuaternionKeyframeTrack(
+          `${vrmNodeName}.${propertyName}`,
+          track.times,
+          track.values.map((v, i) => (vrm.meta?.metaVersion === '0' && i % 2 === 0 ? -v : v)),
+        ),
+      )
+    } else if (track instanceof VectorKeyframeTrack) {
+      const value = track.values.map(
+        (v, i) => (vrm.meta?.metaVersion === '0' && i % 3 !== 1 ? -v : v) * hipsPositionScale,
+      )
+      tracks.push(new VectorKeyframeTrack(`${vrmNodeName}.${propertyName}`, track.times, value))
+    }
+  })
+
+  const vrmClip = new AnimationClip('vrmAnimation', baseClip.duration, tracks)
+  vrmCache.set(url, vrmClip)
+  return vrmClip
 }
+
+// Suspends until the FBX is loaded, so the clip is ready on the first render
+export function useMixamoAnimation(url: string, vrm: VRM) {
+  const asset = use(load(url))
+  return useMemo(() => retarget(url, asset, vrm), [url, asset, vrm])
+}
+
+useMixamoAnimation.preload = (url: string) => void load(url)
