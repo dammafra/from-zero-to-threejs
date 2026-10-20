@@ -42,6 +42,7 @@ export function AboutMe(props: SlideProps) {
 
   return (
     <Slide title="Francesco Dammacco" {...props}>
+      {/* @ts-expect-error spring typings */}
       <a.group position={spring.position} rotation-y={rotationY} scale={1.5}>
         <Avatar />
       </a.group>

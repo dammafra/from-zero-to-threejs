@@ -23,6 +23,7 @@ export function WebGL(props: SlideProps) {
 
   return (
     <Slide background={false} {...props}>
+      {/* @ts-expect-error spring typings */}
       <AnimatedBillboard position={spring.position}>
         <Float speed={1.5}>
           <Center scale={2}>

@@ -1,20 +1,28 @@
+import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react-swc'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { globSync } from 'glob'
 import { defineConfig } from 'vite'
-import restart from 'vite-plugin-restart'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import fullReload from 'vite-plugin-full-reload'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [restart(), react(), tailwindcss(), tsconfigPaths()],
+  plugins: [
+    fullReload('./src/**'),
+    react(),
+    babel({ presets: [reactCompilerPreset()] }),
+    tailwindcss(),
+  ],
+  resolve: {
+    tsconfigPaths: true,
+  },
   server: {
     host: true,
   },
   build: {
     emptyOutDir: true,
     sourcemap: true,
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         main: 'index.html',
         ...Object.fromEntries(globSync('demo/**/*.html').map((file, i) => [`demo${i}`, file])),

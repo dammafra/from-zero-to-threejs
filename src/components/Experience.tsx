@@ -1,3 +1,6 @@
+import { Suspense } from 'react'
+import { PCFShadowMap } from 'three'
+
 import { Canvas, Helpers } from '@components/helpers'
 import {
   AboutMe,
@@ -22,7 +25,6 @@ import {
   WebGL,
 } from '@components/slides'
 
-import { Suspense } from 'react'
 import { Cameras } from './Cameras'
 import { Environment } from './Environment'
 import { Loader } from './Loader'
@@ -30,7 +32,7 @@ import { Presentation } from './Presentation'
 
 export function Experience() {
   return (
-    <Canvas shadows>
+    <Canvas shadows={{ type: PCFShadowMap }}>
       <Environment />
       <Cameras />
       <Helpers />

@@ -71,6 +71,7 @@ const vrmClipsCache = new WeakMap<VRM, Map<string, AnimationClip>>()
 
 export function useMixamoAnimation(url: string | null, vrm: VRM | null) {
   const [clip, setClip] = useState<AnimationClip | null>(null)
+  const cachedClip = url && vrm ? (vrmClipsCache.get(vrm)?.get(url) ?? null) : null
 
   useEffect(() => {
     if (!url || !vrm) return
@@ -133,10 +134,7 @@ export function useMixamoAnimation(url: string | null, vrm: VRM | null) {
       vrmClipsCache.set(vrm, vrmCache)
     }
 
-    if (vrmCache.has(url)) {
-      setClip(vrmCache.get(url)!)
-      return
-    }
+    if (vrmCache.has(url)) return
 
     if (rawClipsCache.has(url)) {
       process(rawClipsCache.get(url)!)
@@ -148,7 +146,7 @@ export function useMixamoAnimation(url: string | null, vrm: VRM | null) {
     }
   }, [url, vrm])
 
-  return clip
+  return cachedClip ?? clip
 }
 
 useMixamoAnimation.preload = (url: string) => {

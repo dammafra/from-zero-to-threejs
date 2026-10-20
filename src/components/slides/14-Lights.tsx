@@ -2,20 +2,20 @@ import { Slide, SlideBody, SlideText, type SlideProps } from '@components'
 import { Hoverable } from '@components/helpers'
 import { Box, SpotLight } from '@react-three/drei'
 import { useEnvironment, useOverlay } from '@stores'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Material, Mesh, MeshBasicMaterial, MeshStandardMaterial } from 'three'
+import { useEffect, useMemo, useState } from 'react'
+import { Mesh, MeshBasicMaterial, MeshStandardMaterial } from 'three'
 
 export function Lights(props: SlideProps) {
   const setDemo = useOverlay(s => s.setDemo)
   const setLights = useEnvironment(s => s.setLights)
 
-  const boxRef = useRef<Mesh>(null)
+  const [box, setBox] = useState<Mesh | null>(null)
   const basicMaterial = useMemo(() => new MeshBasicMaterial({ color: 'red' }), [])
   const standardMaterial = useMemo(() => new MeshStandardMaterial({ color: 'red' }), [])
 
   const [toggleMaterial, setToggle] = useState(false)
-  const [material, setMaterial] = useState<Material>(basicMaterial)
-  const [materialId, setMaterialId] = useState('MeshBasicMaterial')
+  const material = toggleMaterial ? standardMaterial : basicMaterial
+  const materialId = material.type
 
   useEffect(() => {
     setDemo(undefined)
@@ -23,11 +23,6 @@ export function Lights(props: SlideProps) {
     setTimeout(() => setLights(false), 500)
     return () => setLights(true)
   }, [setDemo, setLights])
-
-  useEffect(() => {
-    setMaterial(toggleMaterial ? standardMaterial : basicMaterial)
-    setMaterialId(toggleMaterial ? 'MeshStandardMaterial' : 'MeshBasicMaterial')
-  }, [toggleMaterial, setMaterial, setMaterialId, basicMaterial, standardMaterial])
 
   return (
     <Slide title="Lights and Materials" {...props}>
@@ -69,12 +64,12 @@ export function Lights(props: SlideProps) {
         intensity={2}
         decay={0.5}
         castShadow
-        target={boxRef.current ?? undefined}
+        target={box ?? undefined}
       />
 
       <Hoverable>
         <Box
-          ref={boxRef}
+          ref={setBox}
           position-y={0.5}
           material={material}
           onClick={e => {

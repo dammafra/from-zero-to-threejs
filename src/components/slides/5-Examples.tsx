@@ -55,6 +55,7 @@ export function Examples(props: SlideProps) {
   return (
     <Slide background={false} {...props}>
       {examplesSprings.map((spring, i) => (
+        // @ts-expect-error spring typings
         <Frame
           key={`example-${i}`}
           onDoubleClick={() => window.location.assign(examples.at(i)!.url)}

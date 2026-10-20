@@ -8,7 +8,7 @@ export function GUI() {
   return (
     <div
       className={clsx(
-        'absolute right-0 bottom-0 top-17 w-77.5 opacity-90 z-9999 overflow-scroll pointer-events-none [&>*]:pointer-events-auto',
+        'pointer-events-none absolute top-17 right-0 bottom-0 z-9999 w-83 overflow-scroll opacity-90 [&>*]:pointer-events-auto',
         { hidden: !debug },
       )}
     >
