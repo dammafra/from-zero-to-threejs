@@ -19,8 +19,8 @@ export function End(props: SlideProps) {
       <Frame
         position={[1.8, 1.7, 0.7]}
         scale={1.1}
-        onDoubleClick={() => window.open('https://overfloor.vercel.app')}
-        onClick={() => isTouch && window.open('https://overfloor.vercel.app')}
+        onDoubleClick={() => window.open('https://overfloor.dammafra.dev')}
+        onClick={() => isTouch && window.open('https://overfloor.dammafra.dev')}
       >
         <FrameLoader src="/images/overfloor.png" className="size-full object-cover" />
       </Frame>
